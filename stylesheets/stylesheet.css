@@ -301,6 +301,10 @@ a.download-button {
   color: #fff;
 }
 
+.company-list {
+  text-align: center;
+}
+
 .company-list img {
   margin: 15px;
   padding: 0px;
