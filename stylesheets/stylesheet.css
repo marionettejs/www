@@ -326,6 +326,24 @@ a.download-button span {
   color: #fff;
 }
 
+.donations {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+span.donation {
+  padding: 0px;
+  margin: 25px;
+  display: inline;
+  width: 75px;
+}
+
+span.donation p{
+  display: block;
+  padding: 0px;
+  margin: 0px;
+}
+
 footer {
   margin-bottom: 60px;
   padding-bottom: 60px;

@@ -17,19 +17,28 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
 
     <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-34606707-1']);
+      _gaq.push(['_setDomainName', 'marionettejs.com']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
 
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-34606707-1']);
-    _gaq.push(['_setDomainName', 'marionettejs.com']);
-    _gaq.push(['_setAllowLinker', true]);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+    <script type="text/javascript">
+      /* <![CDATA[ */
+          (function() {
+              var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
+              s.type = 'text/javascript';
+              s.async = true;
+              s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
+              t.parentNode.insertBefore(s, t);
+          })();
+      /* ]]> */
     </script>
   </head>
 
@@ -118,6 +127,33 @@
           </article>
 
           <article class="markdown-body">
+            <header><h3>Support Marionette!</h3></header>
+            <p>
+              Marionette needs your support, but not everyone can offer assitance 
+              with code, bug submissions, and answering questions. If you're 
+              using Marionette and you're finding that it is saving you as much 
+              time and effort as we believe it does, then please consider 
+              financial support for the project.
+            </p>
+
+            <div class="donations">
+              <span class="donation">
+                <a class="FlattrButton" style="display:none;" href="http://marionettejs.com"></a><noscript><a href="http://flattr.com/thing/922031/Backbone-Marionette" target="_blank"><img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" /></a></noscript>
+              </span>
+
+              <span class="donation">
+                <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7SJHYWJ487SF4"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" alt="Donate via PayPal" border="0"></a>
+              </span>
+
+              <span class="donation">
+                <iframe style="border: 0; margin: 0; padding: 0;"
+                src="https://www.gittip.com/derickbailey/widget.html"
+                width="48pt" height="20pt"></iframe>
+              </span>
+            </div>
+          </article>
+
+          <article class="markdown-body">
             <header><h3>Get In Touch</h3></header>
             <p>
               You can find Marionette and it's team at these places:
@@ -156,12 +192,12 @@
         </div>
       </footer>
     </div>
+
     <div class="current-section">
       <a href="#top">Scroll to top</a>
-      <a href="https://github.com/marionettejs/marionettejs.github.com/tarball/master" class="tar">tar</a><a href="https://github.com/marionettejs/marionettejs.github.com/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
+      <a href="https://github.com/marionettejs/backbone.marionette/tarball/master" class="tar">tar</a><a href="https://github.com/marionettejs/backbone.marionette/zipball/master" class="zip">zip</a><a href="https://github.com/marionettejs/backbone.marionette" class="code">source code</a>
       <p class="name"></p>
     </div>
-
 
   </body>
 </html>
