@@ -1,5 +1,7 @@
 #! /bin/bash
 
+mkdir -p lib/amd
+
 curl https://raw.github.com/douglascrockford/JSON-js/master/json2.js > lib/json2.js
 curl http://underscorejs.org/underscore.js > lib/underscore.js
 curl http://backbonejs.org/backbone.js > lib/backbone.js
@@ -7,6 +9,9 @@ curl http://code.jquery.com/jquery.js > lib/jquery.js
 curl https://raw.github.com/marionettejs/backbone.eventbinder/master/lib/backbone.eventbinder.js > lib/backbone.eventbinder.js
 curl https://raw.github.com/marionettejs/backbone.wreqr/master/lib/backbone.wreqr.js > lib/backbone.wreqr.js
 curl https://raw.github.com/marionettejs/backbone.marionette/master/lib/backbone.marionette.js > lib/backbone.marionette.js
+curl https://raw.github.com/marionettejs/backbone.marionette/master/lib/backbone.marionette.min.js > lib/backbone.marionette.min.js
+curl https://raw.github.com/marionettejs/backbone.marionette/master/lib/amd/backbone.marionette.js > lib/amd/backbone.marionette.js
+curl https://raw.github.com/marionettejs/backbone.marionette/master/lib/amd/backbone.marionette.min.js > lib/amd/backbone.marionette.min.js
 
 rm backbone.marionette.tar.gz
 rm backbone.marionette.zip
