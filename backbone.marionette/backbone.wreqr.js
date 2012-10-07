@@ -17,7 +17,7 @@
 
     
 
-    <link href="https://a248.e.akamai.net/assets.github.com/assets/github-7277a3fd9e7ab62a5b6e587a50c4295c9c6e6b9f.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="https://a248.e.akamai.net/assets.github.com/assets/github-368ad162d99b0ea9c2c3672bc49e6b6ab6254c49.css" media="screen" rel="stylesheet" type="text/css" />
     <link href="https://a248.e.akamai.net/assets.github.com/assets/github2-df48af9ffbb3f77334c3ec2f7f6294f9002ec4c6.css" media="screen" rel="stylesheet" type="text/css" />
     
 
@@ -251,7 +251,7 @@
           <li><a href="https://github.com/security">Security</a></li>
       </ul>
 
-      <p>&copy; 2012 <span title="0.04074s from fe16.rs.github.com">GitHub</span> Inc. All rights reserved.</p>
+      <p>&copy; 2012 <span title="0.03480s from fe16.rs.github.com">GitHub</span> Inc. All rights reserved.</p>
     </div><!-- /#legal or /#legal_ie-->
 
   </div><!-- /.site -->
@@ -656,7 +656,7 @@ I think you should use an
 
     
     
-    <span id='server_response_time' data-time='0.04236' data-host='fe16'></span>
+    <span id='server_response_time' data-time='0.03761' data-host='fe16'></span>
     
   </body>
 </html>
