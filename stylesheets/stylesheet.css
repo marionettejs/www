@@ -197,33 +197,14 @@ p.tagline {
 }
 
 .current-section p {
-  padding: 5px 27px;
-  font-size: 24px;
+  padding: 5px 27px 0px 27px;
+  font-size: 30px;
   font-weight: bold;
 }
 
-.current-section a {
-  float: right;
-  text-indent: -10000px;
-  background: transparent url(../images/top.png) no-repeat 0 0;
-  width: 20px;
-  height: 20px;
-  opacity: 0.8;
-  margin-right: 12px;
-  margin-top: 12px;
-  -moz-opacity: 0.8;
-  filter:alpha(opacity=8);
-  -webkit-transition: opacity ease-in-out 0.3s;
-}
-
-.current-section a:hover {
-  opacity: 1;
-  -moz-opacity: 1;
-  filter:alpha(opacity=1);
-}
-
-.current-section a.zip {
-  margin-right: 8px;
+.current-section a.logo {
+  float: left;
+  margin: 5px 15px 0px 5px;
 }
 
 a.zip,
