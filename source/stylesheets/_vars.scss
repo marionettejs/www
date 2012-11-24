@@ -69,11 +69,11 @@ $default-face:      "Avenir Next", "Helvetica Neue", sans-serif!default;
 
 
 /**
- * Multiple used inline images
+ * Multiple used images
  */
 
 $image-dotted-line: inline-image('dotted-line.png');
-$image-pattern-light: inline-image('pattern-light.jpg');
+$image-pattern-light: image-url('pattern-light.jpg');
 
 
 /**

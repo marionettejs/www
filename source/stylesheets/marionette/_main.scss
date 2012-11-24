@@ -3,7 +3,7 @@
  */
 
 body {
-  background: inline-image('pattern-paper.png');
+  background: image-url('pattern-paper.png');
   color: $default-color;
   font-family: $default-face;
 }
@@ -199,7 +199,7 @@ $breakpoints: 'full featured' (min-width 1200px),
         }
 
         .pendulum-parent {
-          background: image-url('pendulum-pivot.png') no-repeat;
+          background: inline-image('pendulum-pivot.png') no-repeat;
           background-size: cover;
           height: 11px;
           left: 90px;
@@ -209,7 +209,7 @@ $breakpoints: 'full featured' (min-width 1200px),
         }
 
             .pendulum-child {
-              background: image-url('pendulum.png') no-repeat;
+              background: inline-image('pendulum.png') no-repeat;
               background-size: cover;
               height: 288px;
               left: -82px;
@@ -383,7 +383,7 @@ $breakpoints: 'full featured' (min-width 1200px),
  */
 
 .footer {
-  background: inline-image('pattern-dark.jpg');
+  background: image-url('pattern-dark.jpg');
   color: #fff;
   > div {
     background-image: $image-dotted-line;

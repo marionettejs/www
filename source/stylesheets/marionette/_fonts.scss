@@ -1,6 +1,5 @@
-// see: http://stackoverflow.com/questions/10617306/new-bulletproof-font-face-syntax-using-data-uris-in-compass
-@include font-face('bemio', font-files('bemio.svg#mf'), 'bemio.eot', normal, normal);
-@include font-face('bemio', inline-font-files('bemio.woff', woff, 'bemio.ttf', truetype), $weight: normal, $style: normal);
+@include font-face('bemio', font-files('bemio.svg'), 'bemio.eot', normal, normal);
+@include font-face("bemio", font-files('bemio.ttf', 'bemio.otf', 'bemio.woff', 'bemio.eot'));
 
-@include font-face('bemio-italic', font-files('bemio-italic.svg#mf'), 'bemio-italic.eot', normal, normal);
-@include font-face('bemio-italic', inline-font-files('bemio-italic.woff', woff, 'bemio-italic.ttf', truetype), $weight: normal, $style: normal);
+@include font-face('bemio-italic', font-files('bemio-italic.svg'), 'bemio-italic.eot', normal, normal);
+@include font-face("bemio-italic", font-files('bemio-italic.ttf', 'bemio-italic.otf', 'bemio-italic.woff', 'bemio-italic.eot'));
