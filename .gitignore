@@ -12,3 +12,9 @@
 
 # Ignore Sass' cache
 /.sass-cache
+source/stylesheets/.git
+
+*.orig
+*.swp
+*.swo
+.DS_Store
