@@ -1,0 +1,441 @@
+/**
+ * Basics
+ */
+
+body {
+  background: inline-image('pattern-paper.png');
+  color: $default-color;
+  font-family: $default-face;
+}
+
+a {
+  color: $brand-color;
+  &:hover, &:active, &:visited {
+    text-decoration: none;
+  }
+}
+
+h1, h2, h3, b {
+  font-weight: normal;
+}
+
+section, footer {
+  @extend .cf;
+  > div {
+    @extend .cf;
+    padding: 0 10%;
+  }
+  > .g {
+    padding: 0;
+  }
+}
+
+ul {
+  margin-left: 1em;
+}
+
+li {
+  margin-bottom: 1em;
+}
+
+.middot {
+  @extend .kilo;
+  position: relative;
+  top: 0.23em;
+}
+
+
+/**
+ * Animation keyframes
+ */
+
+@include keyframes(swing-normal) {
+  0%, 50%, 100% {
+    @include transform-origin(50%, 0);
+  }
+  0% {
+    @include rotate(-2deg);
+  }
+  50% {
+    @include rotate(2deg);
+  }
+  100% {
+    @include rotate(-2deg);
+  }
+}
+
+@include keyframes(swing-reverse) {
+  0%, 50%, 100% {
+    @include transform-origin(50%, 0);
+  }
+  0% {
+    @include rotate(2deg);
+  }
+  50% {
+    @include rotate(-2deg);
+  }
+  100% {
+    @include rotate(2deg);
+  }
+}
+
+
+/**
+ * Media Query Breakpoints
+ */
+
+// automatically converted in em values
+$breakpoints: 'full featured' (min-width 1200px),
+              'visible text shadows' (min-width 700px),
+              'full width columns' (1024px),
+              'reduced header' (700px);
+
+
+/**
+ * Media Queries for the Grid
+ */
+
+.one-half {
+  @include respond-to('full width columns') {
+    width: 100%;
+  }
+}
+
+.three-column-section .one-third,
+.footer .one-third,
+.footer .two-thirds {
+  @include respond-to('full width columns') {
+    width: 100%;
+  }
+}
+
+.header .one-third {
+  @include respond-to('reduced header') {
+    width: 100%;
+  }
+}
+
+.five-sixths {
+  @include respond-to('full width columns') {
+    width: 100%;
+  }
+}
+
+
+/**
+ * Header styles
+ */
+
+.header {
+  padding: 2em 6em 0 6em;
+
+  @include respond-to('full width columns') {
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+
+  @include respond-to('reduced header') {
+    margin-left: 3em;
+  }
+}
+
+    .header__item {
+      @extend .text-center;
+      height: 296px;
+      margin: 2em auto 0 auto;
+      position: relative;
+      width: 174px;
+
+      @include respond-to('reduced header') {
+        display: none;
+      }
+    }
+
+    .header__item--logo {
+      @extend .text-center;
+      margin-right: -2em;
+      margin-top: -1em;
+
+      @include respond-to('reduced header') {
+        margin-right: 0;
+        margin-top: 0;
+        width: 90%;
+      }
+    }
+
+        .header__item__body {
+          height: 70px;
+          padding-top: 180px;
+          a {
+            @extend .delta;
+          }
+          b {
+            @extend .brand-face;
+            display: block;
+          }
+        }
+
+    .header__introduction {
+      margin: 6em auto 0 auto;
+
+      @include respond-to('full width columns') {
+        width: 95%;
+      }
+
+      @include respond-to('reduced header') {
+        margin-left: -1em;
+        margin-top: 2em;
+      }
+    }
+
+        .header__introduction__body {
+          @extend .kilo, .text-center;
+          font-family: $brand-face-italic;
+          line-height: 1.25em;
+
+          @include respond-to('visible text shadows') {
+            @include single-text-shadow;
+          }
+        }
+
+        .pendulum-parent {
+          background: image-url('pendulum-pivot.png') no-repeat;
+          background-size: cover;
+          height: 11px;
+          left: 90px;
+          position: absolute;
+          top: 0px;
+          width: 11px;
+        }
+
+            .pendulum-child {
+              background: image-url('pendulum.png') no-repeat;
+              background-size: cover;
+              height: 288px;
+              left: -82px;
+              position: absolute;
+              top: 5px;
+              width: 174px;
+            }
+
+        .header__introduction__buttons {
+          @extend .text-center;
+          display: none;
+          a {
+            @extend .btn, .text-center;
+            @include vendor(border-radius, 4px);
+            background-color: #999;
+            color: #fff;
+            line-height: 1.3;
+            margin: 1em 0 1.5em 0;
+            width: 75%;
+          }
+
+          @include respond-to('reduced header') {
+           display: block;
+          }
+        }
+
+    .header__item--normal {
+      .pendulum-parent {
+        @include animation(swing-normal 3s infinite);
+      }
+    }
+
+    .header__item--reverse {
+      .pendulum-parent {
+        @include animation(swing-reverse 2s infinite);
+      }
+    }
+
+
+/**
+ * About styles
+ */
+
+.two-column-section {
+  background: $image-pattern-light;
+  margin-top: 8em;
+  overflow: hidden;
+
+  @include respond-to('reduced header') {
+    margin-top: 2em;
+  }
+
+  > div {
+    background-image: $image-dotted-line, $image-dotted-line;
+    background-position: 0 1em, 0 99%;
+    background-repeat: repeat-x;
+
+    @include respond-to('full width columns') {
+      padding-bottom: 2em;
+      padding-top: 2em;
+    }
+  }
+}
+
+    .two-column-section__column--highlight {
+      @include respond-to('full featured') {
+        @include rgba-background-inline(rgba(170, 17, 19, 0.1));
+        margin-bottom: -2000px;
+        padding-bottom: 2000px;
+        padding-left: 2em;
+      }
+    }
+
+        .two-column-section__column {
+          padding: 4em 4em 4em 0;
+          h1 {
+            @extend .brand, .beta;
+            ~ h1 {
+              margin-top: 2em;
+            }
+          }
+
+          @include respond-to('full width columns') {
+            padding-bottom: 2em;
+            padding-right: 0;
+            padding-top: 2em;
+          }
+        }
+
+
+/**
+ * Builds styles
+ */
+
+.three-column-section__column {
+  @extend .cf;
+  padding: 4em 0 0 0;
+
+  @include respond-to('full width columns') {
+    padding-top: 3em;
+  }
+
+  h1 {
+    @extend .fl, .brand, .beta;
+
+    @include respond-to('full width columns') {
+      float: none;
+      margin-bottom: 0;
+    }
+  }
+  small {
+    @extend .fr;
+    position: relative;
+    top: -0.75em;
+
+    @include respond-to('full width columns') {
+      float: none;
+      top: -1.75em;
+    }
+  }
+  h2 {
+    @extend .brand-face, .gamma;
+  }
+  h3 {
+   @extend .brand-face, .epsilon;
+   margin: 1.5em 0 0 0;
+  }
+}
+
+
+/**
+ * Companies styles
+ */
+
+.one-column-section {
+  background: $image-pattern-light;
+  margin-top: 6em;
+  > div {
+    background-image: $image-dotted-line;
+    background-position: 0 1em;
+    background-repeat: repeat-x;
+  }
+}
+
+    .one-column-section__column {
+      @extend .cf;
+      padding: 2em 0 4em 0;
+      h1 {
+        @extend .brand, .beta;
+        margin: 1.5em 0 2.5em 0;
+      }
+      ul {
+        @extend .cf;
+        list-style: none;
+        margin: 0;
+        padding-right: 6em;
+
+        @include respond-to('full width columns') {
+          padding-right: 0;
+        }
+      }
+      li {
+        @extend .fl;
+        margin: 0 2em 2em 0;
+      }
+    }
+
+
+/**
+ * Footer styles
+ */
+
+.footer {
+  background: inline-image('pattern-dark.jpg');
+  color: #fff;
+  > div {
+    background-image: $image-dotted-line;
+    background-position: 0 1em;
+    background-repeat: repeat-x;
+  }
+  .middot {
+    @include respond-to('reduced header') {
+      display: none;
+    }
+  }
+}
+
+    .footer__column {
+      padding: 4em 2em 0 0;
+      h1 {
+        @extend .brand-face, .gamma;
+      }
+      ul {
+        list-style: none;
+        margin-left: 0;
+      }
+      li {
+        margin-bottom: 0.5em;
+      }
+    }
+
+        .footer__column__donations {
+          margin-top: 4em;
+          li {
+            @include inline-block();
+            vertical-align: bottom;
+            margin-right: 2em;
+
+            @include respond-to('reduced header') {
+              margin-right: 0.6em;
+            }
+          }
+        }
+
+    .footer__about {
+      @extend .text-center;
+      margin: 4em 0 2em 0;
+      br {
+        @include respond-to('visible text shadows') {
+          display: none;
+        }
+      }
+      a {
+        @include respond-to('reduced header') {
+          display: block;
+          padding-top: 0.25em;
+        }
+      }
+    }
