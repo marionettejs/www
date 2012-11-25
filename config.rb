@@ -73,6 +73,9 @@ configure :build do
   # Enable cache buster
   activate :cache_buster
 
+  # Enable asset pipeline
+  activate :asset_hash, ignore: %w(favicon.png)
+
   # Use relative URLs
   activate :relative_assets
 
