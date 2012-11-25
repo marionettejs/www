@@ -197,7 +197,7 @@ $breakpoints: 'full featured' (min-width 1200px),
           font-family: $brand-face-italic;
           line-height: 1.25em;
 
-          .not-ie & {
+          .lt-ie11 & {
             text-shadow: none !important;
           }
 
