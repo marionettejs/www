@@ -238,13 +238,13 @@ $breakpoints: 'full featured' (min-width 1200px),
 
     .header__item--normal {
       .pendulum-parent {
-        @include animation(swing-normal 3s infinite);
+        @include animation(swing-normal 3s ceaser('easeInOutSine') infinite);
       }
     }
 
     .header__item--reverse {
       .pendulum-parent {
-        @include animation(swing-reverse 2s infinite);
+        @include animation(swing-reverse 2.5s ceaser('easeInOutSine') infinite);
       }
     }
 

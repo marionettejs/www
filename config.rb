@@ -3,6 +3,7 @@
 ###
 
 require 'rgbapng'
+require 'ceaser-easing'
 require 'respond-to'
 
 activate :deploy do |deploy|
