@@ -146,6 +146,10 @@ $breakpoints: 'full featured' (min-width 1200px),
       position: relative;
       width: 174px;
 
+      .lt-ie9 & {
+        visibility: hidden;
+      }
+
       @include respond-to('reduced header') {
         display: none;
       }
@@ -193,6 +197,10 @@ $breakpoints: 'full featured' (min-width 1200px),
           font-family: $brand-face-italic;
           line-height: 1.25em;
 
+          .not-ie & {
+            text-shadow: none !important;
+          }
+
           @include respond-to('visible text shadows') {
             @include single-text-shadow;
           }
@@ -200,7 +208,7 @@ $breakpoints: 'full featured' (min-width 1200px),
 
         .pendulum-parent {
           background: inline-image('pendulum-pivot.png') no-repeat;
-          background-size: cover;
+          @include background-size(cover);
           height: 11px;
           left: 90px;
           position: absolute;
@@ -210,7 +218,7 @@ $breakpoints: 'full featured' (min-width 1200px),
 
             .pendulum-child {
               background: inline-image('pendulum.png') no-repeat;
-              background-size: cover;
+              @include background-size(cover);
               height: 288px;
               left: -82px;
               position: absolute;
@@ -266,6 +274,11 @@ $breakpoints: 'full featured' (min-width 1200px),
     background-image: $image-dotted-line, $image-dotted-line;
     background-position: 0 1em, 0 99%;
     background-repeat: repeat-x;
+
+    .lt-ie9 & {
+      background-image: $image-dotted-line;
+      background-position: 0 1em;
+    }
 
     @include respond-to('full width columns') {
       padding-bottom: 2em;
@@ -413,6 +426,12 @@ $breakpoints: 'full featured' (min-width 1200px),
 
         .footer__column__donations {
           margin-top: 4em;
+
+          // unfortunately problems with donation buttons in ie8
+          .lt-ie9 & {
+            display: none;
+          }
+
           li {
             @include inline-block();
             vertical-align: bottom;
@@ -427,6 +446,13 @@ $breakpoints: 'full featured' (min-width 1200px),
     .footer__about {
       @extend .text-center;
       margin: 4em 0 2em 0;
+
+      .lt-ie9 & {
+        br {
+          display: none !important;
+        }
+      }
+
       br {
         @include respond-to('visible text shadows') {
           display: none;
