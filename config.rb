@@ -6,6 +6,7 @@ require 'rgbapng'
 require 'ceaser-easing'
 require 'respond-to'
 
+# documentation: http://tvaughan.github.com/middleman-deploy/
 activate :deploy do |deploy|
   deploy.method = :git
 end
