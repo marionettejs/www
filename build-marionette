@@ -1,5 +1,14 @@
 #! /bin/bash
 
+if [ -z "$1" ]
+  then
+    echo "please specify your version. example: ./build-marionette 1.0.0-beta6"
+    exit
+fi
+
+# replace version in data/global.yml
+sed -E -i '' -e 's/^version: (.+)/version: '$1'/g' data/global.yml
+
 mkdir -p backbone.marionette/amd
 mkdir -p backbone.marionette/core/amd
 
@@ -25,3 +34,13 @@ rm backbone.marionette.zip
 
 tar -zcvf backbone.marionette.tar.gz backbone.marionette/
 zip -r backbone.marionette.zip backbone.marionette/
+
+rm -r source/downloads
+mv backbone.marionette source/downloads
+mv backbone.marionette.tar.gz source/downloads
+mv backbone.marionette.zip source/downloads
+
+rm source/downloads/backbone.js
+rm source/downloads/jquery.js
+rm source/downloads/json2.js
+rm source/downloads/underscore.js

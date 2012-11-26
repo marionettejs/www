@@ -72,7 +72,7 @@ configure :build do
   activate :cache_buster
 
   # Enable asset pipeline
-  activate :asset_hash, ignore: ['favicon.png', /backbone.marionette\/*/]
+  activate :asset_hash, ignore: ['favicon.png', /downloads\/*/]
 
   # Use relative URLs
   activate :relative_assets
