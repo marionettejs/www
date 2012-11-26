@@ -57,9 +57,7 @@ end
 # end
 
 set :css_dir, 'stylesheets'
-
 set :js_dir, 'javascripts'
-
 set :images_dir, 'images'
 
 # Build-specific configuration
@@ -74,7 +72,7 @@ configure :build do
   activate :cache_buster
 
   # Enable asset pipeline
-  activate :asset_hash, ignore: %w(favicon.png)
+  activate :asset_hash, ignore: ['favicon.png', /backbone.marionette\/*/]
 
   # Use relative URLs
   activate :relative_assets
