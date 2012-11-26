@@ -32,6 +32,12 @@ section, footer {
 
 ul {
   margin-left: 1em;
+  &.g {
+    margin-bottom: 0;
+    li {
+      margin-bottom: 0.25em;
+    }
+  }
 }
 
 li {

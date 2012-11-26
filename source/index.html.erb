@@ -49,11 +49,11 @@ schema_org_type: WebPage
   </div>
 </section>
 
-<section id="builds" class="three-column-section gw">
+<section id="download" class="three-column-section gw">
   <div>
     <div class="g one-whole">
       <div class="three-column-section__column">
-        <h1>Downloadable Builds</h1>
+        <h1>Downloads and Documentation</h1>
         <small>
           <%= data.global.version %> <span class="middot">&middot;</span> <%= link_to 'See Changelog', 'https://github.com/marionettejs/backbone.marionette/blob/master/changelog.md' %>
         </small>
@@ -66,10 +66,14 @@ schema_org_type: WebPage
         <p>These packages include the standard and AMD versions of both the non-minified and minified versions of Marionette.</p>
 
         <h3>*nix (.tar.gz)</h3>
-        <%= link_to 'backbone.marionette.tar.gz', 'backbone.marionette.tar.gz' %>
+        <p>
+          <%= link_to 'backbone.marionette.tar.gz', 'backbone.marionette.tar.gz' %>
+        </p>
 
         <h3>Windows (.zip)</h3>
-        <%= link_to 'backbone.marionette.zip', 'backbone.marionette.zip' %>
+        <p>
+          <%= link_to 'backbone.marionette.zip', 'backbone.marionette.zip' %>
+        </p>
       </div>
     </div>
     <div class="g one-third">
@@ -78,12 +82,16 @@ schema_org_type: WebPage
         <p>Download the bundled backbone.marionette.js file with the Backbone.EventBinder and Backbone.Wreqr prerequisites built in.</p>
 
         <h3>Standard .js</h3>
-        <a href="https://raw.github.com/marionettejs/backbone.marionette/master/lib/backbone.marionette.js">backbone.marionette.js</a>
-        <a href="https://raw.github.com/marionettejs/backbone.marionette/master/lib/backbone.marionette.min.js">backbone.marionette.min.js</a>
+        <p>
+          <%= link_to 'backbone.marionette.js', 'backbone.marionette/backbone.marionette.js' %>
+          <%= link_to 'backbone.marionette.min.js', 'backbone.marionette/backbone.marionette.min.js' %>
+        </p>
 
         <h3>RequireJS (AMD) Compatible</h3>
-        <a href="https://raw.github.com/marionettejs/backbone.marionette/master/lib/amd/backbone.marionette.js">backbone.marionette.js</a>
-        <a href="https://raw.github.com/marionettejs/backbone.marionette/master/lib/amd/backbone.marionette.min.js">backbone.marionette.min.js</a>
+        <p>
+          <%= link_to 'backbone.marionette.js', 'backbone.marionette/amd/backbone.marionette.js' %>
+          <%= link_to 'backbone.marionette.min.js', 'backbone.marionette/amd/backbone.marionette.min.js' %>
+        </p>
       </div>
     </div>
     <div class="g one-third">
@@ -93,23 +101,46 @@ schema_org_type: WebPage
         <p>These pre-requisites are still required for Marionette to run, but this allows you to download them separately and update them independently.</p>
 
         <h3>Standard .js</h3>
-        <a href="https://raw.github.com/marionettejs/backbone.marionette/master/lib/core/backbone.marionette.js">backbone.marionette.js</a>
-        <a href="https://raw.github.com/marionettejs/backbone.marionette/master/lib/core/backbone.marionette.min.js">backbone.marionette.min.js</a>
+        <p>
+          <%= link_to 'backbone.marionette.js', 'backbone.marionette/core/backbone.marionette.js' %>
+          <%= link_to 'backbone.marionette.min.js', 'backbone.marionette/core/backbone.marionette.min.js' %>
+        </p>
 
         <h3>RequireJS (AMD) Compatible</h3>
-        <a href="https://raw.github.com/marionettejs/backbone.marionette/master/lib/core/amd/backbone.marionette.js">backbone.marionette.js</a>
-        <a href="https://raw.github.com/marionettejs/backbone.marionette/master/lib/core/amd/backbone.marionette.min.js">backbone.marionette.min.js</a>
+        <p>
+          <%= link_to 'backbone.marionette.js', 'backbone.marionette/core/amd/backbone.marionette.js' %>
+          <%= link_to 'backbone.marionette.min.js', 'backbone.marionette/core/amd/backbone.marionette.min.js' %>
+        </p>
       </div>
     </div>
-  </div>
-</section>
-
-<section class="gw">
-  <div>
-    <div class="g two-thirds">
-
-    </div>
-    <div class="g one-third">
+    <div class="gw">
+      <div class="g one-whole">
+        <div class="g one-third">
+          <div class="three-column-section__column">
+            <h2>Documentation</h2>
+            <p>For documentation, wiki, issues list and related projects, please <%= link_to 'head over to GitHub', 'https://github.com/marionettejs/backbone.marionette' %>.</p>
+          </div>
+        </div>
+        <div class="g two-thirds">
+          <div class="three-column-section__column">
+            <h2>Prerequisites</h2>
+            <p>Marionette relies on Underscore, Backbone, jQuery, and various other libraries as it's foundation.</p>
+            <div class="gw">
+              <ul class="g one-third">
+                <li><%= link_to 'JSON2.js', 'https://github.com/douglascrockford/JSON-js' %></li>
+                <li><%= link_to 'jQuery (v1.8.x)', 'http://jquery.com/' %></li>
+                <li><%= link_to 'Underscore.js (v1.4.x)', 'http://underscorejs.org/' %></li>
+                <li><%= link_to 'Backbone.js (v0.9.2)', 'http://backbonejs.org/' %></li>
+              </ul>
+              <ul class="g one-third">
+                <li><%= link_to 'backbone.eventbinder.js (v1.0.0)', 'https://github.com/marionettejs/backbone.eventbinder' %></li>
+                <li><%= link_to 'backbone.wreqr.js (v0.0.0)', 'https://github.com/marionettejs/backbone.wreqr' %></li>
+                <li><%= link_to 'backbone.babysitter.js (v0.0.3)', 'https://github.com/marionettejs/backbone.babysitter' %></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
