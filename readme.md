@@ -19,7 +19,7 @@ Make your changes to the site in the source/ folder.
 
     middleman server
 
-Preview your changes in browser by pinting to http://localhost:4567
+Preview your changes in browser by pointing to http://localhost:4567
 
 
 How to build and deploy a new version of the site?
