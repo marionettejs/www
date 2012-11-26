@@ -8,6 +8,8 @@
     Stephan Tyziak -- logo design -- @visged
     Sven Hofmann -- web design -- @svenhofmann
     René Zschoch -- frontend development (html, css) -- @prop79
+    Benjamin Knofe -- ruby development -- @videosynthesis
+    Torsten Baldes -- minor last frontend tweaks -- @tobaco
 
 # TECHNOLOGY COLOPHON
 
