@@ -15,8 +15,12 @@ This website is built using Middleman (http://middlemanapp.com), Sass and Compas
 How to update the site?
 -----
     
-    #make your changes to the site in source/ folder
-    middleman server #preview your changes in browser http://localhost:4567
+Make your changes to the site in the source/ folder.
+
+    middleman server
+
+Preview your changes in browser by pinting to http://localhost:4567
+
 
 How to build and deploy a new version of the site?
 -----
