@@ -1,7 +1,7 @@
 source :rubygems
 
 gem 'middleman', '~>3.0.6'
-gem 'middleman-deploy'
+gem 'middleman-deploy', git: 'git://github.com/benben/middleman-deploy.git'
 # gem 'middleman-smusher'
 gem 'therubyracer'
 
