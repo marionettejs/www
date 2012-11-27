@@ -28,6 +28,9 @@ Build and deploy a new version of the site
     middleman build --clean
     middleman deploy
 
+To deploy, you must have a git remote set up called "live-site".
+
+    git remote add live-site git@github.com:marionettejs/marionettejs.github.com
 
 Populate a new version of Marionette.js builds
 -----

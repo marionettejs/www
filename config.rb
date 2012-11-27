@@ -9,6 +9,8 @@ require 'respond-to'
 # documentation: http://tvaughan.github.com/middleman-deploy/
 activate :deploy do |deploy|
   deploy.method = :git
+  deploy.remote = "live-site"
+  deploy.branch = "master"
 end
 
 # Susy grids in Compass
