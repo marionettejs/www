@@ -407,6 +407,14 @@ $breakpoints: 'full featured' (min-width 1200px),
 .footer {
   background: image-url('pattern-dark.jpg');
   color: #fff;
+  a {
+    @include standard-transition(out);
+    @include single-text-shadow(0px, 2px, 0px, #000);
+    &:hover {
+      @include standard-transition(in);
+      color: #fff;
+    }
+  }
   > div {
     background-image: $image-dotted-line;
     background-position: 0 1em;
