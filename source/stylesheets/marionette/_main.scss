@@ -9,9 +9,14 @@ body {
 }
 
 a {
+  @include standard-transition(out);
   color: $brand-color;
   &:hover, &:active, &:visited {
     text-decoration: none;
+  }
+  &:hover {
+    @include standard-transition(in);
+    color: $default-color;
   }
 }
 
@@ -408,10 +413,8 @@ $breakpoints: 'full featured' (min-width 1200px),
   background: image-url('pattern-dark.jpg');
   color: #fff;
   a {
-    @include standard-transition(out);
     @include single-text-shadow(0px, 2px, 0px, #000);
     &:hover {
-      @include standard-transition(in);
       color: #fff;
     }
   }
