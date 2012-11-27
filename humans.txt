@@ -3,13 +3,16 @@
 
 # TEAM
 
-    Location: Leipzig and Paderborn, Germany
-
+    Location: Paderborn, Germany
     Stephan Tyziak -- logo design -- @visged
+
+    Location: Leipzig, Germany
+    Website: http://medienfreunde.com
+
     Sven Hofmann -- web design -- @svenhofmann
-    René Zschoch -- frontend development (html, css) -- @prop79
+    René Zschoch -- frontend development -- @prop79
     Benjamin Knofe -- ruby development -- @videosynthesis
-    Torsten Baldes -- minor last frontend tweaks -- @tobaco
+    Torsten Baldes -- minor frontend tweaks -- @tobaco
 
 # TECHNOLOGY COLOPHON
 
