@@ -12,7 +12,7 @@ This website is built using Middleman (http://middlemanapp.com), Sass and Compas
     bundle
 
 
-How to update the site?
+Update the site
 -----
     
 Make your changes to the site in the source/ folder.
@@ -22,14 +22,14 @@ Make your changes to the site in the source/ folder.
 Preview your changes in browser by pointing to http://localhost:4567
 
 
-How to build and deploy a new version of the site?
+Build and deploy a new version of the site
 -----
 
     middleman build --clean
     middleman deploy
 
 
-How to populate a new version of the Marionette.js builds?
+Populate a new version of Marionette.js builds
 -----
 
 There is a little bash script that collects and compresses all the files and adds the new version number on the site.
