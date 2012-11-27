@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" class="no-js lt-ie9 lt-ie8 lt-ie7" prefix="og: http://ogp.me/ns#" itemscope itemtype="http://schema.org/WebPage"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" class="no-js lt-ie9 lt-ie8" prefix="og: http://ogp.me/ns#" itemscope itemtype="http://schema.org/WebPage"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" class="no-js lt-ie9" prefix="og: http://ogp.me/ns#" itemscope itemtype="http://schema.org/WebPage"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" class="no-js" prefix="og: http://ogp.me/ns#" itemscope itemtype="http://schema.org/WebPage"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Marionette.js – A scalable and composite application architecture for Backbone.js</title>
+
+  <meta content="Backbone.Marionette is a composite application library for Backbone.js that aims to simplify the construction of large scale JavaScript applications." name="description">
+  <meta content="false" name="HandheldFriendly">
+  <meta name="viewport" content="width=device-width">
+  <meta name="apple-mobile-web-app-title" content="Marionette">
+
+  <link href="stylesheets/marionette-c4cb8fa9.css" media="screen" rel="stylesheet" type="text/css" />
+  <script src="javascripts/header-236a9836.js" type="text/javascript"></script>
+
+  <link rel="author" href="humans.txt">
+  <link rel="publisher" href="https://plus.google.com/101060306397560578875/">
+
+  <meta name="twitter:card" value="summary">
+  <meta name="twitter:site" value="@marionettejs">
+  <meta property="og:site_name" content="Marionette.js – Make your backbone applications dance with a composite application architecture!">
+  <meta property="og:image" content="http://marionettejs.comimages/og-standard-91534b82.jpg">
+  <meta property="og:url" content="http://marionettejs.com/">
+  <meta property="og:description" content="Backbone.Marionette is a composite application library for Backbone.js that aims to simplify the construction of large scale JavaScript applications.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Marionette.js – A scalable and composite application architecture for Backbone.js">
+
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+</head>
+<body class="index">
+
+  <header class="header gw">
+  <section>
+    <div class="g one-third">
+      <div class="header__item header__item--normal">
+        <div class="pendulum-parent">
+          <div class="pendulum-child">
+            <div class="header__item__body">
+              <b>Download</b>
+              <a href="#download">1.0.0-beta6</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="g one-third">
+      <div class="header__item--logo">
+        <img width="337" height="460" alt="Marionette.js – A scalable and composite application architecture for Backbone.js" src="images/logo-a4052db8.png" />
+      </div>
+    </div>
+    <div class="g one-third no-padding-left">
+      <div class="header__item header__item--reverse">
+        <div class="pendulum-parent">
+          <div class="pendulum-child">
+            <div class="header__item__body">
+              <a href="https://github.com/marionettejs/backbone.marionette">Marionette.js on GitHub</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="header__introduction five-sixths">
+    <h1 class="header__introduction__body">
+      Makes your Backbone applications dance with a scalable and composite application architecture
+    </h1>
+    <div class="header__introduction__buttons">
+      <a href="#builds">Current Version:<br>1.0.0-beta6</a>
+      <a href="https://github.com/marionettejs/backbone.marionette">Marionette.js on GitHub</a>
+    </div>
+  </section>
+</header>
+
+  <section class="two-column-section gw">
+  <div>
+    <div class="g one-half">
+      <div class="two-column-section__column">
+        <h1>About</h1>
+        <p>Backbone.Marionette is a composite application library for Backbone.js that aims to simplify the construction of large scale JavaScript applications.</p>
+        <p>It is a collection of common design and implementation patterns found in the applications that I (Derick Bailey) have been building with Backbone, and includes various pieces inspired by composite application architectures, such as Microsoft's "Prism" framework.</p>
+
+        <h1>Getting Started</h1>
+        <p>If this is your first time trying out Marionette, we suggest you start by reading Addy Osmani’s Backbone Fundamentals book, which includes a chapter on <a href="http://addyosmani.github.com/backbone-fundamentals/#backbone.marionette">getting started with Marionette</a>.</p>
+        <p>If you'd like to play with Marionette without having to download any JavaScript files, or set up a web server / page / editing environment on your system, there is a <a href="http://jsfiddle.net/derickbailey/M5J8Q/">jsFiddle</a> available for getting started with Marionette:</p>
+        <p>Once you're ready and want to download and use Marionette, the easiest thing to do is grab a pre-packaged build from the Downloads section. These archives contain all of the .js files that you need to get started with Marionette.</p>
+      </div>
+    </div>
+    <div class="g one-half">
+      <div class="two-column-section__column--highlight">
+        <div class="two-column-section__column">
+          <h1>Key Benefits</h1>
+          <p>
+            <ul>
+              <li>Scale applications out with modular, event driven architecture</li>
+              <li>Sensible defaults, such as using Underscore templates for view rendering</li>
+              <li>Easy to modify to make it work with your applicaton's specific needs</li>
+              <li>Reduce boilerplate for views, with specialized view types</li>
+              <li>Build on a modular architecture with an Application and modules that attach to it</li>
+              <li>Compose your application's visuals at runtime, with Region and Layout</li>
+              <li>Nested views and layouts within visual regions</li>
+              <li>Built-in memory management and zombie killing in views, regions and layouts</li>
+              <li>Built-in event clean up with the EventBinder</li>
+              <li>Event-driven architecture with the EventAggregator</li>
+              <li>Flexible, "as-needed" architecture allowing you to pick and choose what you need</li>
+              <li>And much, much more</li>
+            </ul>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="download" class="three-column-section gw">
+  <div>
+    <div class="g one-whole">
+      <div class="three-column-section__column">
+        <h1>Downloads and Documentation</h1>
+        <small>
+          1.0.0-beta6 <span class="middot">&middot;</span> <a href="https://github.com/marionettejs/backbone.marionette/blob/master/changelog.md">See Changelog</a>
+        </small>
+      </div>
+    </div>
+    <div class="g one-third">
+      <div class="three-column-section__column">
+        <h2>Pre-packaged</h2>
+        <p>These archives contain all of the files you need to get started with Marionette, including Backbone, jQuery and all other prerequisites.</p>
+        <p>These packages include the standard and AMD versions of both the non-minified and minified versions of Marionette.</p>
+
+        <h3>*nix (.tar.gz)</h3>
+        <p>
+          <a href="/downloads/backbone.marionette.tar.gz">backbone.marionette.tar.gz</a>
+        </p>
+
+        <h3>Windows (.zip)</h3>
+        <p>
+          <a href="/downloads/backbone.marionette.zip">backbone.marionette.zip</a>
+        </p>
+      </div>
+    </div>
+    <div class="g one-third">
+      <div class="three-column-section__column">
+        <h2>Bundled</h2>
+        <p>Download the bundled backbone.marionette.js file with the Backbone.EventBinder and Backbone.Wreqr prerequisites built in.</p>
+
+        <h3>Standard .js</h3>
+        <p>
+          <a href="/downloads/backbone.marionette.js">backbone.marionette.js</a>
+          <a href="/downloads/backbone.marionette.min.js">backbone.marionette.min.js</a>
+        </p>
+
+        <h3>RequireJS (AMD) Compatible</h3>
+        <p>
+          <a href="/downloads/amd/backbone.marionette.js">backbone.marionette.js</a>
+          <a href="/downloads/amd/backbone.marionette.min.js">backbone.marionette.min.js</a>
+        </p>
+      </div>
+    </div>
+    <div class="g one-third">
+      <div class="three-column-section__column">
+        <h2>Core</h2>
+        <p>Download the core backbone.marionette.js file, without Backbone.EventBinder or Backbone.Wreqr.</p>
+        <p>These pre-requisites are still required for Marionette to run, but this allows you to download them separately and update them independently.</p>
+
+        <h3>Standard .js</h3>
+        <p>
+          <a href="/downloads/core/backbone.marionette.js">backbone.marionette.js</a>
+          <a href="/downloads/core/backbone.marionette.min.js">backbone.marionette.min.js</a>
+        </p>
+
+        <h3>RequireJS (AMD) Compatible</h3>
+        <p>
+          <a href="/downloads/core/amd/backbone.marionette.js">backbone.marionette.js</a>
+          <a href="/downloads/core/amd/backbone.marionette.min.js">backbone.marionette.min.js</a>
+        </p>
+      </div>
+    </div>
+    <div class="gw">
+      <div class="g one-whole">
+        <div class="g one-third">
+          <div class="three-column-section__column">
+            <h2>Documentation</h2>
+            <p>For documentation, wiki, issues list and related projects, please <a href="https://github.com/marionettejs/backbone.marionette">head over to GitHub</a>.</p>
+          </div>
+        </div>
+        <div class="g two-thirds">
+          <div class="three-column-section__column">
+            <h2>Prerequisites</h2>
+            <p>Marionette relies on Underscore, Backbone, jQuery, and various other libraries as it's foundation.</p>
+            <div class="gw">
+              <ul class="g one-third">
+                <li><a href="https://github.com/douglascrockford/JSON-js">JSON2.js</a></li>
+                <li><a href="http://jquery.com/">jQuery (v1.8.x)</a></li>
+                <li><a href="http://underscorejs.org/">Underscore.js (v1.4.x)</a></li>
+                <li><a href="http://backbonejs.org/">Backbone.js (v0.9.2)</a></li>
+              </ul>
+              <ul class="g one-third">
+                <li><a href="https://github.com/marionettejs/backbone.eventbinder">backbone.eventbinder.js (v1.0.0)</a></li>
+                <li><a href="https://github.com/marionettejs/backbone.wreqr">backbone.wreqr.js (v0.0.0)</a></li>
+                <li><a href="https://github.com/marionettejs/backbone.babysitter">backbone.babysitter.js (v0.0.3)</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="one-column-section gw">
+  <div>
+    <div class="g one-whole">
+      <div class="one-column-section__column">
+        <h1>Companies using Marionette.js</h1>
+        <ul>
+          <li><a href="http://ravenhq.com/"><img alt="Raven HQ" src="images/logos/ravenhq-83728ea3.png" /></a></li>
+          <li><a href="http://advanseez.com/"><img alt="Advanseez" src="images/logos/advanseez-fa16f366.png" /></a></li>
+          <li><a href="http://airbrake.io/"><img alt="Airbrake" src="images/logos/airbrake-e3959203.png" /></a></li>
+          <li><a href="http://crowdtwist.com/"><img alt="Crowdtwist" src="images/logos/crowdtwist-608e98b7.png" /></a></li>
+          <li><a href="http://inspectall.com/"><img alt="Inspectall" src="images/logos/inspectall-314d45aa.png" /></a></li>
+          <li><a href="http://stipple.com/"><img alt="Stipple" src="images/logos/stipple-d9231ef3.png" /></a></li>
+          <li><a href="http://rbmaradio.com/"><img alt="Red Bull Music Academy Radio" src="images/logos/rbma-8f78393f.png" /></a></li>
+          <li><a href="http://learnvest.com/"><img alt="Learnvest" src="images/logos/learnvest-e2eab6ef.png" /></a></li>
+          <li><a href="http://onehealth.com/"><img alt="OneHealth" src="images/logos/onehealth-5bd0c1c6.png" /></a></li>
+          <li><a href="http://roastlog.com/"><img alt="Roastlog" src="images/logos/roastlog-eaff1b11.png" /></a></li>
+          <li><a href="http://stubhub.com/"><img alt="StubHub" src="images/logos/stubhub-f39722ce.png" /></a></li>
+          <li><a href="http://tiptap.com/"><img alt="TipTap" src="images/logos/tiptap-339e1051.png" /></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <footer class="footer gw">
+  <div>
+    <div class="g two-thirds">
+      <div class="footer__column">
+        <h1>Support Marionette.js</h1>
+        <p>Marionette needs your support, but not everyone can offer assitance with code, bug submissions, and answering questions. If you're using Marionette and you're finding that it is saving you as much time and effort as we believe it does, then please consider financial support for the project.</p>
+        <ul class="footer__column__donations">
+          <li>
+            <a class="FlattrButton" style="display:none;" href="http://marionettejs.com"></a>
+            <noscript>
+              <a href="http://flattr.com/thing/922031/Backbone-Marionette" target="_blank">
+                <img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0">
+              </a>
+            </noscript>
+          </li>
+          <li>
+            <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7SJHYWJ487SF4">
+              <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" alt="Donate via PayPal" border="0">
+            </a>
+          </li>
+          <li>
+            <iframe style="border: 0; margin: 0; padding: 0;"
+            src="https://www.gittip.com/derickbailey/widget.html"
+            width="48pt" height="20pt"></iframe>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="g one-third">
+      <div class="footer__column">
+        <h1>Get in touch</h1>
+        <p>You can find Marionette and its team at these places:</p>
+        <ul>
+          <li><a href="http://twitter.com/marionettejs">@marionettejs on Twitter</a></li>
+          <li><a href="http://freenode.net">#marionette on freenode IRC</a></li>
+          <li><a href="https://groups.google.com/forum/#!forum/backbone-marionette">Backbone-Marionette on Google&nbsp;Groups</a></li>
+          <li><a href="http://stackoverflow.com/questions/tagged/backbone.marionette">Backbone.Marionette on StackOverflow</a></li>
+        </ul>
+        <p>
+          <iframe src="http://ghbtns.com/github-btn.html?user=marionettejs&repo=backbone.marionette&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe>
+          <iframe src="http://ghbtns.com/github-btn.html?user=marionettejs&repo=backbone.marionette&type=fork&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe>
+        </p>
+      </div>
+    </div>
+    <div class="g one-whole">
+      <p class="footer__about">
+        Website Design &amp; Development: <br><a href="http://medienfreunde.com">Medienfreunde</a> <span class="middot">&middot;</span> <br>Logo Design:<br> <a href="http://visged.de">Stephan Tyziak</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+
+  <script src='//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js'></script>
+
+  <script>
+    window.jQuery || document.write('<script src="javascripts/libs/jquery.min-9e35c90b.js" type="text/javascript"><\/script>')
+  </script>
+
+  <script src="javascripts/footer-fd1bd1ef.js" type="text/javascript"></script>
+
+  <script>
+    // Flattr
+    (function() {
+      var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
+      s.type = 'text/javascript';
+      s.async = true;
+      s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
+      t.parentNode.insertBefore(s, t);
+    })();
+
+    // Google Analytics
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-34606707-1']);
+    _gaq.push(['_setDomainName', 'marionettejs.com']);
+    _gaq.push(['_setAllowLinker', true]);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+</body>

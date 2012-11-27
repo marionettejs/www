@@ -1,0 +1,26 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+
+    Location: Leipzig and Paderborn, Germany
+
+    Stephan Tyziak -- logo design -- @visged
+    Sven Hofmann -- web design -- @svenhofmann
+    René Zschoch -- frontend development (html, css) -- @prop79
+    Benjamin Knofe -- ruby development -- @videosynthesis
+    Torsten Baldes -- minor last frontend tweaks -- @tobaco
+
+# TECHNOLOGY COLOPHON
+
+    Standards: HTML5, CSS3
+    Components: Modernizr, Sass, Compass
+
+# TOOLS
+
+    inuit.css -- Powerful, scalable, Sass-based, BEM, OOCSS framework. -- https://github.com/csswizardry/inuit.css
+    Middleman -- Middleman is a static site generator using all the shortcuts and tools in modern web development. -- http://middlemanapp.com/
+
+# SOFTWARE
+
+    Sublime Text 2: http://www.sublimetext.com/
