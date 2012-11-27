@@ -7,8 +7,8 @@ Installation
 
 This website is built using Middleman (http://middlemanapp.com), Sass and Compass.  All the dependencies are automatically installed with the help of Bundler.
 
-    git clone …
-    cd ordner
+    git clone the repository
+    cd cloned repository
     bundle
 
 
