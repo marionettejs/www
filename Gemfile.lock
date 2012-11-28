@@ -1,9 +1,8 @@
 GIT
   remote: git://github.com/benben/middleman-deploy.git
-  revision: b67854ae603c22da9cf52fe40b4adb0b7bbc43ff
+  revision: a7d3d153541584c4e946857a560afcbdc4846821
   specs:
     middleman-deploy (0.0.6)
-      git (~> 1.2.0)
       middleman-core (>= 3.0.0)
       ptools
 
@@ -34,7 +33,6 @@ GEM
       multi_json (~> 1.0)
     ffi (1.2.0)
     fssm (0.2.9)
-    git (1.2.5)
     haml (3.1.7)
     hike (1.2.1)
     http_router (0.10.2)
