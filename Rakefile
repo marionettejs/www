@@ -32,17 +32,17 @@ task :deploy do |t, args|
     git_initialize("marionettejs.github.com")
     git_update
 
-    build
-
-    # This screws up the build and isn't necessary
-    # rm_r "source/examples"
-
     File.open("CNAME", 'w') do |f|
       f.write "marionettejs.com"
     end
+  end
 
+  build
+
+  Dir.chdir "build" do
     system "git add -A"
     system "git commit -m '#{message.gsub("'", "\\'")}'"
     system "git push origin master"
   end
+
 end
