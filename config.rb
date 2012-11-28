@@ -5,6 +5,13 @@
 require 'rgbapng'
 require 'ceaser-easing'
 require 'respond-to'
+require 'middleman-deploy'
+
+activate :deploy do |deploy|
+  deploy.method = :git
+  deploy.remote = "live-site"
+  deploy.branch = "master"
+end
 
 # Susy grids in Compass
 # First: gem install susy --pre

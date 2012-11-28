@@ -8,6 +8,8 @@ gem 'compass-rgbapng'
 gem 'ceaser-easing'
 gem 'respond-to'
 
+gem 'middleman-deploy', :git => "https://github.com/tvaughan/middleman-deploy"
+
 gem 'oily_png'
 
 gem "redcarpet"
