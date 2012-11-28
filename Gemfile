@@ -9,3 +9,14 @@ gem 'ceaser-easing'
 gem 'respond-to'
 
 gem 'oily_png'
+
+gem "redcarpet"
+gem "activesupport"
+gem "highline"
+gem "rake"
+gem "coderay"
+gem "middleman-blog", "~> 3.0"
+gem "thin"
+gem "rack"
+gem "listen"
+gem "builder"
