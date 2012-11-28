@@ -21,12 +21,8 @@ def build
   system "middleman build"
 end
 
-task :build do
-  build
-end
-
 desc "Deploy the website to github pages"
-task :deploy => :build do |t, args|
+task :deploy do |t, args|
   require "highline/import"
   message = "Deploy marionettejs.com"
 
