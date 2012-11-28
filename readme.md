@@ -25,12 +25,8 @@ Preview your changes in browser by pointing to http://localhost:4567
 Build and deploy a new version of the site
 -----
 
-    middleman build --clean
-    middleman deploy
+    rake deploy
 
-To deploy, you must have a git remote set up called "live-site".
-
-    git remote add live-site git@github.com:marionettejs/marionettejs.github.com
 
 Populate a new version of Marionette.js builds
 -----

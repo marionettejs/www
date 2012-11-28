@@ -31,10 +31,6 @@ task :deploy do |t, args|
   Dir.chdir "build" do
     git_initialize("marionettejs.github.com")
     git_update
-
-    File.open("CNAME", 'w') do |f|
-      f.write "marionettejs.com"
-    end
   end
 
   build

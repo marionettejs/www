@@ -1,1 +1,0 @@
-$(".header__introduction__body").fitText(1.2,{minFontSize:"16px",maxFontSize:"48px"}),$(function(){$("a[href*=#]").each(function(){$(this).attr("href").indexOf("#")===0&&$(this).on("click",function(e){e.preventDefault();var t=$($(this).attr("href")).offset().top;$("html, body").animate({scrollTop:t},700)})})});
