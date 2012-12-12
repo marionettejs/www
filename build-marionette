@@ -9,7 +9,7 @@ fi
 # replace version in data/global.yml
 sed -E -i '' -e 's/^version: (.+)/version: '$1'/g' data/global.yml
 
-mkdir -p backbone.marionette/core
+mkdir -p backbone.marionette/core/amd
 
 curl https://raw.github.com/douglascrockford/JSON-js/master/json2.js > backbone.marionette/json2.js
 curl http://underscorejs.org/underscore.js > backbone.marionette/underscore.js
@@ -24,6 +24,9 @@ curl https://raw.github.com/marionettejs/backbone.marionette/master/lib/backbone
 
 curl https://raw.github.com/marionettejs/backbone.marionette/master/lib/core/backbone.marionette.js > backbone.marionette/core/backbone.marionette.js
 curl https://raw.github.com/marionettejs/backbone.marionette/master/lib/core/backbone.marionette.min.js > backbone.marionette/core/backbone.marionette.min.js
+
+curl https://raw.github.com/marionettejs/backbone.marionette/master/lib/core/amd/backbone.marionette.js > backbone.marionette/core/amd/backbone.marionette.js
+curl https://raw.github.com/marionettejs/backbone.marionette/master/lib/core/amd/backbone.marionette.min.js > backbone.marionette/core/amd/backbone.marionette.min.js
 
 rm backbone.marionette.tar.gz
 rm backbone.marionette.zip
