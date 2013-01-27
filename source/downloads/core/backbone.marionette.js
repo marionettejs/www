@@ -1,4 +1,4 @@
- // Backbone.Marionette, v1.0.0-rc3
+ // Backbone.Marionette, v1.0.0-rc4
  // Copyright (c)2013 Derick Bailey, Muted Solutions, LLC.
  // Distributed under MIT license
  // http://github.com/marionettejs/backbone.marionette
@@ -30,7 +30,7 @@ Marionette.getOption = function(target, optionName){
   if (!target || !optionName){ return; }
   var value;
 
-  if (target.options && target.options[optionName]){
+  if (target.options && (optionName in target.options) && (target.options[optionName] !== undefined)){
     value = target.options[optionName];
   } else {
     value = target[optionName];
@@ -157,56 +157,6 @@ Marionette.MonitorDOMRefresh = (function(){
   };
 })();
 
-
-// addEventBinder
-// --------------
-//
-// Mixes in Backbone.Events to the target object, if it is not present
-// already. Also adjusts the listenTo method to accept a 4th parameter
-// for the callback context.
-
-(function(Backbone, Marionette, _){
-
-  // grab a reference to the original listenTo
-  var listenTo = Backbone.Events.listenTo;
-
-  // Fix the listenTo method on the target object, allowing the 4th
-  // context parameter to be specified
-  Marionette.addEventBinder = function(target){
-    // If the target is not already extending Backbone.Events,
-    // then extend that on to it first
-    if (!target.on && !target.off && !target.listenTo && !target.stopListening){
-      _.extend(target, Backbone.Events);
-    }
-
-    // Override the built-in listenTo method to make sure we 
-    // account for context
-    target.listenTo = function(evtSource, events, callback, context){
-      context = context || this;
-      return listenTo.call(this, evtSource, events, _.bind(callback, context));
-    };
-  };
-
-})(Backbone, Marionette, _);
-
-
-// Event Aggregator
-// ----------------
-// A pub-sub object that can be used to decouple various parts
-// of an application through event-driven architecture.
-//
-// Extends [Backbone.Wreqr.EventAggregator](https://github.com/marionettejs/backbone.wreqr)
-// and mixes in an EventBinder from [Backbone.EventBinder](https://github.com/marionettejs/backbone.eventbinder).
-Marionette.EventAggregator = Backbone.Wreqr.EventAggregator.extend({
-
-  constructor: function(){
-    Marionette.addEventBinder(this);
-
-    var args = Array.prototype.slice.apply(arguments);
-    Backbone.Wreqr.EventAggregator.prototype.constructor.apply(this, args);
-  }
-
-});
 
 // Marionette.bindEntityEvents & unbindEntityEvents
 // ---------------------------
@@ -356,8 +306,6 @@ Marionette.Controller = function(options){
   this.triggerMethod = Marionette.triggerMethod;
   this.options = options || {};
 
-  Marionette.addEventBinder(this);
-
   if (_.isFunction(this.initialize)){
     this.initialize(this.options);
   }
@@ -385,8 +333,6 @@ _.extend(Marionette.Controller.prototype, Backbone.Events, {
 
 Marionette.Region = function(options){
   this.options = options || {};
-
-  Marionette.addEventBinder(this);
 
   this.el = Marionette.getOption(this, "el");
 
@@ -602,7 +548,7 @@ _.extend(Marionette.TemplateCache, {
 // and know whether or not it has been loaded
 _.extend(Marionette.TemplateCache.prototype, {
 
-  // Internal method to load the template asynchronously.
+  // Internal method to load the template
   load: function(){
     var that = this;
 
@@ -619,8 +565,10 @@ _.extend(Marionette.TemplateCache.prototype, {
   },
 
   // Load a template from the DOM, by default. Override
-  // this method to provide your own template retrieval,
-  // such as asynchronous loading from a server.
+  // this method to provide your own template retrieval
+  // For asynchronous loading with AMD/RequireJS, consider
+  // using a template-loader plugin as described here: 
+  // https://github.com/marionettejs/backbone.marionette/wiki/Using-marionette-with-requirejs
   loadTemplate: function(templateId){
     var template = $(templateId).html();
 
@@ -672,7 +620,6 @@ Marionette.View = Backbone.View.extend({
 
   constructor: function(){
     _.bindAll(this, "render");
-    Marionette.addEventBinder(this);
 
     var args = Array.prototype.slice.apply(arguments);
     Backbone.View.prototype.constructor.apply(this, args);
@@ -737,7 +684,7 @@ Marionette.View = Backbone.View.extend({
         };
 
         // trigger the event
-        that.trigger(value, args);
+        that.triggerMethod(value, args);
       };
 
     });
@@ -1093,6 +1040,7 @@ Marionette.CollectionView = Marionette.View.extend({
   removeItemView: function(item){
     var view = this.children.findByModel(item);
     this.removeChildView(view);
+    this.checkEmpty();
   },
 
   // Remove the child view and close it
@@ -1110,13 +1058,16 @@ Marionette.CollectionView = Marionette.View.extend({
       this.children.remove(view);
     }
 
+    this.triggerMethod("item:removed", view);
+  },
+
+  // helper to show the empty view if the collection is empty
+  checkEmpty: function() {
     // check if we're empty now, and if we are, show the
     // empty view
     if (!this.collection || this.collection.length === 0){
       this.showEmptyView();
     }
-
-    this.triggerMethod("item:removed", view);
   },
 
   // Append the HTML to the collection's `el`.
@@ -1151,9 +1102,7 @@ Marionette.CollectionView = Marionette.View.extend({
     this.children.each(function(child){
       this.removeChildView(child);
     }, this);
-
-    // re-initialize to clean up after ourselves
-    this._initChildViewStorage();
+    this.checkEmpty();
   }
 });
 
@@ -1491,14 +1440,13 @@ Marionette.AppRouter = Backbone.Router.extend({
 // event aggregator as `app.vent`
 Marionette.Application = function(options){
   this.initCallbacks = new Marionette.Callbacks();
-  this.vent = new Marionette.EventAggregator();
+  this.vent = new Backbone.Wreqr.EventAggregator();
   this.commands = new Backbone.Wreqr.Commands();
   this.reqres = new Backbone.Wreqr.RequestResponse();
   this.submodules = {};
 
   _.extend(this, options);
 
-  Marionette.addEventBinder(this);
   this.triggerMethod = Marionette.triggerMethod;
 };
 
@@ -1585,8 +1533,6 @@ Marionette.Module = function(moduleName, app){
   this.app = app;
   this.startWithParent = true;
 
-  // extend this module with an event binder
-  Marionette.addEventBinder(this);
   this.triggerMethod = Marionette.triggerMethod;
 };
 
@@ -1647,7 +1593,7 @@ _.extend(Marionette.Module.prototype, Backbone.Events, {
     _.each(this.submodules, function(mod){ mod.stop(); });
 
     // run the finalizers
-    this._finalizerCallbacks.run();
+    this._finalizerCallbacks.run(undefined,this);
 
     // reset the initializers and finalizers
     this._initializerCallbacks.reset();
