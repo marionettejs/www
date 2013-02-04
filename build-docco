@@ -1,0 +1,8 @@
+#! /bin/bash
+
+mkdir -p backbone.marionette
+
+curl https://raw.github.com/marionettejs/backbone.marionette/master/lib/backbone.marionette.js > backbone.marionette/backbone.marionette.js
+docco backbone.marionette/backbone.marionette.js -o source/docs/
+
+rm -rdf backbone.marionette

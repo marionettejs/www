@@ -21,8 +21,8 @@ def build
   system "middleman build"
 end
 
-desc "Deploy the website to github pages"
-task :deploy do |t, args|
+desc "Build and deploy the website to github pages"
+task :deploy => :docco do |t, args|
   require "highline/import"
   message = "Deploy marionettejs.com"
 
@@ -41,4 +41,9 @@ task :deploy do |t, args|
     system "git push origin master"
   end
 
+end
+
+desc "Build annotated source code"
+task :docco do
+  `./build-docco`
 end
