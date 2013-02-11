@@ -489,3 +489,7 @@ $breakpoints: 'full featured' (min-width 1200px),
 .company-logo-list li {
   height: 75px;
 }
+
+.company-logo-list li a img {
+  background: none;
+}
