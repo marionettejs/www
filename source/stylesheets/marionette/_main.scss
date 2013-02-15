@@ -55,6 +55,10 @@ li {
   top: 0.23em;
 }
 
+.fluid-width-video-wrapper {
+  margin-bottom: 1em;
+}
+
 
 /**
  * Animation keyframes
@@ -488,8 +492,4 @@ $breakpoints: 'full featured' (min-width 1200px),
 
 .company-logo-list li {
   height: 75px;
-}
-
-.company-logo-list li a img {
-  background: none;
 }
