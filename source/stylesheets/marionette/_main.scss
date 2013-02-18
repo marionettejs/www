@@ -64,7 +64,7 @@ li {
 
 @include keyframes(swing-normal) {
   0%, 50%, 100% {
-    @include transform-origin(50%, 0);
+    @include transform-origin(top, center);
   }
   0% {
     @include rotate(-2deg);
@@ -79,7 +79,7 @@ li {
 
 @include keyframes(swing-reverse) {
   0%, 50%, 100% {
-    @include transform-origin(50%, 0);
+    @include transform-origin(top, center);
   }
   0% {
     @include rotate(2deg);
@@ -92,6 +92,30 @@ li {
   }
 }
 
+@include keyframes(tada) {
+  0%, 10%, 20%, 30%, 40%, 50%, 60%, 70%, 80%, 90%, 100% {
+    @include transform-origin(top, center);
+  }
+  0% {
+    @include scale(1);
+  }
+  10%, 20% {
+    @include scale(0.9);
+    @include rotate(-3deg);
+  }
+  30%, 50%, 70%, 90% {
+    @include scale(1.1);
+    @include rotate(3deg);
+  }
+  40%, 60%, 80% {
+    @include scale(1.1);
+    @include rotate(-3deg);
+  }
+  100% {
+    @include scale(1);
+    @include rotate(0);
+  }
+}
 
 /**
  * Media Query Breakpoints
@@ -175,6 +199,19 @@ $breakpoints: 'full featured' (min-width 1200px),
       @extend .text-center;
       margin-right: -2em;
       margin-top: -1em;
+
+      .animation-toggle {
+        height: 6em;
+        position: absolute;
+        width: 19em;
+        @include respond-to('full width columns') {
+          display: none;
+        }
+      }
+
+      &.animating {
+        @include animation(tada 1.5s ceaser('easeInOutSine'));
+      }
 
       @include respond-to('reduced header') {
         margin-right: 0;
