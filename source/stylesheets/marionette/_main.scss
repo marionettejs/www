@@ -25,9 +25,7 @@ h1, h2, h3, b {
 }
 
 section, footer {
-  @extend .cf;
   > div {
-    @extend .cf;
     padding: 0 10%;
   }
   > .g {
@@ -336,7 +334,6 @@ $breakpoints: 'full featured' (min-width 1200px),
  */
 
 .three-column-section__column {
-  @extend .cf;
   padding: 4em 0 0 0;
 
   @include respond-to('full width columns') {
@@ -385,15 +382,17 @@ $breakpoints: 'full featured' (min-width 1200px),
   }
 }
 
+.one-column-section--last {
+  margin-top: 12em;
+}
+
     .one-column-section__column {
-      @extend .cf;
       padding: 2em 0 4em 0;
       h1 {
         @extend .brand, .beta;
         margin: 1.5em 0 2.5em 0;
       }
       ul {
-        @extend .cf;
         list-style: none;
         margin: 0;
         padding-right: 6em;
