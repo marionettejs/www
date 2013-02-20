@@ -9,20 +9,20 @@ schema_org_type: WebPage
 ---
 
 <section class="two-column-section gw">
-  <div>
+  <div class="cf">
     <div class="g one-half">
       <div class="two-column-section__column">
         <h1>About</h1>
         <p>
-        Backbone.Marionette is a composite application library for 
-        Backbone.js that aims to simplify the construction of large 
+        Backbone.Marionette is a composite application library for
+        Backbone.js that aims to simplify the construction of large
         scale JavaScript applications.
         </p>
 
         <p>
-        It is a collection of common design and implementation 
-        patterns found in the applications that we have been building 
-        with Backbone, and includes pieces inspired by 
+        It is a collection of common design and implementation
+        patterns found in the applications that we have been building
+        with Backbone, and includes pieces inspired by
         composite application architectures, event-driven architectures,
         messaging architectures, and more.
         </p>
@@ -61,13 +61,13 @@ schema_org_type: WebPage
 
 <section id="download" class="three-column-section gw">
   <a name="#download"></a>
-  <div>
+  <div class="cf">
     <div class="g one-whole">
       <div class="three-column-section__column">
         <h1>Downloads and Documentation</h1>
         <small>
-          <%= data.global.version %> 
-          <span class="middot">&middot;</span> 
+          <%= data.global.version %>
+          <span class="middot">&middot;</span>
           <%= link_to 'See Upgrade Guide', 'https://github.com/marionettejs/backbone.marionette/blob/master/upgradeGuide.md' %>
           <span class="middot">&middot;</span>
           <%= link_to 'See Changelog', 'https://github.com/marionettejs/backbone.marionette/blob/master/changelog.md' %>
@@ -161,7 +161,7 @@ schema_org_type: WebPage
 </section>
 
 <section class="two-column-section gw">
-  <div>
+  <div class="cf">
     <div class="g one-half">
       <div class="two-column-section__column">
         <h1>Featured Video</h1>
@@ -198,15 +198,15 @@ schema_org_type: WebPage
   </div>
 </section>
 
-<section class="three-column-section gw">
-  <div>
+<section class="one-column-section gw one-column-section--last">
+  <div class="cf">
     <div class="g one-whole">
       <div class="one-column-section__column">
         <h1>Companies using Marionette.js</h1>
-        <ul class="company-logo-list">
+        <ul class="company-logo-list cf">
           <li><a href="http://advanseez.com/"><%= image_tag 'logos/advanseez.png', alt: 'Advanseez' %></a></li>
           <li><a href="http://airbrake.io/"><%= image_tag 'logos/airbrake.png', alt: 'Airbrake' %></a></li>
-          <li><a href="http://crashlytics.com/"><%= image_tag 'logos/crashlytics.png', {alt: 'Crashlytics', width: "150"} %></a></li>
+          <li><a href="http://crashlytics.com/"><%= image_tag 'logos/crashlytics.png', alt: 'Crashlytics' %></a></li>
           <li><a href="http://crowdtwist.com/"><%= image_tag 'logos/crowdtwist.png', alt: 'Crowdtwist' %></a></li>
           <li><a href="http://cynergy.com/"><%= image_tag 'logos/cynergy.png', alt: 'cynergy' %></a></li>
           <li><a href="http://inspectall.com/"><%= image_tag 'logos/inspectall.png', alt: 'Inspectall' %></a></li>
@@ -214,7 +214,7 @@ schema_org_type: WebPage
           <li><a href="http://onehealth.com/"><%= image_tag 'logos/onehealth.png', alt: 'OneHealth' %></a></li>
           <li><a href="http://railslove.com/"><%= image_tag 'logos/railslove.png', alt: 'Railslove' %></a></li>
           <li><a href="http://ravenhq.com/"><%= image_tag 'logos/ravenhq.png', alt: 'Raven HQ' %></a></li>
-          <li><a href="http://rbmaradio.com/"><%= image_tag 'logos/rbma.png', {alt: 'Red Bull Music Academy Radio', width: "50"} %></a></li>
+          <li><a href="http://rbmaradio.com/"><%= image_tag 'logos/rbma.png', alt: 'Red Bull Music Academy Radio' %></a></li>
           <li><a href="http://roastlog.com/"><%= image_tag 'logos/roastlog.png', alt: 'Roastlog' %></a></li>
           <li><a href="http://stipple.com/"><%= image_tag 'logos/stipple.png', alt: 'Stipple' %></a></li>
           <li><a href="http://stubhub.com/"><%= image_tag 'logos/stubhub.png', alt: 'StubHub' %></a></li>
