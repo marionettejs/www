@@ -1,6 +1,6 @@
 <!DOCTYPE html>  <html> <head>   <title>backbone.marionette.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               backbone.marionette.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <h2>MarionetteJS (Backbone.Marionette)</h2>
 
-<p>v1.0.0</p>
+<p>v1.0.1</p>
 
 <p>Copyright (c)2013 Derick Bailey, Muted Solutions, LLC.
 Distributed under MIT license</p>
@@ -641,6 +641,8 @@ and return the region instance</p>             </td>             <td class="code
       <span class="kd">var</span> <span class="nx">hasSelector</span> <span class="o">=</span> <span class="o">!!</span><span class="nx">definition</span><span class="p">.</span><span class="nx">selector</span><span class="p">;</span>
 
       <span class="k">if</span> <span class="p">(</span><span class="nx">isString</span> <span class="o">||</span> <span class="p">(</span><span class="nx">isObject</span> <span class="o">&amp;&amp;</span> <span class="nx">hasSelector</span><span class="p">)){</span>
+        <span class="nx">region</span> <span class="o">=</span> <span class="nx">Marionette</span><span class="p">.</span><span class="nx">Region</span><span class="p">.</span><span class="nx">buildRegion</span><span class="p">(</span><span class="nx">definition</span><span class="p">,</span> <span class="nx">Marionette</span><span class="p">.</span><span class="nx">Region</span><span class="p">);</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">_</span><span class="p">.</span><span class="nx">isFunction</span><span class="p">(</span><span class="nx">definition</span><span class="p">)){</span>
         <span class="nx">region</span> <span class="o">=</span> <span class="nx">Marionette</span><span class="p">.</span><span class="nx">Region</span><span class="p">.</span><span class="nx">buildRegion</span><span class="p">(</span><span class="nx">definition</span><span class="p">,</span> <span class="nx">Marionette</span><span class="p">.</span><span class="nx">Region</span><span class="p">);</span>
       <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
         <span class="nx">region</span> <span class="o">=</span> <span class="nx">definition</span><span class="p">;</span>
