@@ -1,31 +1,4 @@
 @charset "UTF-8";
-/*------------------------------------*\
-    MARIONETTE.CSS
-\*------------------------------------*/
-/**
- *
- * sass --watch your-project.scss:your-project.min.css --style compressed
- *
- * Here we set up some variables, include the inuit.css framework, then add our
- * project-specific components afterwards.
- */
-
-
-/**
- * Setup
- */
-@import 'vars';
-
-
-/**
- * She’s all yours, cap’n... Begin importing your stuff here.
- */
-
 @import 'compass';
 @import 'rgbapng';
 @import 'jeet';
-
-@import 'marionette/compass-defaults';
-@import 'marionette/fonts';
-@import 'marionette/mixins';
-@import 'marionette/main';
