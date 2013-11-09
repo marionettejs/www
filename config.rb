@@ -3,7 +3,6 @@
 ###
 
 require 'rgbapng'
-require 'respond-to'
 require 'middleman-deploy'
 require 'jeet'
 
