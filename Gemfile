@@ -4,6 +4,7 @@ gem 'middleman', '~>3.0.6'
 gem 'therubyracer'
 
 gem 'compass', '~> 0.13.alpha.0'
+gem 'jeet'
 gem 'compass-rgbapng'
 gem 'ceaser-easing'
 gem 'respond-to'
