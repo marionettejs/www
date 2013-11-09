@@ -1,1 +1,1 @@
-//= require libs/modernizr
+//= require libs/modernizr-respond
