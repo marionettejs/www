@@ -1,0 +1,189 @@
+// Aliasing _settings.scss Variables
+$pr: $primary_ratio;
+$sr: $secondary_ratio;
+
+// Modular Scale Mixin
+@function ms($numbawang: 1, $ratio: pr) {
+    @if ($ratio == $sr) {
+        @return $numbawang * $sr + unquote("px");
+    } @else {
+        @return $numbawang * $pr + unquote("px");
+    }
+}
+
+// Primary Typography
+html {
+    font-family: $body;
+    font-weight: 200;
+    color: $body_color;
+    font-size: ms(10);
+    line-height: ms(15);
+}
+a {
+    color: $blue;
+    &:hover {
+        color: darken($blue, 10%);
+    }
+}
+h1, h2, h3, h4, h5, h6, p, ul, ol, dt, pre, code {
+    margin-top: 0;
+}
+h1, h2, h3, h4, h5, h6, dt {
+    font-family: $headers;
+    font-weight: $header_weight;
+    color: $header_color;
+    @if $headers == $optima { letter-spacing: -.015em; }
+    @if $headers == $futura { letter-spacing: -.035em; }
+    @if $headers == $gill_sans { letter-spacing: 0; }
+    @if $headers == $trebuchet { letter-spacing: -.025em; }
+    @if $headers == $helvetica { letter-spacing: -.015em; }
+    @if $headers == $verdana { letter-spacing: -.045em; }
+    @if $headers == $lucida_grande { letter-spacing: -.045em; }
+    @if $headers == $segoe { letter-spacing: .015em; }
+    @if $headers == $candara { letter-spacing: -.025em; }
+    @if $headers == $calibri { letter-spacing: -.025em; }
+    @if $headers == $franklin { letter-spacing: -.025em; }
+    @if $headers == $tahoma { letter-spacing: 0; }
+    @if $headers == $garamond { letter-spacing: -.015em; }
+    @if $headers == $lucida_bright { letter-spacing: -.015em; }
+    @if $headers == $palatino { letter-spacing: -.015em; }
+    @if $headers == $caslon { letter-spacing: .025em; }
+    @if $headers == $didot { letter-spacing: -.035em; }
+    @if $headers == $baskerville { letter-spacing: -.025em; }
+    @if $headers == $hoefler { letter-spacing: -.025em; }
+    @if $headers == $bodoni { letter-spacing: -.025em; }
+    @if $headers == $goudy { letter-spacing: .025em; }
+    @if $headers == $constantia { letter-spacing: -.025em; }
+    @if $headers == $cambria { letter-spacing: 0; }
+    @if $headers == $antiqua { letter-spacing: -.015em; }
+}
+h1 {
+    font-size: ms(28);
+    line-height: ms(30);
+    margin-bottom: ms(10);
+}
+h2 {
+    font-size: ms(25);
+    line-height: ms(28);
+    margin-bottom: ms(8);
+}
+h3 {
+    font-size: ms(22);
+    line-height: ms(26);
+    margin-bottom: ms(6);
+}
+h4 {
+    font-size: ms(20);
+    line-height: ms(24);
+    margin-bottom: ms(4);
+}
+h5 {
+    font-size: ms(16);
+    line-height: ms(22);
+    margin-bottom: ms(2);
+}
+h6 {
+    font-size: ms(13);
+    line-height: ms(20);
+    margin-bottom: ms(0);
+}
+p, ul, ol, pre, dl {
+    margin-bottom: ms(10);
+}
+ul, ol {
+    padding-left: 1.4em;
+}
+li, dd {
+    margin-bottom: ms(5);
+}
+pre {
+    font-size: ms(8);
+}
+header {
+    p { color: $tagline_color }
+    h1 ~ p { margin-top: -#{ms(5)}; }
+    h2 ~ p { margin-top: -#{ms(4)}; }
+    h3 ~ p { margin-top: -#{ms(3)}; }
+    h4 ~ p { margin-top: -#{ms(2)}; }
+    h5 ~ p { margin-top: -#{ms(1)}; }
+    h6 ~ p { margin-top: -#{ms(1)}; }
+}
+code {
+    padding: 3px 4px;
+    color: $body_color;
+    background-color: #F5F5F5;
+    border: 1px solid #E1E1E8;
+    border-radius: 3px;
+    font-family: Menlo, Monaco, monospace;
+}
+pre {
+    display: block;
+    padding: 7px;
+    background-color: #F5F5F5;
+    border: 1px solid #E1E1E8;
+    border-radius: 3px;
+    white-space: pre-wrap;
+    word-break: break-all;
+    font-family: Menlo, Monaco, monospace;
+    line-height: 160%;
+}
+.browsehappy {
+    span {
+        font-size: ms(8);
+    }
+}
+
+// Secondary Typography
+@include breakpoint($breakpoint) {
+    html {
+        font-size: ms(10, $sr);
+        line-height: ms(15, $sr);
+    }
+    h1 {
+        font-size: ms(28, $sr);
+        line-height: ms(30, $sr);
+        margin-bottom: ms(10, $sr);
+    }
+    h2 {
+        font-size: ms(25, $sr);
+        line-height: ms(28, $sr);
+        margin-bottom: ms(8, $sr);
+    }
+    h3 {
+        font-size: ms(22, $sr);
+        line-height: ms(26, $sr);
+        margin-bottom: ms(6, $sr);
+    }
+    h4 {
+        font-size: ms(19, $sr);
+        line-height: ms(24, $sr);
+        margin-bottom: ms(4, $sr);
+    }
+    h5 {
+        font-size: ms(16, $sr);
+        line-height: ms(22, $sr);
+        margin-bottom: ms(2, $sr);
+    }
+    h6 {
+        font-size: ms(13, $sr);
+        line-height: ms(20, $sr);
+        margin-bottom: ms(0, $sr);
+    }
+    p, ul, ol, pre, dl{
+        margin-bottom: ms(10, $sr);
+    }
+    li, dd{
+        margin-bottom: ms(5, $sr);
+    }
+    pre{
+        font-size: ms(8, $sr);
+    }
+    header {
+        h1 ~ p { margin-top: -#{ms(5, $sr)} }
+        h2 ~ p { margin-top: -#{ms(4, $sr)} }
+        h3 ~ p { margin-top: -#{ms(3, $sr)} }
+        h4 ~ p { margin-top: -#{ms(2, $sr)} }
+        h5 ~ p { margin-top: -#{ms(1, $sr)} }
+        h6 ~ p { margin-top: -#{ms(1, $sr)} }
+    }
+}

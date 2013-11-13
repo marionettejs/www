@@ -1,11 +1,19 @@
-$(function() {
-  $('a[href*=#]').each(function() {
-    if($(this).attr('href').indexOf('#') === 0) {
-      $(this).on('click', function(e) {
-        e.preventDefault();
-        var targetOffset = $($(this).attr('href')).offset().top;
-        $('html, body').animate({scrollTop: targetOffset}, 700);
-      });
+$(document).ready(function() {
+
+    // equalHeights
+    if($(window).width() > 705) {
+        $('.code_examples > div').equalHeights();
     }
-  });
+    $(window).resize(function() {
+        if($(window).width() > 705) {
+            $('.code_examples > div').css('height', 'auto');
+            $('.code_examples > div').equalHeights();
+        } else {
+            $('.code_examples > div').css('height', 'auto');
+        }
+    });
+
+    // fitVids
+    $('.vid').fitVids();
+
 });

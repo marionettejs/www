@@ -1,1 +1,3 @@
+//= require libs/jquery.equalheights.min
+//= require libs/fitVids-1.0.3.min
 //= require script

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title><%= data.page.title || "Marionette.js" %></title>
+        <meta content="<%= data.page.description || "" %>" name="description">
+        <meta name="viewport" content="width=device-width">
+        <%= stylesheet_link_tag "marionette" %>
+        <script type="text/javascript" src="//use.typekit.net/ycm5ipv.js"></script>
+        <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+        <!--[if lt IE 9]><script src="js/vendor/selectivizr-1.0.2.min.js"></script><![endif]-->
+        <%= javascript_include_tag "header" %>
+        <link rel="author" href="humans.txt">
+        <link rel="publisher" href="https://plus.google.com/101060306397560578875/">
+        <meta name="twitter:card" value="Make your backbone applications dance with a composite application architecture">
+        <meta name="twitter:site" value="@marionettejs">
+        <meta property="og:site_name" content="Marionette.js – Make your backbone applications dance with a composite application architecture!">
+        <meta property="og:image" content="<%= data.global.baseURL %>/images/og-standard.jpg">
+        <meta property="og:url" content="<%= data.global.baseURL %><%= data.page.og_url || '/' %>">
+        <meta property="og:description" content="<%= data.page.og_description || data.page.description %>">
+        <meta property="og:type" content="<%= data.page.og_type || 'article' %>">
+        <meta property="og:title" content="<%= data.page.og_title || data.page.title %>">
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    </head>
+    <body>
+        <!--[if lt IE 9]>
+            <div class="browsehappy">
+                <p>
+                    You are using an <strong>outdated</strong> browser. Please <a href="//browsehappy.com" target="_blank">upgrade your browser</a> or <a href="//www.google.com/chromeframe/?redirect=true" target="_blank">activate Google Chrome Frame</a> to improve your experience.
+                </p>
+                <p>Clicking anywhere inside this frame will temporarily hide it.</p>
+            </div>
+        <![endif]-->
+
+
+        <div class="masthead">
+            <div>
+                <%= image_tag 'marionette_logo.png', alt: 'Marionette.js – A scalable and composite application architecture for Backbone.js' %>
+                <a href="#download" class="dl_btn">Download <span>v1.2.0</span></a>
+                <a href="https://github.com/marionettejs/backbone.marionette">Marionette.js on GitHub</a>
+            </div>
+        </div>
+
+        <div class="ribbon">
+            <div>
+                <h1>Make your Backbone applications <span>dance!</span></h1>
+            </div>
+        </div>
+
+        <section class="about">
+            <article>
+                <header>
+                    <h2>About Marionette</h2>
+                </header>
+                <p>
+                    Backbone.Marionette is a composite application library for Backbone.js that aims to simplify the construction of large scale JavaScript applications.
+                </p>
+                <p>
+                    It is a collection of common design and implementation patterns found in the applications that we have been building with Backbone, and includes pieces inspired by composite application architectures, event-driven architectures, messaging architectures, and more.
+                </p>
+            </article>
+            <aside>
+                <nav>
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li>
+                            <a href="https://github.com/marionettejs/backbone.marionette">Marionette.js on GitHub</a>
+                        </li>
+                        <li>
+                            <a href="http://derickbailey.github.io/backbone.marionette/docs/backbone.marionette.html">Annotated Source Code</a>
+                        </li>
+                    </ul>
+                </nav>
+                <nav>
+                    <h3>Requirements</h3>
+                    <ul>
+                        <li>jQuery <span>v1.8+</span></li>
+                        <li>Underscore <span>v1.4.4+</span></li>
+                        <li>
+                            Backbone <span>v1.0</span>
+                            <p class="note">
+                                is preferred. v0.9.9 and v0.9.10 should work still
+                            </p>
+                        </li>
+                        <li>Backbone.Wreqr</li>
+                        <li>Backbone.BabySitter</li>
+                    </ul>
+                </nav>
+            </aside>
+        </section>
+
+        <section class="code_examples">
+            <div>
+                <header>
+                    <h4>Wreqr.CommandStorage</h4>
+                </header>
+<pre><code class="language-js">var CommandStorage = function(options) {
+    this.options = options;
+    this._commands = {};
+
+    if (_.isFunction(this.initialize)) {
+        this.initialize(options);
+    }
+};</code></pre>
+            </div>
+            <div>
+                <header>
+                    <h4>Callbacks</h4>
+                </header>
+<pre><code class="language-js">Marionette.Callbacks = function() {
+    this._deferred = Marionette.$.Deferred();
+    this._callbacks = [];
+};</code></pre>
+            </div>
+            <div>
+                <header>
+                    <ul class="slider1">
+                        <li class="active"><a href="#"><%= image_tag 'disc1.png', alt: '' %></a></li>
+                        <li><a href="#"><%= image_tag 'disc1.png', alt: '' %></a></li>
+                        <li><a href="#"><%= image_tag 'disc1.png', alt: '' %></a></li>
+                    </ul>
+                    <h4>Results</h4>
+                </header>
+                <div class="result">
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro, sit aut vitae soluta dolorem iste doloribus. Autem, consequuntur, deleniti, error sunt illum amet necessitatibus molestiae facere ducimus at iste possimus.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="featured_videos">
+            <div>
+                <header>
+                    <h3>Featured Videos</h3>
+                    <ul class="slider2">
+                        <li class="active"><a href="#"></a></li>
+                        <li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
+                    </ul>
+                </header>
+            </div>
+            <div>
+                <div class="video_slide">
+                    <figure class="vid">
+                        <iframe width="1280" height="720" src="//www.youtube-nocookie.com/embed/0o2whtCJw8I?rel=0" frameborder="0" allowfullscreen></iframe>
+                    </figure>
+                    <figcaption>
+                        <p>
+                            Amy Palamountain gave a presentation on how to "Unsuck Your Backbone" at Codemania in New Zealand, in April of 2013. This is one of the best presentations I've seen, on a high level structure for your Backbone applications. Amy's experience in building scalable apps with composite application patterns in Windows shines through as she describes the patterns and practices that are baked in to Marionette.
+                        </p>
+                    </figcaption>
+                </div>
+            </div>
+        </section>
+
+        <section class="support">
+            <div>
+                <nav>
+                    <div>
+                        <i class="icon-twitter"></i>
+                        <a href="https://twitter.com/marionettejs">@marionettejs on Twitter</a>
+                    </div>
+                    <div>
+                        <i class="icon-google-plus"></i>
+                        <a href="https://plus.google.com/101060306397560578875">Marionette.js on Google+</a>
+                    </div>
+                    <div>
+                        <i class="icon-github"></i>
+                        <a href="https://github.com/marionettejs/backbone.marionette">Marionette.js on GitHub</a>
+                    </div>
+                </nav>
+                <article class="support_article">
+                    <header>
+                        <h3>Support Marionette.js</h3>
+                    </header>
+                    <p>
+                        Marionette needs your support, but not everyone can offer assistance with code, bug submissions, and answering questions. If you're using Marionette and you're finding that it is saving you as much time and effort as we believe it does, then please consider financial support for the project.
+                    </p>
+                    <div class="donate">
+                        <a href="#" class="donate_btn">Donate</a>
+                        <p>
+                            Your PayPal contributions are much appreciated, thank you!
+                        </p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="stickers">
+            <div>
+                <article>
+                    <header>
+                        <h5>Stickers!</h5>
+                    </header>
+                    <p>
+                        These awesome stickers are printed by StickerMule, and are the highest quality vinyl stickers, coming in at 2.27x3 inches. The perfect size for any space on your laptop lid.
+                    </p>
+                    <a href="#">Order Yours Now! <i class="icon-arrow-right"></i></a>
+                </article>
+                <div class="sticker_pics">
+                    <%= image_tag 'stickers1.jpg', alt: '' %>
+                    <%= image_tag 'stickers2.jpg', alt: '' %>
+                    <%= image_tag 'stickers3.jpg', alt: '' %>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div>
+                <p>website handcrafted &amp; coded by</p>
+                <a href="http://mojotech.com"><%= image_tag 'mojotech.png', alt: 'MojoTech' %></a>
+            </div>
+        </footer>
+
+
+        <!--[if lt IE 9]>
+            <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+            <script>window.jQuery || document.write('<%= javascript_include_tag("libs/jquery-1.10.2.min.js").gsub("</", "<\\/") %>')</script>
+        <![endif]-->
+        <!--[if gt IE 8]><!-->
+            <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+            <script>window.jQuery || document.write('<%= javascript_include_tag("libs/jquery-2.0.3.min.js").gsub("</", "<\\/") %>')</script>
+        <!--<![endif]-->
+        <%= javascript_include_tag "footer" %>
+        <script>
+            // Flattr
+            (function() {
+                var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
+                s.type = 'text/javascript';
+                s.async = true;
+                s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
+                t.parentNode.insertBefore(s, t);
+            })();
+
+            // Google Analytics
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-34606707-1']);
+            _gaq.push(['_setDomainName', 'marionettejs.com']);
+            _gaq.push(['_setAllowLinker', true]);
+            _gaq.push(['_trackPageview']);
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+    </body>
+</html>
