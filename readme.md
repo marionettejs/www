@@ -14,7 +14,7 @@ This website is built using Middleman (http://middlemanapp.com), Sass and Compas
 
 Update the site
 -----
-    
+
 Make your changes to the site in the source/ folder.
 
     middleman server
@@ -34,9 +34,9 @@ Populate a new version of Marionette.js builds
 There is a little bash script that collects and compresses all the files and adds the new version number on the site.
 
     ./build-marionette 1.0.0-beta6
-    
+
 Now push the new version online with:
 
     middleman build --clean
     middleman deploy
-    
+
