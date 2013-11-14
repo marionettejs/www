@@ -10,7 +10,7 @@ This website is built using Middleman (http://middlemanapp.com), Sass and Compas
     git clone the repository
     cd cloned repository
     bundle
-
+    npm install -g docco
 
 Update the site
 -----
