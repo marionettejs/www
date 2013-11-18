@@ -1,5 +1,11 @@
 $(document).ready(function() {
 
+    // Cycle 2
+    $('.video_slideshow').cycle({
+        pager: '.slider2',
+        pagerTemplate: '<span></span>'
+    });
+
     // equalHeights
     if($(window).width() > 705) {
         $('.code_examples > div').equalHeights();
