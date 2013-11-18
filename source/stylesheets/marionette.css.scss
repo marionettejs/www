@@ -4,6 +4,8 @@
 @import 'jeet';
 @import 'jeet/_reset';
 @import 'fonts';
+@import 'prettify/prettify';
+@import 'prettify/marionette';
 
 $sans: "open-sans", $helvetica;
 $serif: "ff-meta-serif-web-pro", $garamond;

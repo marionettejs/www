@@ -16,4 +16,7 @@ $(document).ready(function() {
     // fitVids
     $('.vid').fitVids();
 
+    // Google Prettify syntax highlighting
+    prettyPrint();
+
 });
