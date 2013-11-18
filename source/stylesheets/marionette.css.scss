@@ -3,11 +3,11 @@
 @import 'rgbapng';
 @import 'jeet';
 @import 'jeet/_reset';
-@import 'fonts';
+@import 'fonts/fonts';
 @import 'prettify/prettify';
 @import 'prettify/marionette';
 
-$sans: "open-sans", $helvetica;
+$sans: "avenir_lt_std45_book", $helvetica;
 $serif: "ff-meta-serif-web-pro", $garamond;
 
 $red: #cf2227;
