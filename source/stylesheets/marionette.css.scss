@@ -24,9 +24,14 @@ html {
     font-size: 20px;
     line-height: 32px;
 }
+h1, h2, h3, h4, h5, h6 {
+    font-family: $sans;
+}
 .masthead {
     @include cf;
-    background: #e3ecf1;
+    box-shadow: 0 1px 0 #cbd9e1;
+    background: #eff3f7;
+    background: radial-gradient(#fafbfd, #e3ecf1);
     text-align: center;
     padding-left: $center_pad;
     padding-right: $center_pad;
@@ -41,6 +46,10 @@ html {
         margin-bottom: 30px;
         @include breakpoint($breakpoint) {
             @include col(3/12, $offset: 4.5/12);
+            margin-top: 40px;
+        }
+        @include breakpoint(1050px) {
+            @include col(1.975/12, $offset: 5.0125/12);
         }
     }
     a {
@@ -50,10 +59,15 @@ html {
         margin-bottom: 20px;
         font-family: $sans;
         font-size: 12px;
+        line-height: 16px;
         color: #818285;
         transition: all 200ms ease;
         @include breakpoint($breakpoint) {
             @include col(3/12, $offset: 4.5/12);
+            margin-bottom: 60px;
+        }
+        @include breakpoint(1050px) {
+            @include col(2/12, $offset: 5/12);
         }
         &:hover {
             text-decoration: none;
@@ -64,10 +78,11 @@ html {
         text-decoration: none;
         background: #1abc9c;
         margin-bottom: 15px;
-        padding: 10px 0;
         color: #fff;
         border-radius: 999px;
         font-size: 16px;
+        height: 36px;
+        line-height: 36px;
         span {
             font-size: 12px;
         }
@@ -75,8 +90,44 @@ html {
             color: #fff;
             background: darken(#1abc9c, 1%);
         }
+        @include breakpoint($breakpoint) {
+            margin-bottom: 20px;
+        }
     }
 }
+@-webkit-keyframes boogie {
+    0% {
+        -webkit-transform: translate(0, 0);
+    }
+    10% {
+        -webkit-transform: translate(0, -10px) rotate(random(40) + deg);
+    }
+    15% {
+        -webkit-transform: translate(0, -10px) rotate(random(40) + deg);
+    }
+    20% {
+        -webkit-transform: translate(0, -10px) rotate(random(40) + deg);
+    }
+    25% {
+        -webkit-transform: translate(0, -10px) rotate(random(40) + deg);
+    }
+    30% {
+        -webkit-transform: translate(0, -10px) rotate(random(40) + deg);
+    }
+    35% {
+        -webkit-transform: translate(0, -10px) rotate(random(40) + deg);
+    }
+    40% {
+        -webkit-transform: translate(0, -10px) rotate(random(40) + deg);
+    }
+    45% {
+        -webkit-transform: translate(0, -10px) rotate(random(40) + deg);
+    }
+    50% {
+        -webkit-transform: translate(0, -10px) rotate(random(40) + deg);
+    }
+}
+
 .ribbon {
     background: #F4F8F9;
     border: 1px rgba(204,217,225,.7) solid;
@@ -86,11 +137,15 @@ html {
     padding-right: $center_pad;
     margin-bottom: 20px;
     @include breakpoint($breakpoint) {
-        margin-bottom: 75px;
+        margin-bottom: 74px;
+        padding-top: 40px;
+        padding-bottom: 40px;
     }
     > div {
         @include breakpoint($breakpoint) {
             @include center($center_mw, $center_pad);
+            position: relative;
+            left: -32px;
         }
     }
     h1 {
@@ -100,15 +155,26 @@ html {
         margin-top: 10px;
         margin-bottom: 10px;
         color: #818285;
+        position: relative;
         span {
             color: #cf2227;
+            @include breakpoint($breakpoint) {
+                position: absolute;
+                padding-left: .25em;
+            }
         }
+        @include breakpoint($breakpoint) {
+            font-size: ms(16);
+        }
+    }
+    &:hover span {
+        -webkit-animation: boogie 2s alternate infinite ease;
     }
 }
 .about {
     margin: 15px auto 20px;
     @include breakpoint($breakpoint) {
-        margin-bottom: 75px;
+        margin-bottom: 74px;
     }
     font-size: 16px;
     line-height: 26px;
@@ -139,7 +205,7 @@ html {
     nav {
         font-family: $sans;
         background: #dbe4ea;
-        padding: 15px 30px;
+        padding: 30px 30px 10px;
         border-radius: 5px 5px 0 0;
         border: 1px solid #dbe4ea;
         border-bottom: 0;
@@ -151,7 +217,8 @@ html {
             color: #818285;
             letter-spacing: .25em;
             font-size: 12px;
-            margin-bottom: 5px;
+            line-height: 16px;
+            margin-bottom: 10px;
         }
         ul {
             padding-left: 1em;
@@ -182,6 +249,10 @@ html {
                 color: #a7a9ac;
                 line-height: 18px;
             }
+            ul {
+                padding-left: 0;
+                list-style: none;
+            }
         }
     }
 }
@@ -192,7 +263,7 @@ html {
     margin-bottom: 20px;
     @include breakpoint($breakpoint) {
         @include center($center_mw, $center_pad);
-        margin-bottom: 75px;
+        margin-bottom: 74px;
     }
     > div {
         @include breakpoint($breakpoint) {
@@ -241,6 +312,9 @@ html {
             }
         }
     }
+    header {
+        position: relative;
+    }
     h4 {
         font-size: 12px;
         text-transform: uppercase;
@@ -267,21 +341,17 @@ html {
             &:last-child {
                 margin-right: 0;
             }
-            &.active, &:hover {
-                a img {
-                    opacity: 1;
-                }
-            }
         }
-        a {
+        img {
             width: 10px;
             height: 10px;
             display: block;
-            img {
-                display: block;
-                opacity: .7;
-            }
         }
+    }
+}
+@include breakpoint($breakpoint) {
+    .lt-ie9 .code_examples > div {
+        width: 32%;
     }
 }
 pre {
@@ -291,18 +361,18 @@ pre {
 pre, code {
     background: none;
     border: 0;
-    color: #69aff8;
     border-radius: 0;
     margin-bottom: 0;
+    color: yellow;
 }
 .featured_videos {
     border: 1px solid #dbe4ea;
     border-left: 0;
     border-right: 0;
-    padding-top: 20px;
-    padding-bottom: 20px;
     font-size: 16px;
     line-height: 26px;
+    padding-top: 20px;
+    padding-bottom: 20px;
     p:last-of-type {
         margin-bottom: 0;
     }
@@ -330,31 +400,35 @@ pre, code {
         margin-bottom: 20px;
         border-radius: 10px;
         overflow: hidden;
+        .fluid-width-video-wrapper {
+            margin-bottom: 12px;
+        }
+        p {
+            font-size: 12px;
+            line-height: 16px;
+            font-family: $sans;
+        }
     }
     .slider2 {
         position: absolute;
         right: 0;
         top: 10px;
-        li {
+        span {
             float: left;
             margin-left: 10px;
-            &.active, &:hover {
-                a {
-                    background: $red;
-                }
-            }
-        }
-        a {
             display: block;
             width: 10px;
             height: 10px;
             border-radius: 999px;
             border: 1px solid $red;
+            &.cycle-pager-active, &:hover {
+                background: $red;
+            }
         }
     }
     @include breakpoint($breakpoint) {
-        padding-top: 75px;
-        padding-bottom: 75px;
+        padding-top: 74px;
+        padding-bottom: 74px;
         font-size: 20px;
         line-height: 32px;
         .vid {
@@ -371,7 +445,7 @@ pre, code {
     line-height: 26px;
     padding: 20px 0 0;
     @include breakpoint($breakpoint) {
-        padding: 40px 0;
+        padding: 74px 0 40px;
         font-size: 20px;
         line-height: 32px;
     }
@@ -404,6 +478,9 @@ pre, code {
             top: 7px;
             color: #818285;
         }
+        @include breakpoint($breakpoint) {
+            margin-top: 40px;
+        }
     }
     .support_article {
         @include breakpoint($breakpoint) {
@@ -420,8 +497,8 @@ pre, code {
         font-family: $sans;
         margin-bottom: 20px;
         .donate_btn {
-            margin-top: 5px;
             @include col(1/2);
+            margin-top: 5px;
             text-align: center;
             font-size: 14px;
             line-height: 20px;
@@ -441,8 +518,9 @@ pre, code {
         p {
             clear: both;
             display: block;
-            font-size: 14px;
-            line-height: 20px;
+            font-size: 12px;
+            line-height: 16px;
+            color: #a7a9ac;
         }
         @include breakpoint($breakpoint) {
             .donate_btn {
@@ -450,7 +528,8 @@ pre, code {
                 text-align: center;
             }
             p {
-                @include col(7/12, $offset: 1/12);
+                @include col(8/12);
+                margin-top: 14px;
             }
         }
     }
@@ -490,15 +569,19 @@ pre, code {
         margin-bottom: 10px;
     }
     img {
-        @include col(1/3);
+        @include col(2/7);
+        &:last-child {
+            @include col(3/7);
+        }
     }
     @include breakpoint($breakpoint) {
+        margin-bottom: 74px;
         article {
             @include col(3/12);
             @include shift(8/12);
         }
         .sticker_pics {
-            @include col(6/12);
+            @include col(7/12);
             @include shift(-2/12);
         }
     }
@@ -517,6 +600,10 @@ footer {
     > div {
         @include center($center_mw, $center_pad);
     }
+    @include breakpoint($breakpoint) {
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
     p {
         margin-bottom: 20px;
     }
@@ -528,5 +615,20 @@ footer {
         img {
             display: block;
         }
+    }
+}
+
+.browsehappy {
+    background: lighten(black, 15%);
+    font: 13px/21px helvetica;
+    color: #fff;
+    border-bottom: 5px solid lighten(black, 30%);
+    cursor: pointer;
+    p {
+        margin: 0;
+        padding: 0;
+    }
+    a {
+        color: lighten(yellow, 25%);
     }
 }

@@ -79,16 +79,16 @@
                 <nav>
                     <h3>Requirements</h3>
                     <ul>
-                        <li>jQuery <span>v1.8+</span></li>
-                        <li>Underscore <span>v1.4.4+</span></li>
+                        <li><a href="http://jquery.com/">jQuery</a> <span>v1.8+</span></li>
+                        <li><a href="http://underscorejs.org/">Underscore</a> <span>v1.4.4+</span></li>
                         <li>
-                            Backbone <span>v1.0</span>
+                            <a href="http://backbonejs.org/">Backbone</a> <span>v1.0</span>
                             <p class="note">
                                 is preferred. v0.9.9 and v0.9.10 should work still
                             </p>
                         </li>
-                        <li>Backbone.Wreqr</li>
-                        <li>Backbone.BabySitter</li>
+                        <li><a href="https://github.com/marionettejs/backbone.wreqr">Backbone.Wreqr</a></li>
+                        <li><a href="https://github.com/marionettejs/backbone.babysitter">Backbone.BabySitter</a></li>
                     </ul>
                 </nav>
             </aside>
@@ -120,9 +120,9 @@
             <div>
                 <header>
                     <ul class="slider1">
-                        <li class="active"><a href="#"><%= image_tag 'disc1.png', alt: '' %></a></li>
-                        <li><a href="#"><%= image_tag 'disc1.png', alt: '' %></a></li>
-                        <li><a href="#"><%= image_tag 'disc1.png', alt: '' %></a></li>
+                        <li><%= image_tag 'disc1.png', alt: '' %></li>
+                        <li><%= image_tag 'disc1.png', alt: '' %></li>
+                        <li><%= image_tag 'disc1.png', alt: '' %></li>
                     </ul>
                     <h4>Results</h4>
                 </header>
@@ -136,27 +136,39 @@
 
         <section class="featured_videos">
             <div>
-                <header>
-                    <h3>Featured Videos</h3>
-                    <ul class="slider2">
-                        <li class="active"><a href="#"></a></li>
-                        <li><a href="#"></a></li>
-                        <li><a href="#"></a></li>
-                        <li><a href="#"></a></li>
-                        <li><a href="#"></a></li>
-                    </ul>
-                </header>
-            </div>
-            <div>
-                <div class="video_slide">
-                    <figure class="vid">
-                        <iframe width="1280" height="720" src="//www.youtube-nocookie.com/embed/0o2whtCJw8I?rel=0" frameborder="0" allowfullscreen></iframe>
-                    </figure>
-                    <figcaption>
-                        <p>
-                            Amy Palamountain gave a presentation on how to "Unsuck Your Backbone" at Codemania in New Zealand, in April of 2013. This is one of the best presentations I've seen, on a high level structure for your Backbone applications. Amy's experience in building scalable apps with composite application patterns in Windows shines through as she describes the patterns and practices that are baked in to Marionette.
-                        </p>
-                    </figcaption>
+                <div>
+                    <header>
+                        <h3>Featured Videos</h3>
+                        <div class="slider2"></div>
+                    </header>
+                </div>
+                <div class="video_slideshow" data-cycle-slides=".video_slide">
+                    <div class="video_slide">
+                        <figure class="vid">
+                            <iframe width="1280" height="720" src="//www.youtube-nocookie.com/embed/0o2whtCJw8I?rel=0" frameborder="0" allowfullscreen></iframe>
+                            <p>
+                                Check out the slide deck and other info from Amy's blog post about the presentation.
+                            </p>
+                        </figure>
+                        <figcaption>
+                            <p>
+                                Amy Palamountain gave a presentation on how to "Unsuck Your Backbone" at Codemania in New Zealand, in April of 2013. This is one of the best presentations I've seen, on a high level structure for your Backbone applications. Amy's experience in building scalable apps with composite application patterns in Windows shines through as she describes the patterns and practices that are baked in to Marionette.
+                            </p>
+                        </figcaption>
+                    </div>
+                    <div class="video_slide">
+                        <figure class="vid">
+                            <iframe width="1280" height="720" src="//www.youtube-nocookie.com/embed/0o2whtCJw8I?rel=0" frameborder="0" allowfullscreen></iframe>
+                            <p>
+                                Check out the slide deck and other info from Amy's blog post about the presentation.
+                            </p>
+                        </figure>
+                        <figcaption>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis, debitis, est? Adipisci, cupiditate, eveniet, sequi illo deserunt laboriosam laudantium eos numquam vero delectus velit eius obcaecati voluptatibus autem optio consectetur?
+                            </p>
+                        </figcaption>
+                    </div>
                 </div>
             </div>
         </section>
