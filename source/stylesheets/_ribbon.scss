@@ -1,0 +1,44 @@
+.ribbon {
+  background-color: $header-grey;
+  border-top: solid 1px #ccd9e1;
+  border-left: 0;
+  border-right: 0;
+  padding-left: $center_pad;
+  padding-right: $center_pad;
+  margin-bottom: 20px;
+  @include box-shadow(0 1px 0 rgba(204,217,225,.7));
+  @include breakpoint($breakpoint) {
+    margin-bottom: 74px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+  > div {
+    @include breakpoint($breakpoint) {
+      @include center($center_mw, $center_pad);
+      position: relative;
+      left: -32px;
+    }
+  }
+  h1 {
+    font-size: 18px;
+    line-height: 26px;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #818285;
+    position: relative;
+    span {
+      color: #cf2227;
+      @include breakpoint($breakpoint) {
+        position: absolute;
+        padding-left: .25em;
+      }
+    }
+    @include breakpoint($breakpoint) {
+      font-size: ms(16);
+    }
+  }
+  &:hover span {
+    -webkit-animation: boogie 2s alternate infinite ease;
+  }
+}
