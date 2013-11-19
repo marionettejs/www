@@ -1,0 +1,32 @@
+@-webkit-keyframes boogie {
+  0% {
+      -webkit-transform: translate(0, 0);
+  }
+  10% {
+      -webkit-transform: translate(0, -10px) rotate(random(40) + deg);
+  }
+  15% {
+      -webkit-transform: translate(0, -10px) rotate(random(40) + deg);
+  }
+  20% {
+      -webkit-transform: translate(0, -10px) rotate(random(40) + deg);
+  }
+  25% {
+      -webkit-transform: translate(0, -10px) rotate(random(40) + deg);
+  }
+  30% {
+      -webkit-transform: translate(0, -10px) rotate(random(40) + deg);
+  }
+  35% {
+      -webkit-transform: translate(0, -10px) rotate(random(40) + deg);
+  }
+  40% {
+      -webkit-transform: translate(0, -10px) rotate(random(40) + deg);
+  }
+  45% {
+      -webkit-transform: translate(0, -10px) rotate(random(40) + deg);
+  }
+  50% {
+      -webkit-transform: translate(0, -10px) rotate(random(40) + deg);
+  }
+}
