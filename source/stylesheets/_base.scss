@@ -1,6 +1,7 @@
 html {
-  color:       $gray;
-  line-height: 32px;
+  color:                  $gray;
+  line-height:            32px;
+  -webkit-font-smoothing: antialiased;
 
   font: {
     size:   20px;
