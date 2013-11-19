@@ -63,15 +63,15 @@
     ul {
       padding-left: 1em;
       list-style: square;
-      color: #1abc9c;
+      color: $seafoam;
       a {
-        color: #1abc9c;
+        color: $seafoam;
         text-decoration: none;
         font-weight: bold;
         font-size: 16px;
         transition: all 200ms ease;
         &:hover {
-          color: darken(#1abc9c, 5%);
+          color: darken($seafoam, 5%);
         }
       }
     }
@@ -292,13 +292,13 @@
       @include shift(8/12);
     }
     a {
-      color: #1ABC9C;
+      color: $seafoam;
       display: block;
       margin-bottom: 5px;
       padding-left: 30px;
       transition: all 200ms ease;
       &:hover {
-        color: darken(#1ABC9C, 5%);
+        color: darken($seafoam, 5%);
         text-decoration: none;
       }
     }
@@ -379,14 +379,14 @@
     a {
       display: inline-block;
       margin-bottom: 20px;
-      color: #1ABC9C;
+      color: $seafoam;
       font-weight: bold;
       font-size: 12px;
       line-height: 18px;
       text-decoration: none;
       transition: all 200ms ease;
       &:hover {
-        color: darken(#1ABC9C, 5%);
+        color: darken($seafoam, 5%);
       }
     }
   }
