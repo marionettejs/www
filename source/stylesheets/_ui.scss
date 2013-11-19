@@ -17,3 +17,15 @@ a.btn {
 
   @include border-radius($button-size);
 }
+
+.headline {
+  color:        $gray;
+  margin:       0;
+  text-align:   center;
+  line-height:  26px;
+
+  font: {
+    size:   $large-font;
+    weight: bold;
+  }
+}
