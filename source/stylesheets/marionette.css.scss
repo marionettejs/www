@@ -4,9 +4,9 @@
 @import 'jeet';
 @import 'jeet/_reset';
 @import 'fonts/fonts';
+@import 'variables';
 @import 'prettify/prettify';
 @import 'prettify/marionette';
-@import 'variables';
 @import 'animations';
 @import 'base';
 @import 'header';
@@ -56,7 +56,7 @@
       text-transform: uppercase;
       color: #818285;
       letter-spacing: .25em;
-      font-size: 12px;
+      font-size: $small-font;
       line-height: 16px;
       margin-bottom: 10px;
     }
@@ -85,7 +85,7 @@
         color: #818285;
       }
       .note {
-        font-size: 12px;
+        font-size: $small-font;
         color: #a7a9ac;
         line-height: 18px;
       }
@@ -156,7 +156,7 @@
     position: relative;
   }
   h4 {
-    font-size: 12px;
+    font-size: $small-font;
     text-transform: uppercase;
     letter-spacing: .25em;
     color: #dbe4ea;
@@ -231,10 +231,10 @@
     border-radius: 10px;
     overflow: hidden;
     .fluid-width-video-wrapper {
-      margin-bottom: 12px;
+      margin-bottom: $small-font;
     }
     p {
-      font-size: 12px;
+      font-size: $small-font;
       line-height: 16px;
       font-family: $sans;
     }
@@ -348,7 +348,7 @@
     p {
       clear: both;
       display: block;
-      font-size: 12px;
+      font-size: $small-font;
       line-height: 16px;
       color: #a7a9ac;
     }
@@ -381,7 +381,7 @@
       margin-bottom: 20px;
       color: $seafoam;
       font-weight: bold;
-      font-size: 12px;
+      font-size: $small-font;
       line-height: 18px;
       text-decoration: none;
       transition: all 200ms ease;
@@ -391,7 +391,7 @@
     }
   }
   h5 {
-    font-size: 12px;
+    font-size: $small-font;
     line-height: 16px;
     color: $red;
     text-transform: uppercase;
