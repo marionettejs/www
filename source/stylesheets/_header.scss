@@ -1,30 +1,21 @@
 .primary-logo {
-  margin: 20px 0 30px;
-
-  @include col(6/12, $offset: 3/12);
-  @include breakpoint($breakpoint) {
-    @include col(3/12, $offset: 4.5/12);
-    margin-top: 40px;
-  }
-  @include breakpoint($large-breakpoint) {
-    @include col(1.975/12, $offset: 5.0125/12);
-  }
+  width:    177px;
+  margin:   40px auto;
+  display:  block;
 }
 
 .download-button {
+  width:         177px;
   margin-bottom: 15px;
 
   span {
     font-size: $small-font;
   }
-
-  @include breakpoint($breakpoint) {
-    margin-bottom: 20px;
-  }
 }
 
 .on-github {
   color:        $gray;
+  display:      block;
   line-height:  16px;
 
   font: {
@@ -39,22 +30,10 @@
 }
 
 .masthead {
+  padding:    0 $center_pad 40px;
+  overflow:   hidden;
   text-align: center;
   background: $header-grey;
 
-  padding: {
-    left:   $center_pad;
-    right:  $center_pad;
-    bottom: 20px;
-  }
-
   @include background-image(radial-gradient(center center, 100% 100%, rgba(255,255,255,.75) 0%, rgba(0, 0, 1, 0.08) 100%));
-  @include cf;
-
-  a {
-    @include col(8/12, $offset: 2/12);
-    @include breakpoint($breakpoint) {
-      @include col(3/12, $offset: 4.5/12);
-    }
-  }
 }

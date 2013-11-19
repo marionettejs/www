@@ -16,8 +16,4 @@
     padding: 40px;
     span { color: $red; }
   }
-
-  &:hover span {
-    -webkit-animation: boogie 2s alternate infinite ease;
-  }
 }
