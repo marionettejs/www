@@ -1,0 +1,26 @@
+html {
+  color:       $gray;
+  line-height: 32px;
+
+  font: {
+    size:   20px;
+    family: $serif;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $sans;
+}
+
+pre {
+  padding:    20px;
+  font-size:  12px;
+}
+
+pre, code {
+  color:         yellow;
+  border:        0;
+  background:    none;
+  border-radius: 0;
+  margin-bottom: 0;
+}

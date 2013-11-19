@@ -8,16 +8,8 @@
 @import 'prettify/marionette';
 @import 'variables';
 @import 'animations';
+@import 'base';
 
-html {
-  font-family: $serif;
-  color: $gray;
-  font-size: 20px;
-  line-height: 32px;
-}
-h1, h2, h3, h4, h5, h6 {
-  font-family: $sans;
-}
 .masthead {
   @include cf;
   box-shadow: 0 1px 0 #cbd9e1;
@@ -313,17 +305,7 @@ h1, h2, h3, h4, h5, h6 {
     width: 32%;
   }
 }
-pre {
-  padding: 20px;
-  font-size: 12px;
-}
-pre, code {
-  background: none;
-  border: 0;
-  border-radius: 0;
-  margin-bottom: 0;
-  color: yellow;
-}
+
 .featured_videos {
   border: 1px solid #dbe4ea;
   border-left: 0;
