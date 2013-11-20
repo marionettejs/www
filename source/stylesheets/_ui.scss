@@ -17,6 +17,8 @@ a.btn {
   }
 
   @include border-radius($button-size);
+    background-color: $orange;
+      background: darken($orange, 3%);
 }
 
 .headline {

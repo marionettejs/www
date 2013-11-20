@@ -1,11 +1,13 @@
 .ribbon {
   padding:          0 $center_pad;
   margin-bottom:    20px;
-  background-color: $header-grey;
 
+  background-color: lighten($light-blue, 3%);
 
   border: {
     top:    solid 1px #ccd9e1;
+    top:    1px solid darken($light-blue, 7%);
+    bottom: 1px solid darken($light-blue, 7%);
     left:   0;
     right:  0;
   }

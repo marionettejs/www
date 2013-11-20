@@ -427,7 +427,7 @@ footer {
   font-family: $sans;
   padding-top: 20px;
   padding-bottom: 20px;
-  border-top: 1px solid #dbe4ea;
+  border-top: 1px solid darken($light-blue, 15%);
   text-align: center;
   color: darken(#dbe4ea, 10%);
   > div {
@@ -448,6 +448,7 @@ footer {
     img {
       display: block;
     }
+    color: darken($light-blue, 15%);
   }
 }
 
