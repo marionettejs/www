@@ -14,6 +14,7 @@
 @import 'ribbon';
 @import 'code_samples';
 @import "about";
+@import "stickers";
 
 .cl {
   clear: both;
@@ -178,52 +179,6 @@
       color: #a7a9ac;
     }
   }
-}
-.stickers {
-  font-family: $sans;
-  margin-bottom: 40px;
-  h5 {
-    font-size: $small-font;
-    line-height: 16px;
-    color: $red;
-    text-transform: uppercase;
-    letter-spacing: .075em;
-    margin-bottom: 10px;
-  }
-  img {
-    width: 30%;
-    max-width: 30%;
-    height: auto;
-  }
-  p {
-    margin-bottom: 0;
-  }
-  .tiny-link {
-    display: inline-block;
-    margin-bottom: 20px;
-    color: $seafoam;
-    font-weight: bold;
-    font-size: $small-font;
-    line-height: 18px;
-    text-decoration: none;
-    transition: all 200ms ease;
-    &:hover {
-      color: darken($seafoam, 5%);
-    }
-  }
-  @include below($med-breakpoint) {
-    display: none;
-  }
-}
-.sticker-order {
-  vertical-align: top;
-  width: 30%;
-  display: inline-block;
-  margin-left: 5%;
-}
-.sticker-pics {
-  display: inline-block;
-  width: 62%;
 }
 
 footer {
