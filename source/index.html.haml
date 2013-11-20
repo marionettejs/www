@@ -1,0 +1,150 @@
+/[if lt IE 9]
+  <div class="browsehappy">
+  <p>
+  You are using an <strong>outdated</strong> browser. Please <a href="//browsehappy.com" target="_blank">upgrade your browser</a> or <a href="//www.google.com/chromeframe/?redirect=true" target="_blank">activate Google Chrome Frame</a> to improve your experience.
+  </p>
+  <p>Clicking anywhere inside this frame will temporarily hide it.</p>
+  </div>
+.masthead
+  = image_tag 'marionette_logo.png', alt: 'Marionette.js – A scalable and composite application architecture for Backbone.js', class: 'primary-logo'
+  %a.btn.download-button{:href => "#download"}
+    Download
+    %span v1.2.0
+    %a.on-github{href: "https://github.com/marionettejs/backbone.marionette", target: "_blank"} Marionette.js on GitHub
+.ribbon
+  %div
+    %h1.headline
+      Make your Backbone applications
+      %span dance!
+%section.about.column-contain
+  %article
+    %header
+      %h2 About Marionette
+    %p
+      Backbone.Marionette is a composite application library for Backbone.js that aims to simplify the construction of large scale JavaScript applications.
+    %p
+      It is a collection of common design and implementation patterns found in the applications that we have been building with Backbone, and includes pieces inspired by composite application architectures, event-driven architectures, messaging architectures, and more.
+  .quick-links
+    %nav
+      %h3 Quick Links
+      %ul
+        %li
+          %a{href: "https://github.com/marionettejs/backbone.marionette", target: "_blank"}
+            Marionette.js on GitHub
+        %li
+          %a{href: "http://marionettejs.com/docs/backbone.marionette.html", target: "_blank"}
+            Annotated Source Code
+    %nav
+      %h3 Requirements
+      %ul
+        %li
+          %a{href:"http://jquery.com/", target:"_blank"}
+            jQuery
+          %span v1.8+
+        %li
+          %a{href: "http://underscorejs.org/", target:"_blank"}
+            Underscore
+          %span v1.4.4+
+        %li
+          %a{href: "http://backbonejs.org/", target: "_blank"}
+            Backbone
+          %span
+            | v1.1.x
+            %p.note is preferred. v1.0.0, v0.9.9 and v0.9.10 should work still
+        %li
+          %a{href: "https://github.com/marionettejs/backbone.wreqr", target: "_blank"} Backbone.Wreqr
+        %li
+          %a{href: "https://github.com/marionettejs/backbone.babysitter", target: "_blank"} Backbone.BabySitter
+  .cl
+= render :erb, "sections/_code_section"
+.cl
+%section.featured_videos.column-contain
+  %h2 Featured Videos
+  .slider2
+  .video_slideshow{"data-cycle-slides" => ".video_slide"}
+    .video_slide
+      %figure.vid
+        %iframe{:allowfullscreen => "", :frameborder => "0", :height => "720", :src => "//www.youtube-nocookie.com/embed/0o2whtCJw8I?rel=0", :width => "1280"}
+        %p
+          Check out the slide deck and other info from Amy's blog post about the presentation.
+      %figcaption
+        %p
+          Amy Palamountain gave a presentation on how to "Unsuck Your Backbone" at Codemania in New Zealand, in April of 2013. This is one of the best presentations I've seen, on a high level structure for your Backbone applications. Amy's experience in building scalable apps with composite application patterns in Windows shines through as she describes the patterns and practices that are baked in to Marionette.
+    .video_slide
+      %figure.vid
+        %iframe{:allowfullscreen => "", :frameborder => "0", :height => "720", :src => "//www.youtube-nocookie.com/embed/0o2whtCJw8I?rel=0", :width => "1280"}
+        %p
+          Check out the slide deck and other info from Amy's blog post about the presentation.
+      %figcaption
+        %p
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis, debitis, est? Adipisci, cupiditate, eveniet, sequi illo deserunt laboriosam laudantium eos numquam vero delectus velit eius obcaecati voluptatibus autem optio consectetur?
+  .cl
+.cl
+%section.support.column-contain
+  .social-network-col
+    %ul
+      %li
+        %i.icon-twitter
+        %a{href: "https://twitter.com/marionettejs", target: "_blank"} @marionettejs on Twitter
+      %li
+        %i.icon-google-plus
+        %a{href: "https://plus.google.com/101060306397560578875", target: "_blank"} Marionette.js on Google+
+      %li
+        %i.icon-github
+        %a{href: "https://github.com/marionettejs/backbone.marionette", target:"_blank"} Marionette.js on GitHub
+  %article.support_article
+    %h2 Support Marionette.js
+    %p
+      Marionette needs your support, but not everyone can offer assistance with code, bug submissions, and answering questions. If you're using Marionette and you're finding that it is saving you as much time and effort as we believe it does, then please consider financial support for the project.
+    .donate
+      %a.btn.btn-donate{href: "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7SJHYWJ487SF4", target: "_blank"} Donate
+      %p.sans
+        Your PayPal contributions are much appreciated, thank you!
+  .cl
+%section.stickers.column-contain
+  .sticker-pics
+    = image_tag 'stickers1.jpg', alt: ''
+    = image_tag 'stickers2.jpg', alt: ''
+    = image_tag 'stickers3.jpg', alt: ''
+  .sticker-order
+    %header
+      %h5 Stickers!
+    %p
+      These awesome stickers are printed by StickerMule, and are the highest quality vinyl stickers, coming in at 2.27x3 inches. The perfect size for any space on your laptop lid.
+    %a.tiny-link{:href => "#"}
+      Order Yours Now!
+      %i.icon-arrow-right
+  .cl
+%footer
+  %p website handcrafted &amp; coded by
+  %a{href: "http://mojotech.com", target:"_blank"}
+    =image_tag 'mojotech.png', alt: 'MojoTech', class: 'mt-logo'
+/[if lt IE 9]
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<haml:loud> javascript_include_tag(&amp;quot;libs/jquery-1.10.2.min.js&amp;quot;).gsub(&amp;quot;&amp;lt;/&amp;quot;, &amp;quot;&amp;lt;\\/&amp;quot;) </haml:loud>')</script>
+/ [if gt IE 8]><!
+%script{:src => "//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"}
+:javascript
+  window.jQuery || document.write(' javascript_include_tag("libs/jquery-2.0.3.min.js").gsub("</", "<\\/") ')/ <![endif]
+= javascript_include_tag "footer"
+:javascript
+  // Flattr
+  (function() {
+      var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
+      s.type = 'text/javascript';
+      s.async = true;
+      s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
+      t.parentNode.insertBefore(s, t);
+  })();
+
+  // Google Analytics
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-34606707-1']);
+  _gaq.push(['_setDomainName', 'marionettejs.com']);
+  _gaq.push(['_setAllowLinker', true]);
+  _gaq.push(['_trackPageview']);
+  (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
