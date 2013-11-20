@@ -24,6 +24,8 @@
   cursor: pointer;
 }
 
+.books { @include below(601px) {display: none} }
+
 .book-list {
   text-align: center;
 
