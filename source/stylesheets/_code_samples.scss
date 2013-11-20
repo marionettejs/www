@@ -1,0 +1,52 @@
+.code-samples {
+  margin-bottom: 80px;
+  .code-samples {
+    overflow: hidden;
+    border-right: 1px #2c3e50 solid;
+    background-color: #34495E;
+    border-radius: 5px;
+  }
+  .code-sample-block {
+    float: left;
+    width: 33%;
+    color: #818285;
+    border-right: 2px solid darken(#304357, 6%);
+    background-color: darken(#304357, 5%);
+    @include box-shadow(0 1px 0 rgba(0,0,1,.2));
+    @include background-image(linear-gradient(bottom, rgba(0,0,1,.05) 0%, rgba(255,255,255,.05) 100%));
+    @include below($large-breakpoint) {
+      width: 100%;
+    }
+  }
+  .code-results-block {
+    background-color: #ececec;
+    border-right: none;
+    @include border-radius(0 5px 5px 0);
+  }
+  .code-header {
+    background-color: #304357;
+    color: #dbe4ea;
+    font-size: $small-font;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 0;
+    line-height: 70px;
+    border-radius: 5px 5px 0 0;
+  }
+  .code-header-results {
+    color: darken($light-grey, 30%);
+    background-color: $light-grey;
+    position: relative;
+    @include border-radius(0 5px 5px 0);
+    &:after {
+      color: darken($light-grey, 20%);
+      content: "•••";
+      font-size: 26px;
+      @include pos(absolute, 4px, false, false, 20px);
+      @include size(20px, 10px);
+    }
+  }
+  .first-sample-block {
+    @include border-radius(5px 0 0 5px);
+  }
+}
