@@ -5,7 +5,6 @@
 @import 'vendor/prettify/marionette';
 @import 'rgbapng';
 @import 'jeet';
-@import 'jeet/_reset';
 @import 'fonts/fonts';
 @import 'variables';
 @import 'animations';
@@ -22,24 +21,20 @@
 .about {
   padding-left: $center_pad;
   padding-right: $center_pad;
+  border-top: none;
   article {
-    margin-bottom: 20px;
-    @include breakpoint($breakpoint) {
-      @include col(6/12, $offset: 1/12);
+    float: left;
     width: $col-2-3 - 8%;
+    @include below($med-breakpoint) {
+      width: 100%;
     }
   }
-  @include breakpoint($breakpoint) {
-    aside {
-      @include col(3/12, $offset: 1/12);
+  .quick-links {
+    float: right;
     width: $col-1-3;
+    @include below($med-breakpoint) {
+      width: 100%;
     }
-  }
-  h2 {
-    font-size: 24px;
-    line-height: 30px;
-    color: $red;
-    margin-bottom: 15px;
   }
   nav {
     font-family: $sans;
@@ -103,6 +98,7 @@
 }
 
 .featured_videos {
+  position: relative;
   font-size: 16px;
   line-height: 26px;
   p:last-of-type {
@@ -110,11 +106,6 @@
   }
   header {
     position: relative;
-    h3 {
-      font-size: 24px;
-      line-height: 30px;
-      color: $red;
-    }
     ul {
       padding-left: 0;
       list-style: none;
@@ -123,7 +114,8 @@
   .vid {
     margin-bottom: 20px;
     border-radius: 10px;
-    overflow: hidden;
+    width: 35%;
+    float: left;
     .fluid-width-video-wrapper {
       margin-bottom: $small-font;
     }
@@ -132,60 +124,46 @@
       line-height: 16px;
       font-family: $sans;
     }
+    @include below($med-breakpoint) {
+      width: 100%;
+    }
+  }
+  figcaption {
+    width: 60%;
+    margin-left: 5%;
+    float: right;
+    @include below($med-breakpoint) {
+      width: 100%;
+    }
   }
   .slider2 {
-    position: absolute;
-    right: 0;
-    top: 10px;
+    @include pos(absolute, 10px, 0, false, false);
     span {
       float: left;
       margin-left: 10px;
       display: block;
-      width: 10px;
-      height: 10px;
       border-radius: 999px;
       border: 1px solid $red;
+      @include size(10px);
       &.cycle-pager-active, &:hover {
         background: $red;
       }
-    }
-  }
-  @include breakpoint($breakpoint) {
-    padding-top: 74px;
-    padding-bottom: 74px;
-    font-size: 20px;
-    line-height: 32px;
-    .vid {
-      @include col(4/12, $offset: 1/12);
-    }
-    figcaption {
-      @include col(6/12);
-      margin-top: 49px;
     }
   }
 }
 .support {
   font-size: 16px;
   line-height: 26px;
-  padding: 20px 0 0;
-  @include breakpoint($breakpoint) {
-    padding: 74px 0 40px;
-    font-size: 20px;
-    line-height: 32px;
-  }
-  > div {
-    @include center($center_mw, $center_pad);
-  }
-  nav {
+  .social-network-col {
     width: $col-1-3;
+    float: right;
+    @include below($med-breakpoint) {
+      width: 100%;
+    }
     font-family: $sans;
     margin-bottom: 20px;
     font-size: 16px;
     line-height: 26px;
-    @include breakpoint($breakpoint) {
-      @include col(3/12);
-      @include shift(8/12);
-    }
     a {
       color: $seafoam;
       display: block;
@@ -208,15 +186,10 @@
     }
   }
   .support_article {
-    @include breakpoint($breakpoint) {
-      @include col(6/12);
-      @include shift(-2/12);
-    }
-    h3 {
-      font-size: 24px;
-      line-height: 30px;
-      color: $red;
     width: $col-2-3 - 8%;
+    float: left;
+    @include below($med-breakpoint) {
+      width: 100%;
     }
   }
   .donate {
@@ -235,29 +208,6 @@
 .stickers {
   font-family: $sans;
   margin-bottom: 40px;
-  > div {
-    @include center($center_mw, $center_pad);
-  }
-  article {
-    font-size: 16px;
-    line-height: 26px;
-    p {
-      margin-bottom: 0;
-    }
-    a {
-      display: inline-block;
-      margin-bottom: 20px;
-      color: $seafoam;
-      font-weight: bold;
-      font-size: $small-font;
-      line-height: 18px;
-      text-decoration: none;
-      transition: all 200ms ease;
-      &:hover {
-        color: darken($seafoam, 5%);
-      }
-    }
-  }
   h5 {
     font-size: $small-font;
     line-height: 16px;
@@ -267,45 +217,54 @@
     margin-bottom: 10px;
   }
   img {
-    @include col(2/7);
-    &:last-child {
-      @include col(3/7);
+    width: 30%;
+    max-width: 30%;
+    height: auto;
+  }
+  p {
+    margin-bottom: 0;
+  }
+  .tiny-link {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: $seafoam;
+    font-weight: bold;
+    font-size: $small-font;
+    line-height: 18px;
+    text-decoration: none;
+    transition: all 200ms ease;
+    &:hover {
+      color: darken($seafoam, 5%);
     }
   }
-    }
+  @include below($med-breakpoint) {
+    display: none;
   }
+}
+.sticker-order {
+  vertical-align: top;
+  width: 30%;
+  display: inline-block;
+  margin-left: 5%;
+}
+.sticker-pics {
+  display: inline-block;
+  width: 62%;
 }
 
 footer {
   background: #f4f8f9;
-  font-size: 16px;
-  line-height: 20px;
-  font-family: $sans;
   padding-top: 20px;
   padding-bottom: 20px;
   border-top: 1px solid darken($light-blue, 15%);
   text-align: center;
-  color: darken(#dbe4ea, 10%);
-  > div {
-    @include center($center_mw, $center_pad);
-  }
-  @include breakpoint($breakpoint) {
-    padding-top: 40px;
-    padding-bottom: 40px;
-  }
   p {
-    margin-bottom: 20px;
-  }
-  a {
-    @include col(4/12, $offset: 4/12);
-    @include breakpoint($breakpoint) {
-      @include col(2/12, $offset: 5/12);
-    }
-    img {
-      display: block;
-    }
     color: darken($light-blue, 15%);
   }
+}
+.mt-logo {
+  width: 150px;
+  height: auto;
 }
 
 .browsehappy {
