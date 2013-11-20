@@ -9,6 +9,10 @@ html {
   }
 }
 
+section {
+  padding: 50px 0;
+}
+
 .column-contain {
   padding-left: $center_pad;
   padding-right: $center_pad;
@@ -22,6 +26,25 @@ h1, h2, h3, h4, h5, h6 {
   font-family: $sans;
 }
 
+h2 {
+  font-size: 24px;
+  line-height: 30px;
+  color: $red;
+  margin-bottom: 15px;
+}
+
+p {
+  color: #56585E;
+  line-height: 30px;
+  font: {
+    size:   $large-font;
+    family: $serif;
+  }
+}
+
+.sans {
+  font-family: $sans;
+}
 pre {
   padding:    20px;
   font-size:  $small-font;
@@ -33,4 +56,8 @@ pre, code {
   background:    none;
   border-radius: 0;
   margin-bottom: 0;
+}
+
+ul {
+  list-style-type: none;
 }
