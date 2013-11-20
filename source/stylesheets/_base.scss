@@ -11,6 +11,10 @@ html {
 
 section {
   padding: 50px 0;
+
+  @include below(900px) {
+    padding: 20px;
+  }
 }
 
 .column-contain {
