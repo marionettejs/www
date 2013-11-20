@@ -1,30 +1,43 @@
 <section class="code-samples column-contain">
-    <div class="code-sample-block first-sample-block">
-        <h4 class="code-header">Wreqr.CommandStorage</h4>
-        <pre class="prettyprint"><code>var CommandStorage = function(options) {
-            this.options = options;
-            this._commands = {};
+  <div class="code-sample-block first-sample-block">
+      <h4 class="code-header">Setup</h4>
+      <pre class="prettyprint">
+<code>
+var SingleLink = Backbone.Marionette.ItemView.extend({
+  tagName: "li",
+  template: _.template("&lt;a href='<%%-path%>'><%%-path%>&lt;/a>")
+});
 
-            if (_.isFunction(this.initialize)) {
-                this.initialize(options);
-            }
-        };</code></pre>
-    </div>
-    <div class="code-sample-block second-sample-block">
-        <h4 class="code-header">Callbacks</h4>
-        <pre class="prettyprint"><code>Marionette.Callbacks = function() {
-            this._deferred = Marionette.$.Deferred();
-            this._callbacks = [];
-        };</code></pre>
-    </div>
-    <div class="code-sample-block code-results-block">
-        <h4 class="code-header code-header-results">Results</h4>
-        <div class="result">
-          <ul>
-              <li>List Item Here</li>
-              <li>List Item Here</li>
-          </ul>
-        </div>
-    </div>
-    <div class="cl"></div>
+var ListView = Backbone.Marionette.CollectionView.extend({
+  tagName: 'ul',
+  itemView: SingleLink
+});
+</code></pre>
+  </div>
+  <div class="code-sample-block second-sample-block">
+      <h4 class="code-header">Using</h4>
+      <pre class="prettyprint">
+      <code>
+var list = new Backbone.Collection([
+  {path: 'http://google.com'},
+  {path: 'http://mojotech.com'},
+]);
+
+(new ListView({
+  collection: list,
+  el: '.link-area'
+})).render();
+
+      </code></pre>
+  </div>
+  <div class="code-sample-block code-results-block">
+      <h4 class="code-header code-header-results">Results</h4>
+      <div class="result">
+        <ul>
+            <li><a href="http://google.com", target="_blank">http://google.com</a></li>
+            <li><a href="http://mojotech.com", target="_blank">http://mojotech.com</a></li>
+        </ul>
+      </div>
+  </div>
+  <div class="cl"></div>
 </section>
