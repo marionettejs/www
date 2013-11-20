@@ -1,0 +1,42 @@
+%section.column-contain#download
+  .section-header
+    %h2.left Downloads and Documentation
+    %small.right
+      = data.global.version
+      %span.middot ·
+      = link_to 'See Upgrade Guide', 'https://github.com/marionettejs/backbone.marionette/blob/master/upgradeGuide.md'
+      %span.middot ·
+      = link_to 'See Changelog', 'https://github.com/marionettejs/backbone.marionette/blob/master/changelog.md'
+    .cl
+  .download-group
+    %h2 Pre-packaged
+    %p These archives contain all of the files you need to get started with Marionette, including Backbone, jQuery and all other prerequisites.
+    %p These packages include the standard and AMD versions of both the non-minified and minified versions of Marionette.
+    %h3 *nix (.tar.gz)
+    %p
+      = link_to 'backbone.marionette.tar.gz', 'downloads/backbone.marionette.tar.gz'
+    %h3 Windows (.zip)
+    %p
+      = link_to 'backbone.marionette.zip', 'downloads/backbone.marionette.zip'
+  .download-group
+    %h2 Bundled
+    %p Download the bundled backbone.marionette.js file with the Backbone.Wreqr and Backbone.BabySitter prerequisites built in.
+    .gw
+      %ul.g
+        %li= link_to 'backbone.marionette.js', 'downloads/backbone.marionette.js'
+        %li= link_to 'backbone.marionette.min.js', 'downloads/backbone.marionette.min.js'
+  .download-group
+    %h2 Core
+    %p Download the core backbone.marionette.js file, without Backbone.BabySitter or Backbone.Wreqr.
+    %p These pre-requisites are still required for Marionette to run, but this allows you to download them separately and update them independently.
+    %h3 Standard .js
+    .gw
+      %ul.g
+        %li= link_to 'backbone.marionette.js', 'downloads/core/backbone.marionette.js'
+        %li= link_to 'backbone.marionette.min.js', 'downloads/core/backbone.marionette.min.js'
+    %h3 AMD / RequireJS
+    .gw
+      %ul.g
+        %li= link_to 'backbone.marionette.js', 'downloads/core/amd/backbone.marionette.js'
+        %li= link_to 'backbone.marionette.min.js', 'downloads/core/amd/backbone.marionette.min.js'
+  .cl

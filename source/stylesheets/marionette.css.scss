@@ -43,6 +43,24 @@
   }
 }
 
+.download-group {
+  float: left;
+  width: 33.33%;
+
+  p {
+    width:     85%;
+    font-size: $mid-font;
+  }
+
+  ul {
+    padding: 0;
+  }
+
+  a {
+    font-size: $mid-font;
+  }
+}
+
 .about {
   padding-left: $center_pad;
   padding-right: $center_pad;
