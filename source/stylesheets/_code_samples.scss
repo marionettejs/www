@@ -17,7 +17,7 @@
     }
   }
   .code-results-block {
-    background-color: #ececec;
+    background-color: lighten($light-grey, 4%);
     border-right: none;
     @include border-radius(0 5px 5px 0);
   }
