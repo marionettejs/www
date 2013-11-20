@@ -47,6 +47,12 @@
 .download-group {
   float: left;
   width: 33.33%;
+  @include below($med-breakpoint) {
+    width: 100%;
+    border-bottom: 1px solid darken($light-blue, 4%);
+    padding: 30px 0;
+  }
+
 
   p {
     width:     85%;
@@ -55,6 +61,12 @@
 
   a {
     font-size: $mid-font;
+  }
+
+  &:nth-child(4) {
+    @include below($med-breakpoint) {
+      border: none;
+    }
   }
 }
 
