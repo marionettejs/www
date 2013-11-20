@@ -78,3 +78,9 @@ ul {
 .right {
   float: right;
 }
+
+.hidden-xs {
+  @include below($sm-breakpoint) {
+    display: none;
+  }
+}
