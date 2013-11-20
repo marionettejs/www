@@ -1,13 +1,13 @@
 @charset "UTF-8";
 @import 'compass';
 @import 'vendor/mo';
+@import 'vendor/prettify/prettify';
+@import 'vendor/prettify/marionette';
 @import 'rgbapng';
 @import 'jeet';
 @import 'jeet/_reset';
 @import 'fonts/fonts';
 @import 'variables';
-@import 'prettify/prettify';
-@import 'prettify/marionette';
 @import 'animations';
 @import 'base';
 @import 'ui';
