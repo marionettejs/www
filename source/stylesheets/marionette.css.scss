@@ -15,6 +15,10 @@
 @import 'ribbon';
 @import 'code_samples';
 
+.cl {
+  clear: both;
+}
+
 .about {
   padding-left: $center_pad;
   padding-right: $center_pad;
