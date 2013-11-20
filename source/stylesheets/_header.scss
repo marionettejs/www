@@ -33,7 +33,5 @@
   padding:    0 $center_pad 40px;
   overflow:   hidden;
   text-align: center;
-
-  @include background-image(radial-gradient(center center, 100% 100%, rgba(255,255,255,.75) 0%, rgba(0, 0, 1, 0.08) 100%));
   background-color: $light-blue;
 }
