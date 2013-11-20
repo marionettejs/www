@@ -36,9 +36,16 @@
     color: darken($light-grey, 30%);
     background-color: $light-grey;
     position: relative;
+    text-align: center;
     @include border-radius(0 5px 5px 0);
   }
   .first-sample-block {
     @include border-radius(5px 0 0 5px);
+  }
+
+  a {
+    color:     $seafoam;
+    padding:   0 10px;
+    font-size: $mid-font;
   }
 }

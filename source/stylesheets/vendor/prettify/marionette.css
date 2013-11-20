@@ -36,7 +36,7 @@ li.L1,li.L3,li.L5,li.L7,li.L9 { }
 pre.prettyprint {
   border: 0;
   background: none;
-  padding: 30px;
+  padding: 0 30px;
 }
 code {
   padding: 0;
