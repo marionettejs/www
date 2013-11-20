@@ -1,0 +1,39 @@
+.about {
+  border-top: 0;
+}
+
+.top-quick-links {
+  background-color: darken($light-blue, 3%);
+}
+
+.about article {
+  width: 60%;
+
+  @include below(815px) {
+    width: 100%;
+  }
+}
+
+.quick-links {
+  width:            30%;
+  overflow:         hidden;
+  background-color: lighten($light-blue, 3%);
+
+  @include border-radius(5px);
+  @include below(815px) {
+    width: 100%;
+  }
+
+  nav {
+    padding: 15px;
+  }
+
+  a {
+    color:     $seafoam;
+    font-size: $mid-font;
+  }
+}
+
+.note {
+  font-size: $small-font;
+}
