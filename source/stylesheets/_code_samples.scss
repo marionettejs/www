@@ -37,13 +37,6 @@
     background-color: $light-grey;
     position: relative;
     @include border-radius(0 5px 5px 0);
-    &:after {
-      color: darken($light-grey, 20%);
-      content: "•••";
-      font-size: 26px;
-      @include pos(absolute, 4px, false, false, 20px);
-      @include size(20px, 10px);
-    }
   }
   .first-sample-block {
     @include border-radius(5px 0 0 5px);
