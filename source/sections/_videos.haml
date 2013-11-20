@@ -1,0 +1,19 @@
+%section.featured_videos.column-contain
+  %h2 Featured Videos
+  .slider2
+  .video_slideshow{"data-cycle-slides" => ".video_slide"}
+    .video_slide
+      %figure.vid
+        %iframe{:allowfullscreen => "", :frameborder => "0", :height => "720", :src => "//www.youtube-nocookie.com/embed/0o2whtCJw8I?rel=0", :width => "1280"}
+        %p
+          Check out the slide deck and other info from Amy's blog post about the presentation.
+      %figcaption
+        %p
+          Amy Palamountain gave a presentation on how to "Unsuck Your Backbone" at Codemania in New Zealand, in April of 2013. This is one of the best presentations I've seen, on a high level structure for your Backbone applications. Amy's experience in building scalable apps with composite application patterns in Windows shines through as she describes the patterns and practices that are baked in to Marionette.
+    .video_slide
+      %figure.vid
+        %iframe{:allowfullscreen => "", :frameborder => "0", :height => "720", :src => "//www.youtube.com/embed/VERQEr-bVTs", :width => "1280"}
+      %figcaption
+        %p
+          Derick Bailey's jQuery->Backbone->Marionette talk at the Houston Open Dev group. He moves from a jQuery application to a Backbone based structure, and introduces various parts of Marionette along the way.
+  .cl
