@@ -10,6 +10,7 @@
     float: left;
     width: 33%;
     color: #818285;
+    height: 360px;
     border-right: 2px solid darken(#304357, 6%);
     background-color: darken(#304357, 5%);
     @include below($large-breakpoint) {
