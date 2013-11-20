@@ -307,43 +307,15 @@
     }
   }
   .donate {
-    font-family: $sans;
-    margin-bottom: 20px;
-    .donate_btn {
-      @include col(1/2);
-      margin-top: 5px;
-      text-align: center;
-      font-size: 14px;
-      line-height: 20px;
-      background: #ffbf5e;
-      padding: 5px;
-      letter-spacing: -.035em;
-      color: #003366;
-      font-style: italic;
-      text-decoration: none;
-      font-weight: bold;
-      border-radius: 999px;
-      margin-bottom: 20px;
-      &:hover {
-        background: darken(#ffbf5e, 3%);
-      }
+    .btn-donate {
+      display: inline-block;
     }
     p {
-      clear: both;
-      display: block;
+      margin-left: 12px;
+      display: inline-block;
       font-size: $small-font;
       line-height: 16px;
       color: #a7a9ac;
-    }
-    @include breakpoint($breakpoint) {
-      .donate_btn {
-        @include col(3/12);
-        text-align: center;
-      }
-      p {
-        @include col(8/12);
-        margin-top: 14px;
-      }
     }
   }
 }
