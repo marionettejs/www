@@ -15,19 +15,8 @@
 @import 'ribbon';
 
 .about {
-  margin: 15px auto 20px;
-  @include breakpoint($breakpoint) {
-    margin-bottom: 74px;
-  }
-  font-size: 16px;
-  line-height: 26px;
   padding-left: $center_pad;
   padding-right: $center_pad;
-  @include breakpoint($breakpoint) {
-    @include center($center_mw, $center_pad);
-    font-size: 20px;
-    line-height: 32px;
-  }
   article {
     margin-bottom: 20px;
     @include breakpoint($breakpoint) {
@@ -201,26 +190,13 @@
 }
 
 .featured_videos {
-  border: 1px solid #dbe4ea;
-  border-left: 0;
-  border-right: 0;
   font-size: 16px;
   line-height: 26px;
-  padding-top: 20px;
-  padding-bottom: 20px;
   p:last-of-type {
     margin-bottom: 0;
   }
-  > div {
-    @include center($center_mw, $center_pad);
-  }
   header {
     position: relative;
-    @include breakpoint($breakpoint) {
-      @include col(6/12, $offset: 5/12);
-      top: 49px;
-      margin-top: -49px;
-    }
     h3 {
       font-size: 24px;
       line-height: 30px;
@@ -411,15 +387,6 @@
       @include col(3/7);
     }
   }
-  @include breakpoint($breakpoint) {
-    margin-bottom: 74px;
-    article {
-      @include col(3/12);
-      @include shift(8/12);
-    }
-    .sticker_pics {
-      @include col(7/12);
-      @include shift(-2/12);
     }
   }
 }

@@ -9,7 +9,15 @@ html {
   }
 }
 
+.column-contain {
+  padding-left: $center_pad;
+  padding-right: $center_pad;
   border-top: 1px solid darken($light-blue, 3%);
+  margin: 0 auto;
+  width: 90%;
+  max-width: 1200px;
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: $sans;
 }
