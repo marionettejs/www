@@ -18,3 +18,4 @@ source/stylesheets/.git
 *.swp
 *.swo
 .DS_Store
+*.zip

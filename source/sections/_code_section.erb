@@ -1,0 +1,43 @@
+<section class="code-samples column-contain hidden-xs">
+  <div class="code-sample-block first-sample-block">
+      <h4 class="code-header">Setup</h4>
+      <pre class="prettyprint">
+<code>
+var SingleLink = Backbone.Marionette.ItemView.extend({
+  tagName: "li",
+  template: _.template("&lt;a href='<%%-path%>'><%%-path%>&lt;/a>")
+});
+
+var ListView = Backbone.Marionette.CollectionView.extend({
+  tagName: 'ul',
+  itemView: SingleLink
+});
+</code></pre>
+  </div>
+  <div class="code-sample-block second-sample-block">
+      <h4 class="code-header">Using</h4>
+      <pre class="prettyprint">
+      <code>
+var list = new Backbone.Collection([
+  {path: 'http://google.com'},
+  {path: 'http://mojotech.com'},
+]);
+
+(new ListView({
+  collection: list,
+  el: '.link-area'
+})).render();
+
+      </code></pre>
+  </div>
+  <div class="code-sample-block code-results-block">
+      <h4 class="code-header code-header-results">Results</h4>
+      <div class="result">
+        <ul>
+            <li><a href="http://google.com", target="_blank">http://google.com</a></li>
+            <li><a href="http://mojotech.com", target="_blank">http://mojotech.com</a></li>
+        </ul>
+      </div>
+  </div>
+  <div class="cl"></div>
+</section>

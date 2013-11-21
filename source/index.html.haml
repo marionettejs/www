@@ -1,0 +1,54 @@
+.masthead
+  = image_tag 'marionette_logo.png', alt: 'Marionette.js – A scalable and composite application architecture for Backbone.js', class: 'primary-logo'
+  %a.btn.download-button{:href => "#download"}
+    Download
+    %span= data.global.version
+    %a.on-github{href: "https://github.com/marionettejs/backbone.marionette", target: "_blank"} Marionette.js on GitHub
+.ribbon
+  %div
+    %h1.headline
+      Make your Backbone applications
+      %span dance!
+
+= render :haml, "sections/_about"
+= render :haml, "sections/_download"
+= render :erb, "sections/_code_section"
+= render :haml, "sections/_videos"
+= render :haml, "sections/_books"
+= render :haml, "sections/_support"
+= render :haml, "sections/_stickers"
+= render :haml, "sections/_who_is_using"
+
+%footer
+  %p website handcrafted &amp; coded by
+  %a{href: "http://mojotech.com", target:"_blank"}
+    =image_tag 'mojotech.png', alt: 'MojoTech', class: 'mt-logo'
+/[if lt IE 9]
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<haml:loud> javascript_include_tag(&amp;quot;libs/jquery-1.10.2.min.js&amp;quot;).gsub(&amp;quot;&amp;lt;/&amp;quot;, &amp;quot;&amp;lt;\\/&amp;quot;) </haml:loud>')</script>
+/ [if gt IE 8]><!
+%script{:src => "//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"}
+:javascript
+  window.jQuery || document.write(' javascript_include_tag("libs/jquery-2.0.3.min.js").gsub("</", "<\\/") ')/ <![endif]
+= javascript_include_tag "footer"
+:javascript
+  // Flattr
+  (function() {
+      var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
+      s.type = 'text/javascript';
+      s.async = true;
+      s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
+      t.parentNode.insertBefore(s, t);
+  })();
+
+  // Google Analytics
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-34606707-1']);
+  _gaq.push(['_setDomainName', 'marionettejs.com']);
+  _gaq.push(['_setAllowLinker', true]);
+  _gaq.push(['_trackPageview']);
+  (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();

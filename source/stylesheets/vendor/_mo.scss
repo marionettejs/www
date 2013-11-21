@@ -1,0 +1,99 @@
+// v0.2.2
+@mixin above($above) {
+  @media screen and (min-width: $above){
+    @content;
+  }
+}
+
+@mixin below($below) {
+  @media screen and (max-width: $below){
+    @content;
+  }
+}
+
+@mixin between($low, $high) {
+  @media screen and (max-width: $low), screen and (max-width: $high) {
+    @content;
+  }
+}
+
+@mixin bg-color($r, $g, $b: false, $a: false) {
+  $bg_color: #FFF;
+  $ie_8: '\0/';
+
+  @if $b {
+    $bg_color: rgba($r, $g, $b, $a);
+  } @else {
+    $bg_color: transparentize($r, 1 - $g);
+  }
+
+  background-color: opacify($bg_color, 1);
+  background-color: $bg_color;
+
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{ie-hex-str($bg_color)}', endColorstr='#{ie-hex-str($bg_color)}')#{$ie_8};
+  background-color: transparent#{$ie_8};
+  zoom: 1#{$ie_8};
+
+  @content;
+}
+
+@mixin pos($location: false, $top: false, $right: false, $bottom: false, $left: false) {
+  @if $location == "relative" or $location == "absolute" or $location == "fixed" or $location == "static" {
+    position: $location;
+  } @else {
+    $left   : $bottom;
+    $bottom : $right;
+    $right  : $top;
+    $top    : $location;
+  }
+
+  @if $left {
+    left: $left;
+  }
+
+  @if $top {
+    top: $top;
+  }
+
+  @if $right {
+    right: $right;
+  }
+
+  @if $bottom {
+    bottom: $bottom;
+  }
+
+  @content;
+}
+
+@mixin ellipsis($width) {
+  width:          $width;
+  overflow:       hidden;
+  white-space:    nowrap;
+  text-overflow:  ellipsis;
+}
+
+@mixin size($width, $height: false) {
+  width:  $width;
+
+  @if $height  {
+    height: $height;
+  } @else {
+    height: $width;
+  }
+}
+
+@mixin retina-background-image($name, $extension: png) {
+  background-image: url("#{$name}.#{$extension}");
+
+  @media
+  only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (  min--moz-device-pixel-ratio: 2),
+  only screen and (    -o-min-device-pixel-ratio: 2/1),
+  only screen and (        min-device-pixel-ratio: 2),
+  only screen and (                min-resolution: 192dpi),
+  only screen and (                min-resolution: 2dppx) {
+    background-image: url("#{$name}@2x.#{$extension}");
+    background-size: cover;
+  }
+}

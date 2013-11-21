@@ -1,0 +1,20 @@
+.stickers {
+  @include below(700px) { display: none; }
+}
+
+.sticker-pics {
+  width:      65%;
+  text-align: center;
+}
+
+.sticker-order {
+  width: 30%;
+
+  p {
+    font-size: $mid-font;
+  }
+}
+
+.tiny-link {
+  color: $seafoam;
+}

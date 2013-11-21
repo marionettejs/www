@@ -1,0 +1,50 @@
+/* Icons */
+@font-face {
+    font-family: 'icomoon';
+    src:url('fonts/icons/icomoon.eot');
+    src:url('fonts/icons/icomoon.eot?#iefix') format('embedded-opentype'),
+        url('fonts/icons/icomoon.ttf') format('truetype'),
+        url('fonts/icons/icomoon.woff') format('woff'),
+        url('fonts/icons/icomoon.svg#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class*="icon-"] {
+    font-family: 'icomoon';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-twitter:before {
+    content: "\e600";
+}
+.icon-google-plus:before {
+    content: "\e601";
+}
+.icon-github:before {
+    content: "\e602";
+}
+.icon-arrow-right:before {
+    content: "\e603";
+}
+
+/* Font */
+@font-face {
+    font-family: 'avenir_lt_std45_book';
+    src: url('fonts/avenir/avenirltstd-book-webfont.eot');
+    src: url('fonts/avenir/avenirltstd-book-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/avenir/avenirltstd-book-webfont.woff') format('woff'),
+         url('fonts/avenir/avenirltstd-book-webfont.ttf') format('truetype'),
+         url('fonts/avenir/avenirltstd-book-webfont.svg#avenir_lt_std45_book') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}

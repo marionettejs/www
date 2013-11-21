@@ -1,0 +1,46 @@
+a.btn {
+  color:            #fff;
+  height:           $button-size;
+  display:          inline-block;
+  background:       $seafoam;
+  line-height:      $button-size;
+  text-decoration:  none;
+
+  font: {
+    size:   16px;
+    weight: bold;
+    family: $sans;
+  }
+
+  &:hover {
+    background: darken($seafoam, 5%);
+  }
+
+  @include border-radius($button-size);
+
+  &.btn-donate {
+    padding: 0 50px;
+    background-color: $orange;
+    color: #003366;
+    font-style: italic;
+    &:hover {
+      background: darken($orange, 3%);
+    }
+  }
+}
+
+.section-header {
+  margin-bottom: $center_pad;
+}
+
+.headline {
+  color:        $gray;
+  margin:       0;
+  text-align:   center;
+  line-height:  26px;
+
+  font: {
+    size:   $large-font;
+    weight: bold;
+  }
+}

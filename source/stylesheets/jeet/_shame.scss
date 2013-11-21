@@ -1,0 +1,39 @@
+$g: $gutter;
+@mixin col($args...) {
+    @include column($args...)
+}
+@function get_span($ratio: 1) {
+    @return $ratio * 100;
+}
+@function get_column($ratios: 1, $g: $gutter) {
+    @if $parent_first == false { $ratios: reverse($ratios); }
+    $w: 100;
+    @each $ratio in $ratios {
+        $g: $g / $w * 100;
+        $w: 100 * $ratio - $g + $ratio * $g;
+    }
+    @return $w $g;
+}
+@function get_layout_direction() {
+    $result: if($layout_direction == RTL, right, left);
+    @return $result;
+}
+@function replace_nth($list, $index, $value) {
+    $result: ();
+    $index: if($index < 0, length($list) + $index + 1, $index);
+    @for $i from 1 through length($list) {
+        @if $i == $index {
+           $result: append($result, $value);
+        } @else {
+            $result: append($result, nth($list, $i));
+        }
+    }
+    @return $result;
+}
+@function reverse($list) {
+    $result: ();
+    @each $item in $list {
+        @return join($item, $result);
+    }
+    @return $result;
+}

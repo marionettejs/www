@@ -1,0 +1,17 @@
+.ribbon {
+  padding:          0 $center_pad;
+  margin-bottom:    60px;
+  background-color: lighten($light-blue, 3%);
+
+  border: {
+    top:    1px solid darken($light-blue, 7%);
+    bottom: 1px solid darken($light-blue, 7%);
+    left:   0;
+    right:  0;
+  }
+
+  .headline {
+    padding: 40px;
+    span { color: $red; }
+  }
+}

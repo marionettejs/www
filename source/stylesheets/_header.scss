@@ -1,0 +1,37 @@
+.primary-logo {
+  width:    177px;
+  margin:   40px auto;
+  display:  block;
+}
+
+.download-button {
+  width:         177px;
+  margin-bottom: 15px;
+
+  span {
+    font-size: $small-font;
+  }
+}
+
+.on-github {
+  color:        $gray;
+  display:      block;
+  line-height:  16px;
+
+  font: {
+    size:   $small-font;
+    family: $sans;
+  }
+
+  &:hover {
+    text-decoration: none;
+    color: darken($gray, 5%);
+  }
+}
+
+.masthead {
+  padding:    0 $center_pad 40px;
+  overflow:   hidden;
+  text-align: center;
+  background-color: $light-blue;
+}

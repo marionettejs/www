@@ -4,12 +4,16 @@
 # TEAM
 
     Location: Leipzig and Paderborn, Germany
-
     Stephan Tyziak -- logo design -- @visged
     Sven Hofmann -- web design -- @svenhofmann
     René Zschoch -- frontend development (html, css) -- @prop79
     Benjamin Knofe -- ruby development -- @videosynthesis
     Torsten Baldes -- minor last frontend tweaks -- @tobaco
+
+    Location: MojoTech - Providence, RI, USA
+    Sam Saccone - frontend development (Middleman integration) -- @sam_saccone
+    Matt Rossi - web design -- @matthewjrossi
+    Cory Simmons - frontend development (html, css, Jeet integration) -- @ccccory
 
 # TECHNOLOGY COLOPHON
 
@@ -18,9 +22,9 @@
 
 # TOOLS
 
-    inuit.css -- Powerful, scalable, Sass-based, BEM, OOCSS framework. -- https://github.com/csswizardry/inuit.css
+    Jeet Framework -- A light, semantic, responsive, CSS framework built from the best parts. -- https://jeetframework.com
     Middleman -- Middleman is a static site generator using all the shortcuts and tools in modern web development. -- http://middlemanapp.com/
 
 # SOFTWARE
 
-    Sublime Text 2: http://www.sublimetext.com/
+    Sublime Text: http://www.sublimetext.com/

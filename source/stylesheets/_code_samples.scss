@@ -1,0 +1,51 @@
+.code-samples {
+  margin-bottom: 80px;
+  .code-samples {
+    overflow: hidden;
+    border-right: 1px #2c3e50 solid;
+    background-color: #34495E;
+    border-radius: 5px;
+  }
+  .code-sample-block {
+    float: left;
+    width: 33%;
+    color: #818285;
+    height: 360px;
+    border-right: 2px solid darken(#304357, 6%);
+    background-color: darken(#304357, 5%);
+    @include below($large-breakpoint) {
+      width: 100%;
+    }
+  }
+  .code-results-block {
+    background-color: lighten($light-grey, 4%);
+    border-right: none;
+    @include border-radius(0 5px 5px 0);
+  }
+  .code-header {
+    background-color: #304357;
+    color: #dbe4ea;
+    font-size: $small-font;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 0;
+    line-height: 70px;
+    border-radius: 5px 5px 0 0;
+  }
+  .code-header-results {
+    color: darken($light-grey, 30%);
+    background-color: $light-grey;
+    position: relative;
+    text-align: center;
+    @include border-radius(0 5px 5px 0);
+  }
+  .first-sample-block {
+    @include border-radius(5px 0 0 5px);
+  }
+
+  a {
+    color:     $seafoam;
+    padding:   0 10px;
+    font-size: $mid-font;
+  }
+}
