@@ -16,6 +16,7 @@
 
 .quick-links {
   width:            30%;
+  border:           solid 1px darken($light-blue, 3%);
   overflow:         hidden;
   background-color: lighten($light-blue, 3%);
 
@@ -29,8 +30,14 @@
   }
 
   a {
-    color:     $seafoam;
-    font-size: $mid-font;
+    color:           $seafoam;
+    text-decoration: none;
+
+    font: {
+      size:   $mid-font;
+      weight: 500;
+      family: $sans;
+    }
   }
 }
 
