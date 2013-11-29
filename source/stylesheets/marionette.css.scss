@@ -16,6 +16,7 @@
 @import "about";
 @import "stickers";
 @import "screencasts";
+@import "downloads";
 
 .cl {
   clear: both;
@@ -47,33 +48,6 @@
     max-height: 60px;
   }
 }
-
-.download-group {
-  float: left;
-  width: 33.33%;
-  @include below($med-breakpoint) {
-    width: 100%;
-    border-bottom: 1px solid darken($light-blue, 4%);
-    padding: 30px 0;
-  }
-
-
-  p {
-    width:     85%;
-    font-size: $mid-font;
-  }
-
-  a {
-    font-size: $mid-font;
-  }
-
-  &:nth-child(4) {
-    @include below($med-breakpoint) {
-      border: none;
-    }
-  }
-}
-
 
 .featured_videos {
   position: relative;
