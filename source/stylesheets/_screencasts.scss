@@ -1,3 +1,5 @@
+$screencast-adaptive-snap: 777px;
+
 .screencasts {
   .description {
     display:        block;
@@ -8,5 +10,35 @@
 
   .link {
     font-size: 19px;
+  }
+
+  .copy {
+    width:   60%;
+    display: inline-block;
+
+    @include below($screencast-adaptive-snap) {
+      width: 90%;
+      float: left;
+    }
+  }
+
+  li {
+    overflow:   hidden;
+    font-size:  0;
+    border-bottom: solid 1px $light-grey;
+    padding: 30px 0;
+
+    &:last-child {
+      border-bottom: solid 0px transparent;
+    }
+  }
+}
+
+.screencast-thumb {
+  width:        30%;
+  margin-right:  10%;
+
+  @include below($screencast-adaptive-snap) {
+    display: none;
   }
 }
