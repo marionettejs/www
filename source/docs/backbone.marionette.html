@@ -40,7 +40,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>v1.4.0</p>
+              <p>v1.4.1</p>
 <p>Copyright (c)2013 Derick Bailey, Muted Solutions, LLC.
 Distributed under MIT license</p>
 <p><a href="http://marionettejs.com">http://marionettejs.com</a></p>
@@ -3015,7 +3015,7 @@ at some point however this may be removed</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="keyword">this</span>.options = options || {};</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">this</span>.options = _.extend({}, <span class="keyword">this</span>.options, options);</pre></div></div>
             
         </li>
         
