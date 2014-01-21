@@ -40,7 +40,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>v1.5.0</p>
+              <p>v1.5.1</p>
 <p>Copyright (c)2014 Derick Bailey, Muted Solutions, LLC.
 Distributed under MIT license</p>
 <p><a href="http://marionettejs.com">http://marionettejs.com</a></p>
@@ -2112,6 +2112,7 @@ a selector and regionType:</p>
 
     <span class="keyword">if</span> (regionConfig.selector) {
       selector = regionConfig.selector;
+      <span class="keyword">delete</span> regionConfig.selector;
     }</pre></div></div>
             
         </li>
@@ -2137,7 +2138,14 @@ a selector and regionType:</p>
 
     <span class="keyword">if</span> (regionConfig.regionType) {
       RegionType = regionConfig.regionType;
-    }</pre></div></div>
+      <span class="keyword">delete</span> regionConfig.regionType;
+    }
+
+    <span class="keyword">if</span> (regionIsString || regionIsType) {
+      regionConfig = {};
+    }
+
+    regionConfig.el = selector;</pre></div></div>
             
         </li>
         
@@ -2152,9 +2160,7 @@ a selector and regionType:</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="keyword">var</span> region = <span class="keyword">new</span> RegionType({
-      el: selector
-    });</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">var</span> region = <span class="keyword">new</span> RegionType(regionConfig);</pre></div></div>
             
         </li>
         
@@ -3794,7 +3800,8 @@ fragment and then insert that document fragment into the page</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>  initRenderBuffer: <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
-    <span class="keyword">this</span>.elBuffer  = document.createDocumentFragment();
+    <span class="keyword">this</span>.elBuffer = document.createDocumentFragment();
+    <span class="keyword">this</span>._bufferedChildren = [];
   },
 
   startBuffering: <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
@@ -3803,9 +3810,19 @@ fragment and then insert that document fragment into the page</p>
   },
 
   endBuffering: <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
-    <span class="keyword">this</span>.appendBuffer(<span class="keyword">this</span>, <span class="keyword">this</span>.elBuffer);
-    <span class="keyword">this</span>.initRenderBuffer();
     <span class="keyword">this</span>.isBuffering = <span class="literal">false</span>;
+    <span class="keyword">this</span>.appendBuffer(<span class="keyword">this</span>, <span class="keyword">this</span>.elBuffer);
+    <span class="keyword">this</span>._triggerShowBufferedChildren();
+    <span class="keyword">this</span>.initRenderBuffer();
+  },
+
+  _triggerShowBufferedChildren: <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+    <span class="keyword">if</span> (<span class="keyword">this</span>._isShown) {
+      _.each(<span class="keyword">this</span>._bufferedChildren, <span class="function"><span class="keyword">function</span> <span class="params">(child)</span> {</span>
+        Marionette.triggerMethod.call(child, <span class="string">"show"</span>);
+      });
+      <span class="keyword">this</span>._bufferedChildren = [];
+    }
   },</pre></div></div>
             
         </li>
@@ -4494,6 +4511,7 @@ document, which are expensive.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>      collectionView.elBuffer.appendChild(itemView.el);
+      collectionView._bufferedChildren.push(itemView);
     }
     <span class="keyword">else</span> {</pre></div></div>
             
@@ -4836,6 +4854,7 @@ HTML appended to the composite view instance.</p>
             <div class="content"><div class='highlight'><pre>  appendHtml: <span class="function"><span class="keyword">function</span><span class="params">(compositeView, itemView, index)</span>{</span>
     <span class="keyword">if</span> (compositeView.isBuffering) {
       compositeView.elBuffer.appendChild(itemView.el);
+      compositeView._bufferedChildren.push(itemView);
     }
     <span class="keyword">else</span> {</pre></div></div>
             
