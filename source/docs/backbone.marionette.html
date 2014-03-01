@@ -40,7 +40,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>v1.6.2</p>
+              <p>v1.6.3</p>
 <p>Copyright (c)2014 Derick Bailey, Muted Solutions, LLC.
 Distributed under MIT license</p>
 <p><a href="http://marionettejs.com">http://marionettejs.com</a></p>
@@ -78,9 +78,9 @@ Distributed under MIT license</p>
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
               <p>v0.1.0</p>
-<p>Copyright (c)2013 Derick Bailey, Muted Solutions, LLC.
+<p>Copyright (c)2014 Derick Bailey, Muted Solutions, LLC.
 Distributed under MIT license</p>
-<p><a href="http://github.com/marionettejs/backbone.babysitter/">http://github.com/marionettejs/backbone.babysitter/</a></p>
+<p><a href="http://github.com/marionettejs/backbone.babysitter">http://github.com/marionettejs/backbone.babysitter</a></p>
 <h2 id="backbone-childviewcontainer">Backbone.ChildViewContainer</h2>
 
             </div>
@@ -231,6 +231,7 @@ a custom key to store an retrieve the view.</p>
       }
 
       <span class="keyword">this</span>._updateLength();
+      <span class="keyword">return</span> <span class="keyword">this</span>;
     },</pre></div></div>
             
         </li>
@@ -316,7 +317,7 @@ stable index.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
-              <p>retrieve a view by it&#39;s <code>cid</code> directly</p>
+              <p>retrieve a view by its <code>cid</code> directly</p>
 
             </div>
             
@@ -406,6 +407,7 @@ stable index.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>      <span class="keyword">this</span>._updateLength();
+      <span class="keyword">return</span> <span class="keyword">this</span>;
     },</pre></div></div>
             
         </li>
@@ -535,8 +537,8 @@ collection related features.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-30">&#182;</a>
               </div>
-              <p>v0.2.0</p>
-<p>Copyright (c)2013 Derick Bailey, Muted Solutions, LLC.
+              <p>v1.0.0</p>
+<p>Copyright (c)2014 Derick Bailey, Muted Solutions, LLC.
 Distributed under MIT license</p>
 <p><a href="http://github.com/marionettejs/backbone.wreqr">http://github.com/marionettejs/backbone.wreqr</a></p>
 
@@ -1266,10 +1268,7 @@ of an application through event-driven architecture.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="keyword">var</span> protoSlice = Array.prototype.slice;
-<span class="function"><span class="keyword">function</span> <span class="title">slice</span><span class="params">(args)</span> {</span>
-  <span class="keyword">return</span> protoSlice.call(args);
-}
+            <div class="content"><div class='highlight'><pre><span class="keyword">var</span> slice = Array.prototype.slice;
 
 <span class="function"><span class="keyword">function</span> <span class="title">throwError</span><span class="params">(message, name)</span> {</span>
   <span class="keyword">var</span> error = <span class="keyword">new</span> Error(message);
@@ -1699,7 +1698,7 @@ handler names on the target object</p>
         throwError(<span class="string">"Method '"</span>+ methodName +<span class="string">"' was configured as an event handler, but does not exist."</span>);
       }
 
-      target.listenTo(entity, evt, method, target);
+      target.listenTo(entity, evt, method);
     });
   }</pre></div></div>
             
@@ -1717,7 +1716,7 @@ handler names on the target object</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>  <span class="function"><span class="keyword">function</span> <span class="title">bindToFunction</span><span class="params">(target, entity, evt, method)</span>{</span>
-      target.listenTo(entity, evt, method, target);
+      target.listenTo(entity, evt, method);
   }</pre></div></div>
             
         </li>
@@ -1739,7 +1738,7 @@ handler names on the target object</p>
 
     _.each(methodNames,<span class="function"><span class="keyword">function</span><span class="params">(methodName)</span> {</span>
       <span class="keyword">var</span> method = target[methodName];
-      target.stopListening(entity, evt, method, target);
+      target.stopListening(entity, evt, method);
     });
   }</pre></div></div>
             
@@ -1757,7 +1756,7 @@ handler names on the target object</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>  <span class="function"><span class="keyword">function</span> <span class="title">unbindToFunction</span><span class="params">(target, entity, evt, method)</span>{</span>
-      target.stopListening(entity, evt, method, target);
+      target.stopListening(entity, evt, method);
   }</pre></div></div>
             
         </li>
@@ -2062,9 +2061,7 @@ Marionette.Controller.extend = Marionette.extend;</pre></div></div>
   <span class="keyword">this</span>.el = Marionette.getOption(<span class="keyword">this</span>, <span class="string">"el"</span>);
 
   <span class="keyword">if</span> (!<span class="keyword">this</span>.el){
-    <span class="keyword">var</span> err = <span class="keyword">new</span> Error(<span class="string">"An 'el' must be specified for a region."</span>);
-    err.name = <span class="string">"NoElError"</span>;
-    <span class="keyword">throw</span> err;
+    throwError(<span class="string">"An 'el' must be specified for a region."</span>, <span class="string">"NoElError"</span>);
   }
 
   <span class="keyword">if</span> (<span class="keyword">this</span>.initialize){
@@ -2122,13 +2119,13 @@ a selector and regionType:</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>  buildRegion: <span class="function"><span class="keyword">function</span><span class="params">(regionConfig, defaultRegionType)</span>{</span>
-    <span class="keyword">var</span> regionIsString = (<span class="keyword">typeof</span> regionConfig === <span class="string">"string"</span>);
-    <span class="keyword">var</span> regionSelectorIsString = (<span class="keyword">typeof</span> regionConfig.selector === <span class="string">"string"</span>);
-    <span class="keyword">var</span> regionTypeIsUndefined = (<span class="keyword">typeof</span> regionConfig.regionType === <span class="string">"undefined"</span>);
-    <span class="keyword">var</span> regionIsType = (<span class="keyword">typeof</span> regionConfig === <span class="string">"function"</span>);
+    <span class="keyword">var</span> regionIsString = _.isString(regionConfig);
+    <span class="keyword">var</span> regionSelectorIsString = _.isString(regionConfig.selector);
+    <span class="keyword">var</span> regionTypeIsUndefined = _.isUndefined(regionConfig.regionType);
+    <span class="keyword">var</span> regionIsType = _.isFunction(regionConfig);
 
     <span class="keyword">if</span> (!regionIsType &amp;&amp; !regionIsString &amp;&amp; !regionSelectorIsString) {
-      <span class="keyword">throw</span> <span class="keyword">new</span> Error(<span class="string">"Region must be specified as a Region type, a selector string or an object with selector property"</span>);
+      throwError(<span class="string">"Region must be specified as a Region type, a selector string or an object with selector property"</span>);
     }
 
     <span class="keyword">var</span> selector, RegionType;</pre></div></div>
@@ -2492,7 +2489,7 @@ the region definition.</p>
       <span class="keyword">var</span> regions = {};
 
       _.each(regionDefinitions, <span class="function"><span class="keyword">function</span><span class="params">(definition, name)</span>{</span>
-        <span class="keyword">if</span> (<span class="keyword">typeof</span> definition === <span class="string">"string"</span>){
+        <span class="keyword">if</span> (_.isString(definition)){
           definition = { selector: definition };
         }
 
@@ -2632,8 +2629,7 @@ manager entirely</p>
             
             <div class="content"><div class='highlight'><pre>    close: <span class="function"><span class="keyword">function</span><span class="params">()</span>{</span>
       <span class="keyword">this</span>.removeRegions();
-      <span class="keyword">var</span> args = Array.prototype.slice.call(arguments);
-      Marionette.Controller.prototype.close.apply(<span class="keyword">this</span>, args);
+      Marionette.Controller.prototype.close.apply(<span class="keyword">this</span>, arguments);
     },</pre></div></div>
             
         </li>
@@ -2820,7 +2816,7 @@ specified templates from the cache:
             
             <div class="content"><div class='highlight'><pre>  clear: <span class="function"><span class="keyword">function</span><span class="params">()</span>{</span>
     <span class="keyword">var</span> i;
-    <span class="keyword">var</span> args = slice(arguments);
+    <span class="keyword">var</span> args = slice.call(arguments);
     <span class="keyword">var</span> length = args.length;
 
     <span class="keyword">if</span> (length &gt; <span class="number">0</span>){
@@ -2997,9 +2993,7 @@ custom rendering and template handling for all of Marionette.</p>
             <div class="content"><div class='highlight'><pre>  render: <span class="function"><span class="keyword">function</span><span class="params">(template, data)</span>{</span>
 
     <span class="keyword">if</span> (!template) {
-      <span class="keyword">var</span> error = <span class="keyword">new</span> Error(<span class="string">"Cannot render the template since it's false, null or undefined."</span>);
-      error.name = <span class="string">"TemplateNotFoundError"</span>;
-      <span class="keyword">throw</span> error;
+      throwError(<span class="string">"Cannot render the template since it's false, null or undefined."</span>, <span class="string">"TemplateNotFoundError"</span>);
     }
 
     <span class="keyword">var</span> templateFunc;
@@ -3042,9 +3036,7 @@ custom rendering and template handling for all of Marionette.</p>
             <div class="content"><div class='highlight'><pre>Marionette.View = Backbone.View.extend({
 
   constructor: <span class="function"><span class="keyword">function</span><span class="params">(options)</span>{</span>
-    _.bindAll(<span class="keyword">this</span>, <span class="string">"render"</span>);
-
-    <span class="keyword">var</span> args = Array.prototype.slice.apply(arguments);</pre></div></div>
+    _.bindAll(<span class="keyword">this</span>, <span class="string">"render"</span>);</pre></div></div>
             
         </li>
         
@@ -3078,10 +3070,10 @@ at some point however this may be removed</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>    <span class="keyword">this</span>.events = <span class="keyword">this</span>.normalizeUIKeys(_.result(<span class="keyword">this</span>, <span class="string">'events'</span>));
-    Backbone.View.prototype.constructor.apply(<span class="keyword">this</span>, args);
+    Backbone.View.prototype.constructor.apply(<span class="keyword">this</span>, arguments);
 
     Marionette.MonitorDOMRefresh(<span class="keyword">this</span>);
-    <span class="keyword">this</span>.listenTo(<span class="keyword">this</span>, <span class="string">"show"</span>, <span class="keyword">this</span>.onShowCalled, <span class="keyword">this</span>);
+    <span class="keyword">this</span>.listenTo(<span class="keyword">this</span>, <span class="string">"show"</span>, <span class="keyword">this</span>.onShowCalled);
   },</pre></div></div>
             
         </li>
@@ -3178,17 +3170,20 @@ swaps the @ui with the associated selector</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>  normalizeUIKeys: <span class="function"><span class="keyword">function</span><span class="params">(hash)</span> {</span>
+    <span class="keyword">var</span> _this = <span class="keyword">this</span>;
     <span class="keyword">if</span> (<span class="keyword">typeof</span>(hash) === <span class="string">"undefined"</span>) {
       <span class="keyword">return</span>;
     }
 
     _.each(_.keys(hash), <span class="function"><span class="keyword">function</span><span class="params">(v)</span> {</span>
-      <span class="keyword">var</span> split = v.split(<span class="string">"@ui."</span>);
-      <span class="keyword">if</span> (split.length === <span class="number">2</span>) {
-        hash[split[<span class="number">0</span>]+<span class="keyword">this</span>.ui[split[<span class="number">1</span>]]] = hash[v];
+      <span class="keyword">var</span> pattern = <span class="regexp">/@ui.[a-zA-Z_$0-9]*/g</span>;
+      <span class="keyword">if</span> (v.match(pattern)) {
+        hash[v.replace(pattern, <span class="function"><span class="keyword">function</span><span class="params">(r)</span> {</span>
+          <span class="keyword">return</span> _.result(_this, <span class="string">"ui"</span>)[r.slice(<span class="number">4</span>)];
+        })] = hash[v];
         <span class="keyword">delete</span> hash[v];
       }
-    }, <span class="keyword">this</span>);
+    });
 
     <span class="keyword">return</span> hash;
   },</pre></div></div>
@@ -3673,7 +3668,7 @@ Marionette.View.prototype.constructor which allows overriding</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>  constructor: <span class="function"><span class="keyword">function</span><span class="params">()</span>{</span>
-    Marionette.View.prototype.constructor.apply(<span class="keyword">this</span>, slice(arguments));
+    Marionette.View.prototype.constructor.apply(<span class="keyword">this</span>, arguments);
   },</pre></div></div>
             
         </li>
@@ -3764,7 +3759,7 @@ more events that are triggered.</p>
 
     <span class="keyword">this</span>.triggerMethod(<span class="string">'item:before:close'</span>);
 
-    Marionette.View.prototype.close.apply(<span class="keyword">this</span>, slice(arguments));
+    Marionette.View.prototype.close.apply(<span class="keyword">this</span>, arguments);
 
     <span class="keyword">this</span>.triggerMethod(<span class="string">'item:closed'</span>);
   }
@@ -3831,7 +3826,7 @@ that are forwarded through the collectionview</p>
             <div class="content"><div class='highlight'><pre>  constructor: <span class="function"><span class="keyword">function</span><span class="params">(options)</span>{</span>
     <span class="keyword">this</span>._initChildViewStorage();
 
-    Marionette.View.prototype.constructor.apply(<span class="keyword">this</span>, slice(arguments));
+    Marionette.View.prototype.constructor.apply(<span class="keyword">this</span>, arguments);
 
     <span class="keyword">this</span>._initialEvents();
     <span class="keyword">this</span>.initRenderBuffer();
@@ -3894,9 +3889,9 @@ binds to.</p>
             
             <div class="content"><div class='highlight'><pre>  _initialEvents: <span class="function"><span class="keyword">function</span><span class="params">()</span>{</span>
     <span class="keyword">if</span> (<span class="keyword">this</span>.collection){
-      <span class="keyword">this</span>.listenTo(<span class="keyword">this</span>.collection, <span class="string">"add"</span>, <span class="keyword">this</span>.addChildView, <span class="keyword">this</span>);
-      <span class="keyword">this</span>.listenTo(<span class="keyword">this</span>.collection, <span class="string">"remove"</span>, <span class="keyword">this</span>.removeItemView, <span class="keyword">this</span>);
-      <span class="keyword">this</span>.listenTo(<span class="keyword">this</span>.collection, <span class="string">"reset"</span>, <span class="keyword">this</span>.render, <span class="keyword">this</span>);
+      <span class="keyword">this</span>.listenTo(<span class="keyword">this</span>.collection, <span class="string">"add"</span>, <span class="keyword">this</span>.addChildView);
+      <span class="keyword">this</span>.listenTo(<span class="keyword">this</span>.collection, <span class="string">"remove"</span>, <span class="keyword">this</span>.removeItemView);
+      <span class="keyword">this</span>.listenTo(<span class="keyword">this</span>.collection, <span class="string">"reset"</span>, <span class="keyword">this</span>.render);
     }
   },</pre></div></div>
             
@@ -4320,7 +4315,7 @@ prepending &quot;itemview:&quot; to the event name</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>    <span class="keyword">this</span>.listenTo(view, <span class="string">"all"</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span>{</span>
-      <span class="keyword">var</span> args = slice(arguments);
+      <span class="keyword">var</span> args = slice.call(arguments);
       <span class="keyword">var</span> rootEvent = args[<span class="number">0</span>];
       <span class="keyword">var</span> itemEvents = <span class="keyword">this</span>.normalizeMethods(<span class="keyword">this</span>.getItemEvents());
 
@@ -4556,7 +4551,7 @@ including events that the collection has from it</p>
               </div>
               <p>Append the HTML to the collection&#39;s <code>el</code>.
 Override this method to do something other
-then <code>.append</code>.</p>
+than <code>.append</code>.</p>
 
             </div>
             
@@ -4640,7 +4635,7 @@ the collection of views.</p>
     <span class="keyword">this</span>.closeChildren();
     <span class="keyword">this</span>.triggerMethod(<span class="string">"collection:closed"</span>);
 
-    Marionette.View.prototype.close.apply(<span class="keyword">this</span>, slice(arguments));
+    Marionette.View.prototype.close.apply(<span class="keyword">this</span>, arguments);
   },</pre></div></div>
             
         </li>
@@ -4710,7 +4705,7 @@ Marionette.CollectionView.prototype.constructor which allows overriding</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>  constructor: <span class="function"><span class="keyword">function</span><span class="params">()</span>{</span>
-    Marionette.CollectionView.prototype.constructor.apply(<span class="keyword">this</span>, slice(arguments));
+    Marionette.CollectionView.prototype.constructor.apply(<span class="keyword">this</span>, arguments);
   },</pre></div></div>
             
         </li>
@@ -4739,16 +4734,16 @@ events, or to add your own initial events.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-245">&#182;</a>
               </div>
-              <p>Bind only after composite view in rendered to avoid adding child views
-to unexisting itemViewContainer</p>
+              <p>Bind only after composite view is rendered to avoid adding child views
+to nonexistent itemViewContainer</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>    <span class="keyword">this</span>.once(<span class="string">'render'</span>, <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
       <span class="keyword">if</span> (<span class="keyword">this</span>.collection){
-        <span class="keyword">this</span>.listenTo(<span class="keyword">this</span>.collection, <span class="string">"add"</span>, <span class="keyword">this</span>.addChildView, <span class="keyword">this</span>);
-        <span class="keyword">this</span>.listenTo(<span class="keyword">this</span>.collection, <span class="string">"remove"</span>, <span class="keyword">this</span>.removeItemView, <span class="keyword">this</span>);
-        <span class="keyword">this</span>.listenTo(<span class="keyword">this</span>.collection, <span class="string">"reset"</span>, <span class="keyword">this</span>._renderChildren, <span class="keyword">this</span>);
+        <span class="keyword">this</span>.listenTo(<span class="keyword">this</span>.collection, <span class="string">"add"</span>, <span class="keyword">this</span>.addChildView);
+        <span class="keyword">this</span>.listenTo(<span class="keyword">this</span>.collection, <span class="string">"remove"</span>, <span class="keyword">this</span>.removeItemView);
+        <span class="keyword">this</span>.listenTo(<span class="keyword">this</span>.collection, <span class="string">"reset"</span>, <span class="keyword">this</span>._renderChildren);
       }
     });
 
@@ -5131,10 +5126,7 @@ re-initializing the <code>el</code> for each region</p>
             <div class="content"><div class='highlight'><pre>      <span class="keyword">this</span>._reInitializeRegions();
     }
 
-    <span class="keyword">var</span> args = Array.prototype.slice.apply(arguments);
-    <span class="keyword">var</span> result = Marionette.ItemView.prototype.render.apply(<span class="keyword">this</span>, args);
-
-    <span class="keyword">return</span> result;
+    <span class="keyword">return</span> Marionette.ItemView.prototype.render.apply(<span class="keyword">this</span>, arguments);
   },</pre></div></div>
             
         </li>
@@ -5153,8 +5145,7 @@ re-initializing the <code>el</code> for each region</p>
             <div class="content"><div class='highlight'><pre>  close: <span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
     <span class="keyword">if</span> (<span class="keyword">this</span>.isClosed){ <span class="keyword">return</span>; }
     <span class="keyword">this</span>.regionManager.close();
-    <span class="keyword">var</span> args = Array.prototype.slice.apply(arguments);
-    Marionette.ItemView.prototype.close.apply(<span class="keyword">this</span>, args);
+    Marionette.ItemView.prototype.close.apply(<span class="keyword">this</span>, arguments);
   },</pre></div></div>
             
         </li>
@@ -5352,8 +5343,8 @@ just one giant router and controller.</p>
             <div class="content"><div class='highlight'><pre>Marionette.AppRouter = Backbone.Router.extend({
 
   constructor: <span class="function"><span class="keyword">function</span><span class="params">(options)</span>{</span>
-    Backbone.Router.prototype.constructor.apply(<span class="keyword">this</span>, slice(arguments));
-
+    Backbone.Router.prototype.constructor.apply(<span class="keyword">this</span>, arguments);
+	
     <span class="keyword">this</span>.options = options || {};
 
     <span class="keyword">var</span> appRoutes = Marionette.getOption(<span class="keyword">this</span>, <span class="string">"appRoutes"</span>);
@@ -5413,7 +5404,7 @@ specified method on the specified <code>controller</code>.</p>
     <span class="keyword">var</span> method = controller[methodName];
 
     <span class="keyword">if</span> (!method) {
-      <span class="keyword">throw</span> <span class="keyword">new</span> Error(<span class="string">"Method '"</span> + methodName + <span class="string">"' was not found on the controller"</span>);
+      throwError(<span class="string">"Method '"</span> + methodName + <span class="string">"' was not found on the controller"</span>);
     }
 
     <span class="keyword">this</span>.route(route, methodName, _.bind(method, controller));
@@ -5477,8 +5468,7 @@ _.extend(Marionette.Application.prototype, Backbone.Events, {</pre></div></div>
             </div>
             
             <div class="content"><div class='highlight'><pre>  execute: <span class="function"><span class="keyword">function</span><span class="params">()</span>{</span>
-    <span class="keyword">var</span> args = Array.prototype.slice.apply(arguments);
-    <span class="keyword">this</span>.commands.execute.apply(<span class="keyword">this</span>.commands, args);
+    <span class="keyword">this</span>.commands.execute.apply(<span class="keyword">this</span>.commands, arguments);
   },</pre></div></div>
             
         </li>
@@ -5495,8 +5485,7 @@ _.extend(Marionette.Application.prototype, Backbone.Events, {</pre></div></div>
             </div>
             
             <div class="content"><div class='highlight'><pre>  request: <span class="function"><span class="keyword">function</span><span class="params">()</span>{</span>
-    <span class="keyword">var</span> args = Array.prototype.slice.apply(arguments);
-    <span class="keyword">return</span> <span class="keyword">this</span>.reqres.request.apply(<span class="keyword">this</span>.reqres, args);
+    <span class="keyword">return</span> <span class="keyword">this</span>.reqres.request.apply(<span class="keyword">this</span>.reqres, arguments);
   },</pre></div></div>
             
         </li>
@@ -5629,8 +5618,7 @@ getRegion(&#39;main&#39;)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  module: <span class="function"><span class="keyword">function</span><span class="params">(moduleNames, moduleDefinition)</span>{</span>
-    <span class="keyword">var</span> ModuleClass = Marionette.Module;</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  module: <span class="function"><span class="keyword">function</span><span class="params">(moduleNames, moduleDefinition)</span>{</span></pre></div></div>
             
         </li>
         
@@ -5645,9 +5633,7 @@ getRegion(&#39;main&#39;)</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="keyword">if</span> (moduleDefinition) {
-      ModuleClass = moduleDefinition.moduleClass || ModuleClass;
-    }</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">var</span> ModuleClass = Marionette.Module.getClass(moduleDefinition);</pre></div></div>
             
         </li>
         
@@ -5663,7 +5649,7 @@ first argument of the array</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="keyword">var</span> args = slice(arguments);
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">var</span> args = slice.call(arguments);
     args.unshift(<span class="keyword">this</span>);</pre></div></div>
             
         </li>
@@ -6160,7 +6146,7 @@ get rid of the module name and definition function</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="keyword">var</span> customArgs = slice(arguments);
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">var</span> customArgs = slice.call(arguments);
     customArgs.splice(<span class="number">0</span>, <span class="number">3</span>);</pre></div></div>
             
         </li>
@@ -6231,11 +6217,8 @@ get rid of the module name and definition function</p>
   },
 
   _getModule: <span class="function"><span class="keyword">function</span><span class="params">(parentModule, moduleName, app, def, args)</span>{</span>
-    <span class="keyword">var</span> ModuleClass = Marionette.Module;
     <span class="keyword">var</span> options = _.extend({}, def);
-    <span class="keyword">if</span> (def) {
-      ModuleClass = def.moduleClass || ModuleClass;
-    }</pre></div></div>
+    <span class="keyword">var</span> ModuleClass = <span class="keyword">this</span>.getClass(def);</pre></div></div>
             
         </li>
         
@@ -6289,6 +6272,20 @@ get rid of the module name and definition function</p>
     <span class="keyword">return</span> module;
   },
 
+  getClass: <span class="function"><span class="keyword">function</span><span class="params">(moduleDefinition)</span> {</span>
+    <span class="keyword">var</span> ModuleClass = Marionette.Module;
+
+    <span class="keyword">if</span> (!moduleDefinition) {
+      <span class="keyword">return</span> ModuleClass;
+    }
+
+    <span class="keyword">if</span> (moduleDefinition.prototype <span class="keyword">instanceof</span> ModuleClass) {
+      <span class="keyword">return</span> moduleDefinition;
+    }
+
+    <span class="keyword">return</span> moduleDefinition.moduleClass || ModuleClass;
+  },
+
   _addModuleDefinition: <span class="function"><span class="keyword">function</span><span class="params">(parentModule, module, def, args)</span>{</span>
     <span class="keyword">var</span> fn;
     <span class="keyword">var</span> startWithParent;
@@ -6327,7 +6324,7 @@ get rid of the module name and definition function</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>      fn = def.define;
-      startWithParent = (<span class="keyword">typeof</span> def.startWithParent !== <span class="string">'undefined'</span>) ? def.startWithParent : <span class="literal">true</span>;
+      startWithParent = !_.isUndefined(def.startWithParent) ? def.startWithParent : <span class="literal">true</span>;
 
     } <span class="keyword">else</span> {</pre></div></div>
             
