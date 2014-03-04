@@ -40,7 +40,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>v1.6.3</p>
+              <p>v1.6.4</p>
 <p>Copyright (c)2014 Derick Bailey, Muted Solutions, LLC.
 Distributed under MIT license</p>
 <p><a href="http://marionettejs.com">http://marionettejs.com</a></p>
@@ -6290,7 +6290,7 @@ get rid of the module name and definition function</p>
     <span class="keyword">var</span> fn;
     <span class="keyword">var</span> startWithParent;
 
-    <span class="keyword">if</span> (_.isFunction(def)){</pre></div></div>
+    <span class="keyword">if</span> (_.isFunction(def) &amp;&amp; !(def.prototype <span class="keyword">instanceof</span> Marionette.Module)){</pre></div></div>
             
         </li>
         
