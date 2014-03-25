@@ -40,7 +40,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>v1.7.1</p>
+              <p>v1.7.2</p>
 <p>Copyright (c)2014 Derick Bailey, Muted Solutions, LLC.
 Distributed under MIT license</p>
 <p><a href="http://marionettejs.com">http://marionettejs.com</a></p>
@@ -5516,7 +5516,7 @@ this is relying on the fact backbone events considers &quot;click .foo&quot; the
           <span class="keyword">var</span> eventKey   = key + whitespace;
           <span class="keyword">var</span> handler    = _.isFunction(behaviorEvents[key]) ? behaviorEvents[key] : b[behaviorEvents[key]];
 
-          _events[eventKey] = handler;
+          _events[eventKey] = _.bind(handler, b);
         });
 
         _behaviorsEvents = _.extend(_behaviorsEvents, _events);
