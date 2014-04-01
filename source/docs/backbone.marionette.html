@@ -40,7 +40,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>v1.7.3</p>
+              <p>v1.7.4</p>
 <p>Copyright (c)2014 Derick Bailey, Muted Solutions, LLC.
 Distributed under MIT license</p>
 <p><a href="http://marionettejs.com">http://marionettejs.com</a></p>
@@ -5523,11 +5523,12 @@ Marionette.Behaviors = (<span class="function"><span class="keyword">function</s
                 <a class="pilcrow" href="#section-276">&#182;</a>
               </div>
               <p>append white-space at the end of each key to prevent behavior key collisions
-this is relying on the fact backbone events considers &quot;click .foo&quot; the same  &quot;click .foo &quot;</p>
+this is relying on the fact backbone events considers &quot;click .foo&quot; the same  &quot;click .foo &quot;
+starts with an array of two so the first behavior has one space</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>          <span class="keyword">var</span> whitespace = (<span class="keyword">new</span> Array(i+<span class="number">1</span>)).join(<span class="string">" "</span>);
+            <div class="content"><div class='highlight'><pre>          <span class="keyword">var</span> whitespace = (<span class="keyword">new</span> Array(i+<span class="number">2</span>)).join(<span class="string">" "</span>);
           <span class="keyword">var</span> eventKey   = key + whitespace;
           <span class="keyword">var</span> handler    = _.isFunction(behaviorEvents[key]) ? behaviorEvents[key] : b[behaviorEvents[key]];
 
@@ -6333,8 +6334,6 @@ sub-modules are stopped / finalized before parents</p>
             <div class="content"><div class='highlight'><pre>    <span class="keyword">this</span>._initializerCallbacks.reset();
     <span class="keyword">this</span>._finalizerCallbacks.reset();
 
-    <span class="keyword">this</span>.stopListening();
-
     Marionette.triggerMethod.call(<span class="keyword">this</span>, <span class="string">"stop"</span>);
   },</pre></div></div>
             
@@ -6602,13 +6601,7 @@ get rid of the module name and definition function</p>
     }
 
     <span class="keyword">return</span> moduleDefinition.moduleClass || ModuleClass;
-  },
-
-  _addModuleDefinition: <span class="function"><span class="keyword">function</span><span class="params">(parentModule, module, def, args)</span>{</span>
-    <span class="keyword">var</span> fn;
-    <span class="keyword">var</span> startWithParent;
-
-    <span class="keyword">if</span> (_.isFunction(def) &amp;&amp; !(def.prototype <span class="keyword">instanceof</span> Marionette.Module)){</pre></div></div>
+  },</pre></div></div>
             
         </li>
         
@@ -6619,133 +6612,65 @@ get rid of the module name and definition function</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-332">&#182;</a>
               </div>
-              <p>if a function is supplied for the module definition</p>
+              <p>Add the module definition and add a startWithParent initializer function.
+This is complicated because module definitions are heavily overloaded
+and support an anonymous function, module class, or options object</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      fn = def;
-      startWithParent = <span class="literal">true</span>;
+            <div class="content"><div class='highlight'><pre>  _addModuleDefinition: <span class="function"><span class="keyword">function</span><span class="params">(parentModule, module, def, args)</span>{</span>
+    <span class="keyword">var</span> fn = <span class="keyword">this</span>._getDefine(def);
+    <span class="keyword">var</span> startWithParent = <span class="keyword">this</span>._getStartWithParent(def, module);
 
-    } <span class="keyword">else</span> <span class="keyword">if</span> (_.isObject(def)){</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-333">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-333">&#182;</a>
-              </div>
-              <p>if an object is supplied</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>      fn = def.define;
-      startWithParent = !_.isUndefined(def.startWithParent) ? def.startWithParent : <span class="literal">true</span>;
-
-    } <span class="keyword">else</span> {</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-334">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-334">&#182;</a>
-              </div>
-              <p>if nothing is supplied</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>      startWithParent = <span class="literal">true</span>;
-    }</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-335">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-335">&#182;</a>
-              </div>
-              <p>add module definition if needed</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>    <span class="keyword">if</span> (fn){
+    <span class="keyword">if</span> (fn){
       module.addDefinition(fn, args);
-    }</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-336">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-336">&#182;</a>
-              </div>
-              <p><code>and</code> the two together, ensuring a single <code>false</code> will prevent it
-from starting with the parent</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>    module.startWithParent = module.startWithParent &amp;&amp; startWithParent;</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-337">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-337">&#182;</a>
-              </div>
-              <p>setup auto-start if needed</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>    <span class="keyword">if</span> (module.startWithParent &amp;&amp; !module.startWithParentIsConfigured){</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-338">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-338">&#182;</a>
-              </div>
-              <p>only configure this once</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>      module.startWithParentIsConfigured = <span class="literal">true</span>;</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-339">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-339">&#182;</a>
-              </div>
-              <p>add the module initializer config</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>      parentModule.addInitializer(<span class="function"><span class="keyword">function</span><span class="params">(options)</span>{</span>
-        <span class="keyword">if</span> (module.startWithParent){
-          module.start(options);
-        }
-      });
-
     }
 
+    <span class="keyword">this</span>._addStartWithParent(parentModule, module, startWithParent);
+  },
+
+  _getStartWithParent: <span class="function"><span class="keyword">function</span><span class="params">(def, module)</span> {</span>
+    <span class="keyword">var</span> swp;
+
+    <span class="keyword">if</span> (_.isFunction(def) &amp;&amp; (def.prototype <span class="keyword">instanceof</span> Marionette.Module)) {
+      swp = module.constructor.prototype.startWithParent;
+      <span class="keyword">return</span> _.isUndefined(swp) ? <span class="literal">true</span> : swp;
+    }
+
+    <span class="keyword">if</span> (_.isObject(def)){
+      swp = def.startWithParent;
+      <span class="keyword">return</span> _.isUndefined(swp) ? <span class="literal">true</span> : swp;
+    }
+
+    <span class="keyword">return</span> <span class="literal">true</span>;
+  },
+
+  _getDefine: <span class="function"><span class="keyword">function</span><span class="params">(def)</span> {</span>
+    <span class="keyword">if</span> (_.isFunction(def) &amp;&amp; !(def.prototype <span class="keyword">instanceof</span> Marionette.Module)) {
+      <span class="keyword">return</span> def;
+    }
+
+    <span class="keyword">if</span> (_.isObject(def)){
+      <span class="keyword">return</span> def.define;
+    }
+
+    <span class="keyword">return</span> <span class="literal">null</span>;
+  },
+
+  _addStartWithParent: <span class="function"><span class="keyword">function</span><span class="params">(parentModule, module, startWithParent)</span> {</span>
+    module.startWithParent = module.startWithParent &amp;&amp; startWithParent;
+
+    <span class="keyword">if</span> (!module.startWithParent || !!module.startWithParentIsConfigured){
+      <span class="keyword">return</span>;
+    }
+
+    module.startWithParentIsConfigured = <span class="literal">true</span>;
+
+    parentModule.addInitializer(<span class="function"><span class="keyword">function</span><span class="params">(options)</span>{</span>
+      <span class="keyword">if</span> (module.startWithParent){
+        module.start(options);
+      }
+    });
   }
 });
 
