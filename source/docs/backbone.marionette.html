@@ -40,7 +40,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
               </div>
-              <p>v1.7.4</p>
+              <p>v1.8.1</p>
 <p>Copyright (c)2014 Derick Bailey, Muted Solutions, LLC.
 Distributed under MIT license</p>
 <p><a href="http://marionettejs.com">http://marionettejs.com</a></p>
@@ -537,7 +537,7 @@ collection related features.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-30">&#182;</a>
               </div>
-              <p>v1.0.0</p>
+              <p>v1.1.0</p>
 <p>Copyright (c)2014 Derick Bailey, Muted Solutions, LLC.
 Distributed under MIT license</p>
 <p><a href="http://github.com/marionettejs/backbone.wreqr">http://github.com/marionettejs/backbone.wreqr</a></p>
@@ -727,7 +727,7 @@ no handler is found.</p>
       <span class="keyword">var</span> config = <span class="keyword">this</span>._wreqrHandlers[name];
 
       <span class="keyword">if</span> (!config){
-        <span class="keyword">throw</span> <span class="keyword">new</span> Error(<span class="string">"Handler not found for '"</span> + name + <span class="string">"'"</span>);
+        <span class="keyword">return</span>;
       }
 
       <span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">()</span>{</span>
@@ -1133,8 +1133,9 @@ request handler, and return a response from it</p>
     request: <span class="function"><span class="keyword">function</span><span class="params">()</span>{</span>
       <span class="keyword">var</span> name = arguments[<span class="number">0</span>];
       <span class="keyword">var</span> args = Array.prototype.slice.call(arguments, <span class="number">1</span>);
-
-      <span class="keyword">return</span> <span class="keyword">this</span>.getHandler(name).apply(<span class="keyword">this</span>, args);
+      <span class="keyword">if</span> (<span class="keyword">this</span>.hasHandler(name)) {
+        <span class="keyword">return</span> <span class="keyword">this</span>.getHandler(name).apply(<span class="keyword">this</span>, args);
+      }
     }
   });
 
@@ -1202,7 +1203,235 @@ of an application through event-driven architecture.</p>
             <div class="content"><div class='highlight'><pre>  _.extend(EA.prototype, Backbone.Events);
 
   <span class="keyword">return</span> EA;
-})(Backbone, _);
+})(Backbone, _);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-66">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-66">&#182;</a>
+              </div>
+              <h2 id="wreqr-channel">Wreqr.Channel</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-67">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-67">&#182;</a>
+              </div>
+              <p>An object that wraps the three messaging systems:
+EventAggregator, RequestResponse, Commands</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>Wreqr.Channel = (<span class="function"><span class="keyword">function</span><span class="params">(Wreqr)</span>{</span>
+  <span class="string">"use strict"</span>;
+
+  <span class="keyword">var</span> Channel = <span class="function"><span class="keyword">function</span><span class="params">(channelName)</span> {</span>
+    <span class="keyword">this</span>.vent        = <span class="keyword">new</span> Backbone.Wreqr.EventAggregator();
+    <span class="keyword">this</span>.reqres      = <span class="keyword">new</span> Backbone.Wreqr.RequestResponse();
+    <span class="keyword">this</span>.commands    = <span class="keyword">new</span> Backbone.Wreqr.Commands();
+    <span class="keyword">this</span>.channelName = channelName;
+  };
+
+  _.extend(Channel.prototype, {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-68">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-68">&#182;</a>
+              </div>
+              <p>Remove all handlers from the messaging systems of this channel</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    reset: <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+      <span class="keyword">this</span>.vent.off();
+      <span class="keyword">this</span>.vent.stopListening();
+      <span class="keyword">this</span>.reqres.removeAllHandlers();
+      <span class="keyword">this</span>.commands.removeAllHandlers();
+      <span class="keyword">return</span> <span class="keyword">this</span>;
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-69">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-69">&#182;</a>
+              </div>
+              <p>Connect a hash of events; one for each messaging system</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    connectEvents: <span class="function"><span class="keyword">function</span><span class="params">(hash, context)</span> {</span>
+      <span class="keyword">this</span>._connect(<span class="string">'vent'</span>, hash, context);
+      <span class="keyword">return</span> <span class="keyword">this</span>;
+    },
+
+    connectCommands: <span class="function"><span class="keyword">function</span><span class="params">(hash, context)</span> {</span>
+      <span class="keyword">this</span>._connect(<span class="string">'commands'</span>, hash, context);
+      <span class="keyword">return</span> <span class="keyword">this</span>;
+    },
+
+    connectRequests: <span class="function"><span class="keyword">function</span><span class="params">(hash, context)</span> {</span>
+      <span class="keyword">this</span>._connect(<span class="string">'reqres'</span>, hash, context);
+      <span class="keyword">return</span> <span class="keyword">this</span>;
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-70">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-70">&#182;</a>
+              </div>
+              <p>Attach the handlers to a given message system <code>type</code></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    _connect: <span class="function"><span class="keyword">function</span><span class="params">(type, hash, context)</span> {</span>
+      <span class="keyword">if</span> (!hash) {
+        <span class="keyword">return</span>;
+      }
+
+      context = context || <span class="keyword">this</span>;
+      <span class="keyword">var</span> method = (type === <span class="string">'vent'</span>) ? <span class="string">'on'</span> : <span class="string">'setHandler'</span>;
+
+      _.each(hash, <span class="function"><span class="keyword">function</span><span class="params">(fn, eventName)</span> {</span>
+        <span class="keyword">this</span>[type][method](eventName, _.bind(fn, context));
+      }, <span class="keyword">this</span>);
+    }
+  });
+
+
+  <span class="keyword">return</span> Channel;
+})(Wreqr);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-71">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-71">&#182;</a>
+              </div>
+              <h2 id="wreqr-radio">Wreqr.Radio</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-72">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-72">&#182;</a>
+              </div>
+              <p>An object that lets you communicate with many channels.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>Wreqr.radio = (<span class="function"><span class="keyword">function</span><span class="params">(Wreqr)</span>{</span>
+  <span class="string">"use strict"</span>;
+
+  <span class="keyword">var</span> Radio = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+    <span class="keyword">this</span>._channels = {};
+    <span class="keyword">this</span>.vent = {};
+    <span class="keyword">this</span>.commands = {};
+    <span class="keyword">this</span>.reqres = {};
+    <span class="keyword">this</span>._proxyMethods();
+  };
+
+  _.extend(Radio.prototype, {
+
+    channel: <span class="function"><span class="keyword">function</span><span class="params">(channelName)</span> {</span>
+      <span class="keyword">if</span> (!channelName) {
+        <span class="keyword">throw</span> <span class="keyword">new</span> Error(<span class="string">'Channel must receive a name'</span>);
+      }
+
+      <span class="keyword">return</span> <span class="keyword">this</span>._getChannel( channelName );
+    },
+
+    _getChannel: <span class="function"><span class="keyword">function</span><span class="params">(channelName)</span> {</span>
+      <span class="keyword">var</span> channel = <span class="keyword">this</span>._channels[channelName];
+
+      <span class="keyword">if</span>(!channel) {
+        channel = <span class="keyword">new</span> Wreqr.Channel(channelName);
+        <span class="keyword">this</span>._channels[channelName] = channel;
+      }
+
+      <span class="keyword">return</span> channel;
+    },
+
+    _proxyMethods: <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+      _.each([<span class="string">'vent'</span>, <span class="string">'commands'</span>, <span class="string">'reqres'</span>], <span class="function"><span class="keyword">function</span><span class="params">(system)</span> {</span>
+        _.each( messageSystems[system], <span class="function"><span class="keyword">function</span><span class="params">(method)</span> {</span>
+          <span class="keyword">this</span>[system][method] = proxyMethod(<span class="keyword">this</span>, system, method);
+        }, <span class="keyword">this</span>);
+      }, <span class="keyword">this</span>);
+    }
+  });
+
+
+  <span class="keyword">var</span> messageSystems = {
+    vent: [
+      <span class="string">'on'</span>,
+      <span class="string">'off'</span>,
+      <span class="string">'trigger'</span>,
+      <span class="string">'once'</span>,
+      <span class="string">'stopListening'</span>,
+      <span class="string">'listenTo'</span>,
+      <span class="string">'listenToOnce'</span>
+    ],
+
+    commands: [
+      <span class="string">'execute'</span>,
+      <span class="string">'setHandler'</span>,
+      <span class="string">'setHandlers'</span>,
+      <span class="string">'removeHandler'</span>,
+      <span class="string">'removeAllHandlers'</span>
+    ],
+
+    reqres: [
+      <span class="string">'request'</span>,
+      <span class="string">'setHandler'</span>,
+      <span class="string">'setHandlers'</span>,
+      <span class="string">'removeHandler'</span>,
+      <span class="string">'removeAllHandlers'</span>
+    ]
+  };
+
+  <span class="keyword">var</span> proxyMethod = <span class="function"><span class="keyword">function</span><span class="params">(radio, system, method)</span> {</span>
+    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">(channelName)</span> {</span>
+      <span class="keyword">var</span> messageSystem = radio._getChannel(channelName)[system];
+      <span class="keyword">var</span> args = Array.prototype.slice.call(arguments, <span class="number">1</span>);
+
+      messageSystem[method].apply(messageSystem, args);
+    };
+  };
+
+  <span class="keyword">return</span> <span class="keyword">new</span> Radio();
+
+})(Wreqr);
 
 
   <span class="keyword">return</span> Wreqr;
@@ -1214,11 +1443,11 @@ of an application through event-driven architecture.</p>
         </li>
         
         
-        <li id="section-66">
+        <li id="section-73">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-66">&#182;</a>
+                <a class="pilcrow" href="#section-73">&#182;</a>
               </div>
               <p>Define and export the Marionette namespace</p>
 
@@ -1230,11 +1459,11 @@ of an application through event-driven architecture.</p>
         </li>
         
         
-        <li id="section-67">
+        <li id="section-74">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-67">&#182;</a>
+                <a class="pilcrow" href="#section-74">&#182;</a>
               </div>
               <p>Get the DOM manipulator for later use</p>
 
@@ -1245,11 +1474,11 @@ of an application through event-driven architecture.</p>
         </li>
         
         
-        <li id="section-68">
+        <li id="section-75">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-68">&#182;</a>
+                <a class="pilcrow" href="#section-75">&#182;</a>
               </div>
               <h2 id="helpers">Helpers</h2>
 
@@ -1258,11 +1487,11 @@ of an application through event-driven architecture.</p>
         </li>
         
         
-        <li id="section-69">
+        <li id="section-76">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-69">&#182;</a>
+                <a class="pilcrow" href="#section-76">&#182;</a>
               </div>
               <p>For slicing <code>arguments</code> in functions</p>
 
@@ -1279,11 +1508,11 @@ of an application through event-driven architecture.</p>
         </li>
         
         
-        <li id="section-70">
+        <li id="section-77">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-70">&#182;</a>
+                <a class="pilcrow" href="#section-77">&#182;</a>
               </div>
               <h2 id="marionette-extend">Marionette.extend</h2>
 
@@ -1292,11 +1521,11 @@ of an application through event-driven architecture.</p>
         </li>
         
         
-        <li id="section-71">
+        <li id="section-78">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-71">&#182;</a>
+                <a class="pilcrow" href="#section-78">&#182;</a>
               </div>
               <p>Borrow the Backbone <code>extend</code> method so we can use it as needed</p>
 
@@ -1307,11 +1536,11 @@ of an application through event-driven architecture.</p>
         </li>
         
         
-        <li id="section-72">
+        <li id="section-79">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-72">&#182;</a>
+                <a class="pilcrow" href="#section-79">&#182;</a>
               </div>
               <h2 id="marionette-getoption">Marionette.getOption</h2>
 
@@ -1320,11 +1549,11 @@ of an application through event-driven architecture.</p>
         </li>
         
         
-        <li id="section-73">
+        <li id="section-80">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-73">&#182;</a>
+                <a class="pilcrow" href="#section-80">&#182;</a>
               </div>
               <p>Retrieve an object, function or other value from a target
 object or its <code>options</code>, with <code>options</code> taking precedence.</p>
@@ -1347,11 +1576,11 @@ object or its <code>options</code>, with <code>options</code> taking precedence.
         </li>
         
         
-        <li id="section-74">
+        <li id="section-81">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-74">&#182;</a>
+                <a class="pilcrow" href="#section-81">&#182;</a>
               </div>
               <h2 id="marionette-normalizemethods">Marionette.normalizeMethods</h2>
 
@@ -1360,11 +1589,11 @@ object or its <code>options</code>, with <code>options</code> taking precedence.
         </li>
         
         
-        <li id="section-75">
+        <li id="section-82">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-75">&#182;</a>
+                <a class="pilcrow" href="#section-82">&#182;</a>
               </div>
               <p>Pass in a mapping of events =&gt; functions or function names
 and return a mapping of events =&gt; functions</p>
@@ -1389,11 +1618,11 @@ and return a mapping of events =&gt; functions</p>
         </li>
         
         
-        <li id="section-76">
+        <li id="section-83">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-76">&#182;</a>
+                <a class="pilcrow" href="#section-83">&#182;</a>
               </div>
               <p>allows for the use of the @ui. syntax within
 a given key for triggers and events
@@ -1422,11 +1651,42 @@ swaps the @ui with the associated selector</p>
         </li>
         
         
-        <li id="section-77">
+        <li id="section-84">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-77">&#182;</a>
+                <a class="pilcrow" href="#section-84">&#182;</a>
+              </div>
+              <p>Mix in methods from Underscore, for iteration, and other
+collection related features.
+Borrowing this code from Backbone.Collection:
+<a href="http://backbonejs.org/docs/backbone.html#section-106">http://backbonejs.org/docs/backbone.html#section-106</a></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>Marionette.actAsCollection = <span class="function"><span class="keyword">function</span><span class="params">(object, listProperty)</span> {</span>
+  <span class="keyword">var</span> methods = [<span class="string">'forEach'</span>, <span class="string">'each'</span>, <span class="string">'map'</span>, <span class="string">'find'</span>, <span class="string">'detect'</span>, <span class="string">'filter'</span>,
+    <span class="string">'select'</span>, <span class="string">'reject'</span>, <span class="string">'every'</span>, <span class="string">'all'</span>, <span class="string">'some'</span>, <span class="string">'any'</span>, <span class="string">'include'</span>,
+    <span class="string">'contains'</span>, <span class="string">'invoke'</span>, <span class="string">'toArray'</span>, <span class="string">'first'</span>, <span class="string">'initial'</span>, <span class="string">'rest'</span>,
+    <span class="string">'last'</span>, <span class="string">'without'</span>, <span class="string">'isEmpty'</span>, <span class="string">'pluck'</span>];
+
+  _.each(methods, <span class="function"><span class="keyword">function</span><span class="params">(method)</span> {</span>
+    object[method] = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+      <span class="keyword">var</span> list = _.values(_.result(<span class="keyword">this</span>, listProperty));
+      <span class="keyword">var</span> args = [list].concat(_.toArray(arguments));
+      <span class="keyword">return</span> _[method].apply(_, args);
+    };
+  });
+};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-85">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-85">&#182;</a>
               </div>
               <p>Trigger an event and/or a corresponding method name. Examples:</p>
 <p><code>this.triggerMethod(&quot;foo&quot;)</code> will trigger the &quot;foo&quot; event and
@@ -1441,11 +1701,11 @@ call the &quot;onFooBar&quot; method.</p>
         </li>
         
         
-        <li id="section-78">
+        <li id="section-86">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-78">&#182;</a>
+                <a class="pilcrow" href="#section-86">&#182;</a>
               </div>
               <p>split the event name on the &quot;:&quot;</p>
 
@@ -1456,11 +1716,11 @@ call the &quot;onFooBar&quot; method.</p>
         </li>
         
         
-        <li id="section-79">
+        <li id="section-87">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-79">&#182;</a>
+                <a class="pilcrow" href="#section-87">&#182;</a>
               </div>
               <p>take the event section (&quot;section1:section2:section3&quot;)
 and turn it in to uppercase name</p>
@@ -1474,11 +1734,11 @@ and turn it in to uppercase name</p>
         </li>
         
         
-        <li id="section-80">
+        <li id="section-88">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-80">&#182;</a>
+                <a class="pilcrow" href="#section-88">&#182;</a>
               </div>
               <p>actual triggerMethod implementation</p>
 
@@ -1489,11 +1749,11 @@ and turn it in to uppercase name</p>
         </li>
         
         
-        <li id="section-81">
+        <li id="section-89">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-81">&#182;</a>
+                <a class="pilcrow" href="#section-89">&#182;</a>
               </div>
               <p>get the method name from the event name</p>
 
@@ -1505,11 +1765,11 @@ and turn it in to uppercase name</p>
         </li>
         
         
-        <li id="section-82">
+        <li id="section-90">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-82">&#182;</a>
+                <a class="pilcrow" href="#section-90">&#182;</a>
               </div>
               <p>trigger the event, if a trigger method exists</p>
 
@@ -1522,11 +1782,11 @@ and turn it in to uppercase name</p>
         </li>
         
         
-        <li id="section-83">
+        <li id="section-91">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-83">&#182;</a>
+                <a class="pilcrow" href="#section-91">&#182;</a>
               </div>
               <p>call the onMethodName if it exists</p>
 
@@ -1537,11 +1797,11 @@ and turn it in to uppercase name</p>
         </li>
         
         
-        <li id="section-84">
+        <li id="section-92">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-84">&#182;</a>
+                <a class="pilcrow" href="#section-92">&#182;</a>
               </div>
               <p>pass all arguments, except the event name</p>
 
@@ -1557,11 +1817,11 @@ and turn it in to uppercase name</p>
         </li>
         
         
-        <li id="section-85">
+        <li id="section-93">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-85">&#182;</a>
+                <a class="pilcrow" href="#section-93">&#182;</a>
               </div>
               <h2 id="domrefresh">DOMRefresh</h2>
 
@@ -1570,11 +1830,11 @@ and turn it in to uppercase name</p>
         </li>
         
         
-        <li id="section-86">
+        <li id="section-94">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-86">&#182;</a>
+                <a class="pilcrow" href="#section-94">&#182;</a>
               </div>
               <p>Monitor a view&#39;s state, and after it has been rendered and shown
 in the DOM, trigger a &quot;dom:refresh&quot; event every time it is
@@ -1587,11 +1847,11 @@ re-rendered.</p>
         </li>
         
         
-        <li id="section-87">
+        <li id="section-95">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-87">&#182;</a>
+                <a class="pilcrow" href="#section-95">&#182;</a>
               </div>
               <p>track when the view has been shown in the DOM,
 using a Marionette.Region (or by other means of triggering &quot;show&quot;)</p>
@@ -1606,11 +1866,11 @@ using a Marionette.Region (or by other means of triggering &quot;show&quot;)</p>
         </li>
         
         
-        <li id="section-88">
+        <li id="section-96">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-88">&#182;</a>
+                <a class="pilcrow" href="#section-96">&#182;</a>
               </div>
               <p>track when the view has been rendered</p>
 
@@ -1624,11 +1884,11 @@ using a Marionette.Region (or by other means of triggering &quot;show&quot;)</p>
         </li>
         
         
-        <li id="section-89">
+        <li id="section-97">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-89">&#182;</a>
+                <a class="pilcrow" href="#section-97">&#182;</a>
               </div>
               <p>Trigger the &quot;dom:refresh&quot; event and corresponding &quot;onDomRefresh&quot; method</p>
 
@@ -1649,11 +1909,11 @@ using a Marionette.Region (or by other means of triggering &quot;show&quot;)</p>
         </li>
         
         
-        <li id="section-90">
+        <li id="section-98">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-90">&#182;</a>
+                <a class="pilcrow" href="#section-98">&#182;</a>
               </div>
               <p>Export public API</p>
 
@@ -1673,11 +1933,11 @@ using a Marionette.Region (or by other means of triggering &quot;show&quot;)</p>
         </li>
         
         
-        <li id="section-91">
+        <li id="section-99">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-91">&#182;</a>
+                <a class="pilcrow" href="#section-99">&#182;</a>
               </div>
               <h2 id="marionette-bindentityevents-unbindentityevents">Marionette.bindEntityEvents &amp; unbindEntityEvents</h2>
 
@@ -1686,11 +1946,11 @@ using a Marionette.Region (or by other means of triggering &quot;show&quot;)</p>
         </li>
         
         
-        <li id="section-92">
+        <li id="section-100">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-92">&#182;</a>
+                <a class="pilcrow" href="#section-100">&#182;</a>
               </div>
               <p>These methods are used to bind/unbind a backbone &quot;entity&quot; (collection/model)
 to methods on a target object.</p>
@@ -1710,11 +1970,11 @@ function can be supplied instead of a string handler name.</p>
         </li>
         
         
-        <li id="section-93">
+        <li id="section-101">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-93">&#182;</a>
+                <a class="pilcrow" href="#section-101">&#182;</a>
               </div>
               <p>Bind the event to handlers specified as a string of
 handler names on the target object</p>
@@ -1724,7 +1984,7 @@ handler names on the target object</p>
             <div class="content"><div class='highlight'><pre>  <span class="function"><span class="keyword">function</span> <span class="title">bindFromStrings</span><span class="params">(target, entity, evt, methods)</span>{</span>
     <span class="keyword">var</span> methodNames = methods.split(<span class="regexp">/\s+/</span>);
 
-    _.each(methodNames,<span class="function"><span class="keyword">function</span><span class="params">(methodName)</span> {</span>
+    _.each(methodNames, <span class="function"><span class="keyword">function</span><span class="params">(methodName)</span> {</span>
 
       <span class="keyword">var</span> method = target[methodName];
       <span class="keyword">if</span>(!method) {
@@ -1738,11 +1998,11 @@ handler names on the target object</p>
         </li>
         
         
-        <li id="section-94">
+        <li id="section-102">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-94">&#182;</a>
+                <a class="pilcrow" href="#section-102">&#182;</a>
               </div>
               <p>Bind the event to a supplied callback function</p>
 
@@ -1755,11 +2015,11 @@ handler names on the target object</p>
         </li>
         
         
-        <li id="section-95">
+        <li id="section-103">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-95">&#182;</a>
+                <a class="pilcrow" href="#section-103">&#182;</a>
               </div>
               <p>Bind the event to handlers specified as a string of
 handler names on the target object</p>
@@ -1769,7 +2029,7 @@ handler names on the target object</p>
             <div class="content"><div class='highlight'><pre>  <span class="function"><span class="keyword">function</span> <span class="title">unbindFromStrings</span><span class="params">(target, entity, evt, methods)</span>{</span>
     <span class="keyword">var</span> methodNames = methods.split(<span class="regexp">/\s+/</span>);
 
-    _.each(methodNames,<span class="function"><span class="keyword">function</span><span class="params">(methodName)</span> {</span>
+    _.each(methodNames, <span class="function"><span class="keyword">function</span><span class="params">(methodName)</span> {</span>
       <span class="keyword">var</span> method = target[methodName];
       target.stopListening(entity, evt, method);
     });
@@ -1778,11 +2038,11 @@ handler names on the target object</p>
         </li>
         
         
-        <li id="section-96">
+        <li id="section-104">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-96">&#182;</a>
+                <a class="pilcrow" href="#section-104">&#182;</a>
               </div>
               <p>Bind the event to a supplied callback function</p>
 
@@ -1795,11 +2055,11 @@ handler names on the target object</p>
         </li>
         
         
-        <li id="section-97">
+        <li id="section-105">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-97">&#182;</a>
+                <a class="pilcrow" href="#section-105">&#182;</a>
               </div>
               <p>generic looping function</p>
 
@@ -1811,11 +2071,11 @@ handler names on the target object</p>
         </li>
         
         
-        <li id="section-98">
+        <li id="section-106">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-98">&#182;</a>
+                <a class="pilcrow" href="#section-106">&#182;</a>
               </div>
               <p>allow the bindings to be a function</p>
 
@@ -1828,11 +2088,11 @@ handler names on the target object</p>
         </li>
         
         
-        <li id="section-99">
+        <li id="section-107">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-99">&#182;</a>
+                <a class="pilcrow" href="#section-107">&#182;</a>
               </div>
               <p>iterate the bindings and bind them</p>
 
@@ -1843,11 +2103,11 @@ handler names on the target object</p>
         </li>
         
         
-        <li id="section-100">
+        <li id="section-108">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-100">&#182;</a>
+                <a class="pilcrow" href="#section-108">&#182;</a>
               </div>
               <p>allow for a function as the handler,
 or a list of event names as a string</p>
@@ -1866,11 +2126,11 @@ or a list of event names as a string</p>
         </li>
         
         
-        <li id="section-101">
+        <li id="section-109">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-101">&#182;</a>
+                <a class="pilcrow" href="#section-109">&#182;</a>
               </div>
               <p>Export Public API</p>
 
@@ -1889,11 +2149,11 @@ or a list of event names as a string</p>
         </li>
         
         
-        <li id="section-102">
+        <li id="section-110">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-102">&#182;</a>
+                <a class="pilcrow" href="#section-110">&#182;</a>
               </div>
               <h2 id="callbacks">Callbacks</h2>
 
@@ -1902,11 +2162,11 @@ or a list of event names as a string</p>
         </li>
         
         
-        <li id="section-103">
+        <li id="section-111">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-103">&#182;</a>
+                <a class="pilcrow" href="#section-111">&#182;</a>
               </div>
               <p>A simple way of managing a collection of callbacks
 and executing them at a later point in time, using jQuery&#39;s
@@ -1924,11 +2184,11 @@ _.extend(Marionette.Callbacks.prototype, {</pre></div></div>
         </li>
         
         
-        <li id="section-104">
+        <li id="section-112">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-104">&#182;</a>
+                <a class="pilcrow" href="#section-112">&#182;</a>
               </div>
               <p>Add a callback to be executed. Callbacks added here are
 guaranteed to execute, even if they are added after the
@@ -1948,11 +2208,11 @@ guaranteed to execute, even if they are added after the
         </li>
         
         
-        <li id="section-105">
+        <li id="section-113">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-105">&#182;</a>
+                <a class="pilcrow" href="#section-113">&#182;</a>
               </div>
               <p>Run all registered callbacks with the context specified.
 Additional callbacks can be added after this has been run
@@ -1967,11 +2227,11 @@ and they will still be executed.</p>
         </li>
         
         
-        <li id="section-106">
+        <li id="section-114">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-106">&#182;</a>
+                <a class="pilcrow" href="#section-114">&#182;</a>
               </div>
               <p>Resets the list of callbacks to be run, allowing the same list
 to be run multiple times - whenever the <code>run</code> method is called.</p>
@@ -1992,11 +2252,11 @@ to be run multiple times - whenever the <code>run</code> method is called.</p>
         </li>
         
         
-        <li id="section-107">
+        <li id="section-115">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-107">&#182;</a>
+                <a class="pilcrow" href="#section-115">&#182;</a>
               </div>
               <h2 id="marionette-controller">Marionette Controller</h2>
 
@@ -2005,11 +2265,11 @@ to be run multiple times - whenever the <code>run</code> method is called.</p>
         </li>
         
         
-        <li id="section-108">
+        <li id="section-116">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-108">&#182;</a>
+                <a class="pilcrow" href="#section-116">&#182;</a>
               </div>
               <p>A multi-purpose object to use as a controller for
 modules and routers, and as a mediator for workflow
@@ -2031,11 +2291,11 @@ Marionette.Controller.extend = Marionette.extend;</pre></div></div>
         </li>
         
         
-        <li id="section-109">
+        <li id="section-117">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-109">&#182;</a>
+                <a class="pilcrow" href="#section-117">&#182;</a>
               </div>
               <h2 id="controller-methods">Controller Methods</h2>
 
@@ -2044,11 +2304,11 @@ Marionette.Controller.extend = Marionette.extend;</pre></div></div>
         </li>
         
         
-        <li id="section-110">
+        <li id="section-118">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-110">&#182;</a>
+                <a class="pilcrow" href="#section-118">&#182;</a>
               </div>
               <p>Ensure it can trigger events with Backbone.Events</p>
 
@@ -2059,18 +2319,18 @@ Marionette.Controller.extend = Marionette.extend;</pre></div></div>
     <span class="keyword">this</span>.stopListening();
     <span class="keyword">var</span> args = Array.prototype.slice.call(arguments);
     <span class="keyword">this</span>.triggerMethod.apply(<span class="keyword">this</span>, [<span class="string">"close"</span>].concat(args));
-    <span class="keyword">this</span>.unbind();
+    <span class="keyword">this</span>.off();
   }
 });</pre></div></div>
             
         </li>
         
         
-        <li id="section-111">
+        <li id="section-119">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-111">&#182;</a>
+                <a class="pilcrow" href="#section-119">&#182;</a>
               </div>
               <h2 id="region">Region</h2>
 
@@ -2079,11 +2339,11 @@ Marionette.Controller.extend = Marionette.extend;</pre></div></div>
         </li>
         
         
-        <li id="section-112">
+        <li id="section-120">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-112">&#182;</a>
+                <a class="pilcrow" href="#section-120">&#182;</a>
               </div>
               <p>Manage the visual regions of your composite application. See
 <a href="http://lostechies.com/derickbailey/2011/12/12/composite-js-apps-regions-and-region-managers/">http://lostechies.com/derickbailey/2011/12/12/composite-js-apps-regions-and-region-managers/</a></p>
@@ -2107,11 +2367,11 @@ Marionette.Controller.extend = Marionette.extend;</pre></div></div>
         </li>
         
         
-        <li id="section-113">
+        <li id="section-121">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-113">&#182;</a>
+                <a class="pilcrow" href="#section-121">&#182;</a>
               </div>
               <h2 id="region-type-methods">Region Type methods</h2>
 
@@ -2120,11 +2380,11 @@ Marionette.Controller.extend = Marionette.extend;</pre></div></div>
         </li>
         
         
-        <li id="section-114">
+        <li id="section-122">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-114">&#182;</a>
+                <a class="pilcrow" href="#section-122">&#182;</a>
               </div>
               
             </div>
@@ -2134,11 +2394,11 @@ Marionette.Controller.extend = Marionette.extend;</pre></div></div>
         </li>
         
         
-        <li id="section-115">
+        <li id="section-123">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-115">&#182;</a>
+                <a class="pilcrow" href="#section-123">&#182;</a>
               </div>
               <p>Build an instance of a region by passing in a configuration object
 and a default region type to use if none is specified in the config.</p>
@@ -2167,11 +2427,11 @@ a selector and regionType:</p>
         </li>
         
         
-        <li id="section-116">
+        <li id="section-124">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-116">&#182;</a>
+                <a class="pilcrow" href="#section-124">&#182;</a>
               </div>
               <p>get the selector for the region</p>
 
@@ -2189,11 +2449,11 @@ a selector and regionType:</p>
         </li>
         
         
-        <li id="section-117">
+        <li id="section-125">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-117">&#182;</a>
+                <a class="pilcrow" href="#section-125">&#182;</a>
               </div>
               <p>get the type for the region</p>
 
@@ -2221,11 +2481,11 @@ a selector and regionType:</p>
         </li>
         
         
-        <li id="section-118">
+        <li id="section-126">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-118">&#182;</a>
+                <a class="pilcrow" href="#section-126">&#182;</a>
               </div>
               <p>build the region instance</p>
 
@@ -2236,11 +2496,11 @@ a selector and regionType:</p>
         </li>
         
         
-        <li id="section-119">
+        <li id="section-127">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-119">&#182;</a>
+                <a class="pilcrow" href="#section-127">&#182;</a>
               </div>
               <p>override the <code>getEl</code> function if we have a parentEl
 this must be overridden to ensure the selector is found
@@ -2269,11 +2529,11 @@ guaranteed to be in the DOM already, and will cause problems</p>
         </li>
         
         
-        <li id="section-120">
+        <li id="section-128">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-120">&#182;</a>
+                <a class="pilcrow" href="#section-128">&#182;</a>
               </div>
               <h2 id="region-instance-methods">Region Instance Methods</h2>
 
@@ -2282,11 +2542,11 @@ guaranteed to be in the DOM already, and will cause problems</p>
         </li>
         
         
-        <li id="section-121">
+        <li id="section-129">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-121">&#182;</a>
+                <a class="pilcrow" href="#section-129">&#182;</a>
               </div>
               
             </div>
@@ -2296,27 +2556,45 @@ guaranteed to be in the DOM already, and will cause problems</p>
         </li>
         
         
-        <li id="section-122">
+        <li id="section-130">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-122">&#182;</a>
+                <a class="pilcrow" href="#section-130">&#182;</a>
               </div>
               <p>Displays a backbone view instance inside of the region.
 Handles calling the <code>render</code> method for you. Reads content
 directly from the <code>el</code> attribute. Also calls an optional
 <code>onShow</code> and <code>close</code> method on your view, just after showing
-or just before closing the view, respectively.</p>
+or just before closing the view, respectively.
+The <code>preventClose</code> option can be used to prevent a view from being destroyed on show.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  show: <span class="function"><span class="keyword">function</span><span class="params">(view)</span>{</span>
+            <div class="content"><div class='highlight'><pre>  show: <span class="function"><span class="keyword">function</span><span class="params">(view, options)</span>{</span>
     <span class="keyword">this</span>.ensureEl();
 
+    <span class="keyword">var</span> showOptions = options || {};
     <span class="keyword">var</span> isViewClosed = view.isClosed || _.isUndefined(view.$el);
     <span class="keyword">var</span> isDifferentView = view !== <span class="keyword">this</span>.currentView;
+    <span class="keyword">var</span> preventClose =  !!showOptions.preventClose;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-131">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-131">&#182;</a>
+              </div>
+              <p>only close the view if we don&#39;t want to preventClose and the view is different</p>
 
-    <span class="keyword">if</span> (isDifferentView) {
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">var</span> _shouldCloseView = !preventClose &amp;&amp; isDifferentView;
+
+    <span class="keyword">if</span> (_shouldCloseView) {
       <span class="keyword">this</span>.close();
     }
 
@@ -2343,11 +2621,11 @@ or just before closing the view, respectively.</p>
         </li>
         
         
-        <li id="section-123">
+        <li id="section-132">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-123">&#182;</a>
+                <a class="pilcrow" href="#section-132">&#182;</a>
               </div>
               <p>Override this method to change how the region finds the
 DOM element that it manages. Return a jQuery selector object.</p>
@@ -2361,11 +2639,11 @@ DOM element that it manages. Return a jQuery selector object.</p>
         </li>
         
         
-        <li id="section-124">
+        <li id="section-133">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-124">&#182;</a>
+                <a class="pilcrow" href="#section-133">&#182;</a>
               </div>
               <p>Override this method to change how the new view is
 appended to the <code>$el</code> that the region is managing</p>
@@ -2379,11 +2657,11 @@ appended to the <code>$el</code> that the region is managing</p>
         </li>
         
         
-        <li id="section-125">
+        <li id="section-134">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-125">&#182;</a>
+                <a class="pilcrow" href="#section-134">&#182;</a>
               </div>
               <p>Close the current view, if there is one. If there is no
 current view, it does nothing and returns immediately.</p>
@@ -2397,11 +2675,11 @@ current view, it does nothing and returns immediately.</p>
         </li>
         
         
-        <li id="section-126">
+        <li id="section-135">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-126">&#182;</a>
+                <a class="pilcrow" href="#section-135">&#182;</a>
               </div>
               <p>call &#39;close&#39; or &#39;remove&#39;, depending on which is found</p>
 
@@ -2418,11 +2696,11 @@ current view, it does nothing and returns immediately.</p>
         </li>
         
         
-        <li id="section-127">
+        <li id="section-136">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-127">&#182;</a>
+                <a class="pilcrow" href="#section-136">&#182;</a>
               </div>
               <p>Attach an existing view to the region. This
 will not call <code>render</code> or <code>onShow</code> for the new view,
@@ -2438,11 +2716,11 @@ of the region.</p>
         </li>
         
         
-        <li id="section-128">
+        <li id="section-137">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-128">&#182;</a>
+                <a class="pilcrow" href="#section-137">&#182;</a>
               </div>
               <p>Reset the region by closing any existing view and
 clearing out the cached <code>$el</code>. The next time a view
@@ -2460,11 +2738,11 @@ DOM for the region&#39;s <code>el</code>.</p>
         </li>
         
         
-        <li id="section-129">
+        <li id="section-138">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-129">&#182;</a>
+                <a class="pilcrow" href="#section-138">&#182;</a>
               </div>
               <p>Copy the <code>extend</code> function used by Backbone&#39;s classes</p>
 
@@ -2475,11 +2753,11 @@ DOM for the region&#39;s <code>el</code>.</p>
         </li>
         
         
-        <li id="section-130">
+        <li id="section-139">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-130">&#182;</a>
+                <a class="pilcrow" href="#section-139">&#182;</a>
               </div>
               <h2 id="marionette-regionmanager">Marionette.RegionManager</h2>
 
@@ -2488,11 +2766,11 @@ DOM for the region&#39;s <code>el</code>.</p>
         </li>
         
         
-        <li id="section-131">
+        <li id="section-140">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-131">&#182;</a>
+                <a class="pilcrow" href="#section-140">&#182;</a>
               </div>
               <p>Manage one or more related <code>Marionette.Region</code> objects.</p>
 
@@ -2509,11 +2787,11 @@ DOM for the region&#39;s <code>el</code>.</p>
         </li>
         
         
-        <li id="section-132">
+        <li id="section-141">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-132">&#182;</a>
+                <a class="pilcrow" href="#section-141">&#182;</a>
               </div>
               <p>Add multiple regions using an object literal, where
 each key becomes the region name, and each value is
@@ -2543,11 +2821,11 @@ the region definition.</p>
         </li>
         
         
-        <li id="section-133">
+        <li id="section-142">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-133">&#182;</a>
+                <a class="pilcrow" href="#section-142">&#182;</a>
               </div>
               <p>Add an individual region to the region manager,
 and return the region instance</p>
@@ -2577,11 +2855,11 @@ and return the region instance</p>
         </li>
         
         
-        <li id="section-134">
+        <li id="section-143">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-134">&#182;</a>
+                <a class="pilcrow" href="#section-143">&#182;</a>
               </div>
               <p>Get a region by name</p>
 
@@ -2594,11 +2872,11 @@ and return the region instance</p>
         </li>
         
         
-        <li id="section-135">
+        <li id="section-144">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-135">&#182;</a>
+                <a class="pilcrow" href="#section-144">&#182;</a>
               </div>
               <p>Remove a region by name</p>
 
@@ -2612,11 +2890,11 @@ and return the region instance</p>
         </li>
         
         
-        <li id="section-136">
+        <li id="section-145">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-136">&#182;</a>
+                <a class="pilcrow" href="#section-145">&#182;</a>
               </div>
               <p>Close all regions in the region manager, and
 remove them</p>
@@ -2632,11 +2910,11 @@ remove them</p>
         </li>
         
         
-        <li id="section-137">
+        <li id="section-146">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-137">&#182;</a>
+                <a class="pilcrow" href="#section-146">&#182;</a>
               </div>
               <p>Close all regions in the region manager, but
 leave them attached</p>
@@ -2652,11 +2930,11 @@ leave them attached</p>
         </li>
         
         
-        <li id="section-138">
+        <li id="section-147">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-138">&#182;</a>
+                <a class="pilcrow" href="#section-147">&#182;</a>
               </div>
               <p>Close all regions and shut down the region
 manager entirely</p>
@@ -2671,11 +2949,11 @@ manager entirely</p>
         </li>
         
         
-        <li id="section-139">
+        <li id="section-148">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-139">&#182;</a>
+                <a class="pilcrow" href="#section-148">&#182;</a>
               </div>
               <p>internal method to store regions</p>
 
@@ -2689,11 +2967,11 @@ manager entirely</p>
         </li>
         
         
-        <li id="section-140">
+        <li id="section-149">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-140">&#182;</a>
+                <a class="pilcrow" href="#section-149">&#182;</a>
               </div>
               <p>internal method to remove a region</p>
 
@@ -2701,6 +2979,7 @@ manager entirely</p>
             
             <div class="content"><div class='highlight'><pre>    _remove: <span class="function"><span class="keyword">function</span><span class="params">(name, region)</span>{</span>
       region.close();
+      region.stopListening();
       <span class="keyword">delete</span> <span class="keyword">this</span>._regions[name];
       <span class="keyword">this</span>._setLength();
       <span class="keyword">this</span>.triggerMethod(<span class="string">"region:remove"</span>, name, region);
@@ -2709,11 +2988,11 @@ manager entirely</p>
         </li>
         
         
-        <li id="section-141">
+        <li id="section-150">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-141">&#182;</a>
+                <a class="pilcrow" href="#section-150">&#182;</a>
               </div>
               <p>set the number of regions current held</p>
 
@@ -2723,36 +3002,9 @@ manager entirely</p>
       <span class="keyword">this</span>.length = _.size(<span class="keyword">this</span>._regions);
     }
 
-  });</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-142">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-142">&#182;</a>
-              </div>
-              <p>Borrowing this code from Backbone.Collection:
-<a href="http://backbonejs.org/docs/backbone.html#section-106">http://backbonejs.org/docs/backbone.html#section-106</a></p>
-<p>Mix in methods from Underscore, for iteration, and other
-collection related features.</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>  <span class="keyword">var</span> methods = [<span class="string">'forEach'</span>, <span class="string">'each'</span>, <span class="string">'map'</span>, <span class="string">'find'</span>, <span class="string">'detect'</span>, <span class="string">'filter'</span>,
-    <span class="string">'select'</span>, <span class="string">'reject'</span>, <span class="string">'every'</span>, <span class="string">'all'</span>, <span class="string">'some'</span>, <span class="string">'any'</span>, <span class="string">'include'</span>,
-    <span class="string">'contains'</span>, <span class="string">'invoke'</span>, <span class="string">'toArray'</span>, <span class="string">'first'</span>, <span class="string">'initial'</span>, <span class="string">'rest'</span>,
-    <span class="string">'last'</span>, <span class="string">'without'</span>, <span class="string">'isEmpty'</span>, <span class="string">'pluck'</span>];
-
-  _.each(methods, <span class="function"><span class="keyword">function</span><span class="params">(method)</span> {</span>
-    RegionManager.prototype[method] = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
-      <span class="keyword">var</span> regions = _.values(<span class="keyword">this</span>._regions);
-      <span class="keyword">var</span> args = [regions].concat(_.toArray(arguments));
-      <span class="keyword">return</span> _[method].apply(_, args);
-    };
   });
+
+  Marionette.actAsCollection(RegionManager.prototype, <span class="string">'_regions'</span>);
 
   <span class="keyword">return</span> RegionManager;
 })(Marionette);</pre></div></div>
@@ -2760,11 +3012,11 @@ collection related features.</p>
         </li>
         
         
-        <li id="section-143">
+        <li id="section-151">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-143">&#182;</a>
+                <a class="pilcrow" href="#section-151">&#182;</a>
               </div>
               <h2 id="template-cache">Template Cache</h2>
 
@@ -2773,11 +3025,11 @@ collection related features.</p>
         </li>
         
         
-        <li id="section-144">
+        <li id="section-152">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-144">&#182;</a>
+                <a class="pilcrow" href="#section-152">&#182;</a>
               </div>
               <p>Manage templates stored in <code>&lt;script&gt;</code> blocks,
 caching them for faster access.</p>
@@ -2791,11 +3043,11 @@ caching them for faster access.</p>
         </li>
         
         
-        <li id="section-145">
+        <li id="section-153">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-145">&#182;</a>
+                <a class="pilcrow" href="#section-153">&#182;</a>
               </div>
               <p>TemplateCache object-level methods. Manage the template
 caches from these method calls instead of creating
@@ -2809,11 +3061,11 @@ your own TemplateCache instances</p>
         </li>
         
         
-        <li id="section-146">
+        <li id="section-154">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-146">&#182;</a>
+                <a class="pilcrow" href="#section-154">&#182;</a>
               </div>
               <p>Get the specified template by id. Either
 retrieves the cached version, or loads it
@@ -2835,11 +3087,11 @@ from the DOM.</p>
         </li>
         
         
-        <li id="section-147">
+        <li id="section-155">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-147">&#182;</a>
+                <a class="pilcrow" href="#section-155">&#182;</a>
               </div>
               <p>Clear templates from the cache. If no arguments
 are specified, clears all templates:
@@ -2868,11 +3120,11 @@ specified templates from the cache:
         </li>
         
         
-        <li id="section-148">
+        <li id="section-156">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-148">&#182;</a>
+                <a class="pilcrow" href="#section-156">&#182;</a>
               </div>
               <p>TemplateCache instance methods, allowing each
 template cache object to manage its own state
@@ -2885,11 +3137,11 @@ and know whether or not it has been loaded</p>
         </li>
         
         
-        <li id="section-149">
+        <li id="section-157">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-149">&#182;</a>
+                <a class="pilcrow" href="#section-157">&#182;</a>
               </div>
               <p>Internal method to load the template</p>
 
@@ -2900,11 +3152,11 @@ and know whether or not it has been loaded</p>
         </li>
         
         
-        <li id="section-150">
+        <li id="section-158">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-150">&#182;</a>
+                <a class="pilcrow" href="#section-158">&#182;</a>
               </div>
               <p>Guard clause to prevent loading this template more than once</p>
 
@@ -2917,11 +3169,11 @@ and know whether or not it has been loaded</p>
         </li>
         
         
-        <li id="section-151">
+        <li id="section-159">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-151">&#182;</a>
+                <a class="pilcrow" href="#section-159">&#182;</a>
               </div>
               <p>Load the template and compile it</p>
 
@@ -2936,11 +3188,11 @@ and know whether or not it has been loaded</p>
         </li>
         
         
-        <li id="section-152">
+        <li id="section-160">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-152">&#182;</a>
+                <a class="pilcrow" href="#section-160">&#182;</a>
               </div>
               <p>Load a template from the DOM, by default. Override
 this method to provide your own template retrieval
@@ -2963,11 +3215,11 @@ using a template-loader plugin as described here:
         </li>
         
         
-        <li id="section-153">
+        <li id="section-161">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-153">&#182;</a>
+                <a class="pilcrow" href="#section-161">&#182;</a>
               </div>
               <p>Pre-compile the template before caching it. Override
 this method if you do not need to pre-compile a template
@@ -2984,11 +3236,11 @@ the template engine used (Handebars, etc).</p>
         </li>
         
         
-        <li id="section-154">
+        <li id="section-162">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-154">&#182;</a>
+                <a class="pilcrow" href="#section-162">&#182;</a>
               </div>
               <h2 id="renderer">Renderer</h2>
 
@@ -2997,11 +3249,11 @@ the template engine used (Handebars, etc).</p>
         </li>
         
         
-        <li id="section-155">
+        <li id="section-163">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-155">&#182;</a>
+                <a class="pilcrow" href="#section-163">&#182;</a>
               </div>
               <p>Render a template with data by passing in the template
 selector and the data to render.</p>
@@ -3013,11 +3265,11 @@ selector and the data to render.</p>
         </li>
         
         
-        <li id="section-156">
+        <li id="section-164">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-156">&#182;</a>
+                <a class="pilcrow" href="#section-164">&#182;</a>
               </div>
               <p>Render a template with data. The <code>template</code> parameter is
 passed to the <code>TemplateCache</code> object to retrieve the
@@ -3046,11 +3298,11 @@ custom rendering and template handling for all of Marionette.</p>
         </li>
         
         
-        <li id="section-157">
+        <li id="section-165">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-157">&#182;</a>
+                <a class="pilcrow" href="#section-165">&#182;</a>
               </div>
               <h2 id="marionette-view">Marionette.View</h2>
 
@@ -3059,11 +3311,11 @@ custom rendering and template handling for all of Marionette.</p>
         </li>
         
         
-        <li id="section-158">
+        <li id="section-166">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-158">&#182;</a>
+                <a class="pilcrow" href="#section-166">&#182;</a>
               </div>
               <p>The core view type that other Marionette views extend from.</p>
 
@@ -3081,11 +3333,11 @@ custom rendering and template handling for all of Marionette.</p>
         </li>
         
         
-        <li id="section-159">
+        <li id="section-167">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-159">&#182;</a>
+                <a class="pilcrow" href="#section-167">&#182;</a>
               </div>
               <p>this exposes view options to the view initializer
 this is a backfill since backbone removed the assignment
@@ -3099,11 +3351,11 @@ at some point however this may be removed</p>
         </li>
         
         
-        <li id="section-160">
+        <li id="section-168">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-160">&#182;</a>
+                <a class="pilcrow" href="#section-168">&#182;</a>
               </div>
               <p>parses out the @ui DSL for events</p>
 
@@ -3119,11 +3371,11 @@ at some point however this may be removed</p>
         </li>
         
         
-        <li id="section-161">
+        <li id="section-169">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-161">&#182;</a>
+                <a class="pilcrow" href="#section-169">&#182;</a>
               </div>
               <p>import the &quot;triggerMethod&quot; to trigger events with corresponding
 methods if the method exists</p>
@@ -3135,11 +3387,11 @@ methods if the method exists</p>
         </li>
         
         
-        <li id="section-162">
+        <li id="section-170">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-162">&#182;</a>
+                <a class="pilcrow" href="#section-170">&#182;</a>
               </div>
               <p>Imports the &quot;normalizeMethods&quot; to transform hashes of
 events=&gt;function references/names to a hash of events=&gt;function references</p>
@@ -3151,11 +3403,11 @@ events=&gt;function references/names to a hash of events=&gt;function references
         </li>
         
         
-        <li id="section-163">
+        <li id="section-171">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-163">&#182;</a>
+                <a class="pilcrow" href="#section-171">&#182;</a>
               </div>
               <p>Get the template for this view
 instance. You can set a <code>template</code> attribute in the view
@@ -3171,11 +3423,11 @@ to the constructor options.</p>
         </li>
         
         
-        <li id="section-164">
+        <li id="section-172">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-164">&#182;</a>
+                <a class="pilcrow" href="#section-172">&#182;</a>
               </div>
               <p>Mix in template helper methods. Looks for a
 <code>templateHelpers</code> attribute, which can either be an
@@ -3203,11 +3455,11 @@ are copies to the object passed in.</p>
         </li>
         
         
-        <li id="section-165">
+        <li id="section-173">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-165">&#182;</a>
+                <a class="pilcrow" href="#section-173">&#182;</a>
               </div>
               <p>Configure <code>triggers</code> to forward DOM events to view
 events. <code>triggers: {&quot;click .foo&quot;: &quot;do:foo&quot;}</code></p>
@@ -3222,11 +3474,11 @@ events. <code>triggers: {&quot;click .foo&quot;: &quot;do:foo&quot;}</code></p>
         </li>
         
         
-        <li id="section-166">
+        <li id="section-174">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-166">&#182;</a>
+                <a class="pilcrow" href="#section-174">&#182;</a>
               </div>
               <p>Allow <code>triggers</code> to be configured as a function</p>
 
@@ -3237,11 +3489,11 @@ events. <code>triggers: {&quot;click .foo&quot;: &quot;do:foo&quot;}</code></p>
         </li>
         
         
-        <li id="section-167">
+        <li id="section-175">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-167">&#182;</a>
+                <a class="pilcrow" href="#section-175">&#182;</a>
               </div>
               <p>Configure the triggers, prevent default
 action and stop propagation of DOM events</p>
@@ -3256,11 +3508,11 @@ action and stop propagation of DOM events</p>
         </li>
         
         
-        <li id="section-168">
+        <li id="section-176">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-168">&#182;</a>
+                <a class="pilcrow" href="#section-176">&#182;</a>
               </div>
               <p>build the event handler function for the DOM event</p>
 
@@ -3271,11 +3523,11 @@ action and stop propagation of DOM events</p>
         </li>
         
         
-        <li id="section-169">
+        <li id="section-177">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-169">&#182;</a>
+                <a class="pilcrow" href="#section-177">&#182;</a>
               </div>
               <p>stop the event in its tracks</p>
 
@@ -3295,11 +3547,11 @@ action and stop propagation of DOM events</p>
         </li>
         
         
-        <li id="section-170">
+        <li id="section-178">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-170">&#182;</a>
+                <a class="pilcrow" href="#section-178">&#182;</a>
               </div>
               <p>build the args for the event</p>
 
@@ -3314,11 +3566,11 @@ action and stop propagation of DOM events</p>
         </li>
         
         
-        <li id="section-171">
+        <li id="section-179">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-171">&#182;</a>
+                <a class="pilcrow" href="#section-179">&#182;</a>
               </div>
               <p>trigger the event</p>
 
@@ -3335,11 +3587,11 @@ action and stop propagation of DOM events</p>
         </li>
         
         
-        <li id="section-172">
+        <li id="section-180">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-172">&#182;</a>
+                <a class="pilcrow" href="#section-180">&#182;</a>
               </div>
               <p>Overriding Backbone.View&#39;s delegateEvents to handle
 the <code>triggers</code>, <code>modelEvents</code>, and <code>collectionEvents</code> configuration</p>
@@ -3355,11 +3607,11 @@ the <code>triggers</code>, <code>modelEvents</code>, and <code>collectionEvents<
         </li>
         
         
-        <li id="section-173">
+        <li id="section-181">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-173">&#182;</a>
+                <a class="pilcrow" href="#section-181">&#182;</a>
               </div>
               <p>internal method to delegate DOM events and triggers</p>
 
@@ -3374,11 +3626,11 @@ the <code>triggers</code>, <code>modelEvents</code>, and <code>collectionEvents<
         </li>
         
         
-        <li id="section-174">
+        <li id="section-182">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-174">&#182;</a>
+                <a class="pilcrow" href="#section-182">&#182;</a>
               </div>
               <p>look up if this view has behavior events</p>
 
@@ -3390,11 +3642,11 @@ the <code>triggers</code>, <code>modelEvents</code>, and <code>collectionEvents<
         </li>
         
         
-        <li id="section-175">
+        <li id="section-183">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-175">&#182;</a>
+                <a class="pilcrow" href="#section-183">&#182;</a>
               </div>
               <p>behavior events will be overriden by view events and or triggers</p>
 
@@ -3408,11 +3660,11 @@ the <code>triggers</code>, <code>modelEvents</code>, and <code>collectionEvents<
         </li>
         
         
-        <li id="section-176">
+        <li id="section-184">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-176">&#182;</a>
+                <a class="pilcrow" href="#section-184">&#182;</a>
               </div>
               <p>Overriding Backbone.View&#39;s undelegateEvents to handle unbinding
 the <code>triggers</code>, <code>modelEvents</code>, and <code>collectionEvents</code> config</p>
@@ -3430,11 +3682,11 @@ the <code>triggers</code>, <code>modelEvents</code>, and <code>collectionEvents<
         </li>
         
         
-        <li id="section-177">
+        <li id="section-185">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-177">&#182;</a>
+                <a class="pilcrow" href="#section-185">&#182;</a>
               </div>
               <p>Internal method, handles the <code>show</code> event.</p>
 
@@ -3445,11 +3697,11 @@ the <code>triggers</code>, <code>modelEvents</code>, and <code>collectionEvents<
         </li>
         
         
-        <li id="section-178">
+        <li id="section-186">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-178">&#182;</a>
+                <a class="pilcrow" href="#section-186">&#182;</a>
               </div>
               <p>Default <code>close</code> implementation, for removing a view from the
 DOM and unbinding it. Regions will call this method
@@ -3466,11 +3718,11 @@ add custom code that is called after the view is closed.</p>
         </li>
         
         
-        <li id="section-179">
+        <li id="section-187">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-179">&#182;</a>
+                <a class="pilcrow" href="#section-187">&#182;</a>
               </div>
               <p>allow the close to be stopped by returning <code>false</code>
 from the <code>onBeforeClose</code> method</p>
@@ -3485,11 +3737,11 @@ from the <code>onBeforeClose</code> method</p>
         </li>
         
         
-        <li id="section-180">
+        <li id="section-188">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-180">&#182;</a>
+                <a class="pilcrow" href="#section-188">&#182;</a>
               </div>
               <p>mark as closed before doing the actual close, to
 prevent infinite loops within &quot;close&quot; event handlers
@@ -3503,11 +3755,11 @@ that are trying to close other views</p>
         </li>
         
         
-        <li id="section-181">
+        <li id="section-189">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-181">&#182;</a>
+                <a class="pilcrow" href="#section-189">&#182;</a>
               </div>
               <p>unbind UI elements</p>
 
@@ -3518,11 +3770,11 @@ that are trying to close other views</p>
         </li>
         
         
-        <li id="section-182">
+        <li id="section-190">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-182">&#182;</a>
+                <a class="pilcrow" href="#section-190">&#182;</a>
               </div>
               <p>remove the view from the DOM</p>
 
@@ -3534,11 +3786,11 @@ that are trying to close other views</p>
         </li>
         
         
-        <li id="section-183">
+        <li id="section-191">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-183">&#182;</a>
+                <a class="pilcrow" href="#section-191">&#182;</a>
               </div>
               <p>This method binds the elements specified in the &quot;ui&quot; hash inside the view&#39;s code with
 the associated jQuery selectors.</p>
@@ -3551,11 +3803,11 @@ the associated jQuery selectors.</p>
         </li>
         
         
-        <li id="section-184">
+        <li id="section-192">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-184">&#182;</a>
+                <a class="pilcrow" href="#section-192">&#182;</a>
               </div>
               <p>store the ui hash in _uiBindings so they can be reset later
 and so re-rendering the view will be able to find the bindings</p>
@@ -3569,11 +3821,11 @@ and so re-rendering the view will be able to find the bindings</p>
         </li>
         
         
-        <li id="section-185">
+        <li id="section-193">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-185">&#182;</a>
+                <a class="pilcrow" href="#section-193">&#182;</a>
               </div>
               <p>get the bindings result, as a function or otherwise</p>
 
@@ -3584,11 +3836,11 @@ and so re-rendering the view will be able to find the bindings</p>
         </li>
         
         
-        <li id="section-186">
+        <li id="section-194">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-186">&#182;</a>
+                <a class="pilcrow" href="#section-194">&#182;</a>
               </div>
               <p>empty the ui so we don&#39;t have anything to start with</p>
 
@@ -3599,11 +3851,11 @@ and so re-rendering the view will be able to find the bindings</p>
         </li>
         
         
-        <li id="section-187">
+        <li id="section-195">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-187">&#182;</a>
+                <a class="pilcrow" href="#section-195">&#182;</a>
               </div>
               <p>bind each of the selectors</p>
 
@@ -3618,11 +3870,11 @@ and so re-rendering the view will be able to find the bindings</p>
         </li>
         
         
-        <li id="section-188">
+        <li id="section-196">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-188">&#182;</a>
+                <a class="pilcrow" href="#section-196">&#182;</a>
               </div>
               <p>This method unbinds the elements specified in the &quot;ui&quot; hash</p>
 
@@ -3634,11 +3886,11 @@ and so re-rendering the view will be able to find the bindings</p>
         </li>
         
         
-        <li id="section-189">
+        <li id="section-197">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-189">&#182;</a>
+                <a class="pilcrow" href="#section-197">&#182;</a>
               </div>
               <p>delete all of the existing ui bindings</p>
 
@@ -3651,11 +3903,11 @@ and so re-rendering the view will be able to find the bindings</p>
         </li>
         
         
-        <li id="section-190">
+        <li id="section-198">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-190">&#182;</a>
+                <a class="pilcrow" href="#section-198">&#182;</a>
               </div>
               <p>reset the ui element to the original bindings configuration</p>
 
@@ -3669,11 +3921,11 @@ and so re-rendering the view will be able to find the bindings</p>
         </li>
         
         
-        <li id="section-191">
+        <li id="section-199">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-191">&#182;</a>
+                <a class="pilcrow" href="#section-199">&#182;</a>
               </div>
               <h2 id="item-view">Item View</h2>
 
@@ -3682,11 +3934,11 @@ and so re-rendering the view will be able to find the bindings</p>
         </li>
         
         
-        <li id="section-192">
+        <li id="section-200">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-192">&#182;</a>
+                <a class="pilcrow" href="#section-200">&#182;</a>
               </div>
               <p>A single item view implementation that contains code for rendering
 with underscore.js templates, serializing the view&#39;s model or collection,
@@ -3699,11 +3951,11 @@ and calling several methods on extended views, such as <code>onRender</code>.</p
         </li>
         
         
-        <li id="section-193">
+        <li id="section-201">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-193">&#182;</a>
+                <a class="pilcrow" href="#section-201">&#182;</a>
               </div>
               <p>Setting up the inheritance chain which allows changes to
 Marionette.View.prototype.constructor which allows overriding</p>
@@ -3717,11 +3969,11 @@ Marionette.View.prototype.constructor which allows overriding</p>
         </li>
         
         
-        <li id="section-194">
+        <li id="section-202">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-194">&#182;</a>
+                <a class="pilcrow" href="#section-202">&#182;</a>
               </div>
               <p>Serialize the model or collection for the view. If a model is
 found, <code>.toJSON()</code> is called. If a collection is found, <code>.toJSON()</code>
@@ -3748,11 +4000,11 @@ definition, to provide custom serialization for your view&#39;s data.</p>
         </li>
         
         
-        <li id="section-195">
+        <li id="section-203">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-195">&#182;</a>
+                <a class="pilcrow" href="#section-203">&#182;</a>
               </div>
               <p>Render the view, defaulting to underscore.js templates.
 You can override this in your view definition to provide
@@ -3786,11 +4038,11 @@ change how Marionette renders views.</p>
         </li>
         
         
-        <li id="section-196">
+        <li id="section-204">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-196">&#182;</a>
+                <a class="pilcrow" href="#section-204">&#182;</a>
               </div>
               <p>Override the default close event to add a few
 more events that are triggered.</p>
@@ -3811,11 +4063,11 @@ more events that are triggered.</p>
         </li>
         
         
-        <li id="section-197">
+        <li id="section-205">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-197">&#182;</a>
+                <a class="pilcrow" href="#section-205">&#182;</a>
               </div>
               <h2 id="collection-view">Collection View</h2>
 
@@ -3824,11 +4076,11 @@ more events that are triggered.</p>
         </li>
         
         
-        <li id="section-198">
+        <li id="section-206">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-198">&#182;</a>
+                <a class="pilcrow" href="#section-206">&#182;</a>
               </div>
               <p>A view that iterates over a Backbone.Collection
 and renders an individual ItemView for each model.</p>
@@ -3840,11 +4092,11 @@ and renders an individual ItemView for each model.</p>
         </li>
         
         
-        <li id="section-199">
+        <li id="section-207">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-199">&#182;</a>
+                <a class="pilcrow" href="#section-207">&#182;</a>
               </div>
               <p>used as the prefix for item view events
 that are forwarded through the collectionview</p>
@@ -3856,11 +4108,11 @@ that are forwarded through the collectionview</p>
         </li>
         
         
-        <li id="section-200">
+        <li id="section-208">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-200">&#182;</a>
+                <a class="pilcrow" href="#section-208">&#182;</a>
               </div>
               <p>constructor</p>
 
@@ -3878,11 +4130,11 @@ that are forwarded through the collectionview</p>
         </li>
         
         
-        <li id="section-201">
+        <li id="section-209">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-201">&#182;</a>
+                <a class="pilcrow" href="#section-209">&#182;</a>
               </div>
               <p>Instead of inserting elements one by one into the page,
 it&#39;s much more performant to insert elements into a document
@@ -3919,11 +4171,11 @@ fragment and then insert that document fragment into the page</p>
         </li>
         
         
-        <li id="section-202">
+        <li id="section-210">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-202">&#182;</a>
+                <a class="pilcrow" href="#section-210">&#182;</a>
               </div>
               <p>Configured the initial events that the collection view
 binds to.</p>
@@ -3941,11 +4193,11 @@ binds to.</p>
         </li>
         
         
-        <li id="section-203">
+        <li id="section-211">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-203">&#182;</a>
+                <a class="pilcrow" href="#section-211">&#182;</a>
               </div>
               <p>Handle a child item added to the collection</p>
 
@@ -3961,11 +4213,11 @@ binds to.</p>
         </li>
         
         
-        <li id="section-204">
+        <li id="section-212">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-204">&#182;</a>
+                <a class="pilcrow" href="#section-212">&#182;</a>
               </div>
               <p>Override from <code>Marionette.View</code> to guarantee the <code>onShow</code> method
 of child views is called.</p>
@@ -3981,11 +4233,11 @@ of child views is called.</p>
         </li>
         
         
-        <li id="section-205">
+        <li id="section-213">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-205">&#182;</a>
+                <a class="pilcrow" href="#section-213">&#182;</a>
               </div>
               <p>Internal method to trigger the before render callbacks
 and events</p>
@@ -4000,11 +4252,11 @@ and events</p>
         </li>
         
         
-        <li id="section-206">
+        <li id="section-214">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-206">&#182;</a>
+                <a class="pilcrow" href="#section-214">&#182;</a>
               </div>
               <p>Internal method to trigger the rendered callbacks and
 events</p>
@@ -4019,11 +4271,11 @@ events</p>
         </li>
         
         
-        <li id="section-207">
+        <li id="section-215">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-207">&#182;</a>
+                <a class="pilcrow" href="#section-215">&#182;</a>
               </div>
               <p>Render the collection of items. Override this method to
 provide your own implementation of a render function for
@@ -4042,11 +4294,11 @@ the collection view.</p>
         </li>
         
         
-        <li id="section-208">
+        <li id="section-216">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-208">&#182;</a>
+                <a class="pilcrow" href="#section-216">&#182;</a>
               </div>
               <p>Internal method. Separated so that CompositeView can have
 more control over events being triggered, around the rendering
@@ -4072,11 +4324,11 @@ process</p>
         </li>
         
         
-        <li id="section-209">
+        <li id="section-217">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-209">&#182;</a>
+                <a class="pilcrow" href="#section-217">&#182;</a>
               </div>
               <p>Internal method to loop through each item in the
 collection view and show it</p>
@@ -4094,11 +4346,11 @@ collection view and show it</p>
         </li>
         
         
-        <li id="section-210">
+        <li id="section-218">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-210">&#182;</a>
+                <a class="pilcrow" href="#section-218">&#182;</a>
               </div>
               <p>Internal method to show an empty view in place of
 a collection of item views, when the collection is
@@ -4119,11 +4371,11 @@ empty</p>
         </li>
         
         
-        <li id="section-211">
+        <li id="section-219">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-211">&#182;</a>
+                <a class="pilcrow" href="#section-219">&#182;</a>
               </div>
               <p>Internal method to close an existing emptyView instance
 if one exists. Called when a collection view has been
@@ -4141,11 +4393,11 @@ rendered empty, and then an item is added to the collection.</p>
         </li>
         
         
-        <li id="section-212">
+        <li id="section-220">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-212">&#182;</a>
+                <a class="pilcrow" href="#section-220">&#182;</a>
               </div>
               <p>Retrieve the empty view type</p>
 
@@ -4158,11 +4410,11 @@ rendered empty, and then an item is added to the collection.</p>
         </li>
         
         
-        <li id="section-213">
+        <li id="section-221">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-213">&#182;</a>
+                <a class="pilcrow" href="#section-221">&#182;</a>
               </div>
               <p>Retrieve the itemView type, either from <code>this.options.itemView</code>
 or from the <code>itemView</code> in the object definition. The &quot;options&quot;
@@ -4183,11 +4435,11 @@ takes precedence.</p>
         </li>
         
         
-        <li id="section-214">
+        <li id="section-222">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-214">&#182;</a>
+                <a class="pilcrow" href="#section-222">&#182;</a>
               </div>
               <p>Render the child item&#39;s view and add it to the
 HTML for the collection view.</p>
@@ -4199,11 +4451,11 @@ HTML for the collection view.</p>
         </li>
         
         
-        <li id="section-215">
+        <li id="section-223">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-215">&#182;</a>
+                <a class="pilcrow" href="#section-223">&#182;</a>
               </div>
               <p>get the itemViewOptions if any were specified</p>
 
@@ -4217,11 +4469,11 @@ HTML for the collection view.</p>
         </li>
         
         
-        <li id="section-216">
+        <li id="section-224">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-216">&#182;</a>
+                <a class="pilcrow" href="#section-224">&#182;</a>
               </div>
               <p>build the view</p>
 
@@ -4232,11 +4484,11 @@ HTML for the collection view.</p>
         </li>
         
         
-        <li id="section-217">
+        <li id="section-225">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-217">&#182;</a>
+                <a class="pilcrow" href="#section-225">&#182;</a>
               </div>
               <p>set up the child view event forwarding</p>
 
@@ -4247,11 +4499,11 @@ HTML for the collection view.</p>
         </li>
         
         
-        <li id="section-218">
+        <li id="section-226">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-218">&#182;</a>
+                <a class="pilcrow" href="#section-226">&#182;</a>
               </div>
               <p>this view is about to be added</p>
 
@@ -4262,11 +4514,11 @@ HTML for the collection view.</p>
         </li>
         
         
-        <li id="section-219">
+        <li id="section-227">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-219">&#182;</a>
+                <a class="pilcrow" href="#section-227">&#182;</a>
               </div>
               <p>Store the child view itself so we can properly
 remove and/or close it later</p>
@@ -4278,11 +4530,11 @@ remove and/or close it later</p>
         </li>
         
         
-        <li id="section-220">
+        <li id="section-228">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-220">&#182;</a>
+                <a class="pilcrow" href="#section-228">&#182;</a>
               </div>
               <p>Render it and show it</p>
 
@@ -4293,11 +4545,11 @@ remove and/or close it later</p>
         </li>
         
         
-        <li id="section-221">
+        <li id="section-229">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-221">&#182;</a>
+                <a class="pilcrow" href="#section-229">&#182;</a>
               </div>
               <p>call the &quot;show&quot; method if the collection view
 has already been shown</p>
@@ -4311,11 +4563,11 @@ has already been shown</p>
         </li>
         
         
-        <li id="section-222">
+        <li id="section-230">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-222">&#182;</a>
+                <a class="pilcrow" href="#section-230">&#182;</a>
               </div>
               <p>this view was added</p>
 
@@ -4329,11 +4581,11 @@ has already been shown</p>
         </li>
         
         
-        <li id="section-223">
+        <li id="section-231">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-223">&#182;</a>
+                <a class="pilcrow" href="#section-231">&#182;</a>
               </div>
               <p>Set up the child view event forwarding. Uses an &quot;itemview:&quot;
 prefix in front of all forwarded events.</p>
@@ -4346,11 +4598,11 @@ prefix in front of all forwarded events.</p>
         </li>
         
         
-        <li id="section-224">
+        <li id="section-232">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-224">&#182;</a>
+                <a class="pilcrow" href="#section-232">&#182;</a>
               </div>
               <p>Forward all child item view events through the parent,
 prepending &quot;itemview:&quot; to the event name</p>
@@ -4368,11 +4620,11 @@ prepending &quot;itemview:&quot; to the event name</p>
         </li>
         
         
-        <li id="section-225">
+        <li id="section-233">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-225">&#182;</a>
+                <a class="pilcrow" href="#section-233">&#182;</a>
               </div>
               <p>call collectionView itemEvent if defined</p>
 
@@ -4389,11 +4641,11 @@ prepending &quot;itemview:&quot; to the event name</p>
         </li>
         
         
-        <li id="section-226">
+        <li id="section-234">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-226">&#182;</a>
+                <a class="pilcrow" href="#section-234">&#182;</a>
               </div>
               <p>returns the value of itemEvents depending on if a function</p>
 
@@ -4410,11 +4662,11 @@ prepending &quot;itemview:&quot; to the event name</p>
         </li>
         
         
-        <li id="section-227">
+        <li id="section-235">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-227">&#182;</a>
+                <a class="pilcrow" href="#section-235">&#182;</a>
               </div>
               <p>render the item view</p>
 
@@ -4428,11 +4680,11 @@ prepending &quot;itemview:&quot; to the event name</p>
         </li>
         
         
-        <li id="section-228">
+        <li id="section-236">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-228">&#182;</a>
+                <a class="pilcrow" href="#section-236">&#182;</a>
               </div>
               <p>Build an <code>itemView</code> for every model in the collection.</p>
 
@@ -4446,11 +4698,11 @@ prepending &quot;itemview:&quot; to the event name</p>
         </li>
         
         
-        <li id="section-229">
+        <li id="section-237">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-229">&#182;</a>
+                <a class="pilcrow" href="#section-237">&#182;</a>
               </div>
               <p>get the child view by item it holds, and remove it</p>
 
@@ -4465,11 +4717,11 @@ prepending &quot;itemview:&quot; to the event name</p>
         </li>
         
         
-        <li id="section-230">
+        <li id="section-238">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-230">&#182;</a>
+                <a class="pilcrow" href="#section-238">&#182;</a>
               </div>
               <p>Remove the child view and close it</p>
 
@@ -4480,28 +4732,27 @@ prepending &quot;itemview:&quot; to the event name</p>
         </li>
         
         
-        <li id="section-231">
+        <li id="section-239">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-231">&#182;</a>
+                <a class="pilcrow" href="#section-239">&#182;</a>
               </div>
               <p>shut down the child view properly,
 including events that the collection has from it</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="keyword">if</span> (view){
-      <span class="keyword">this</span>.stopListening(view);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">if</span> (view){</pre></div></div>
             
         </li>
         
         
-        <li id="section-232">
+        <li id="section-240">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-232">&#182;</a>
+                <a class="pilcrow" href="#section-240">&#182;</a>
               </div>
               <p>call &#39;close&#39; or &#39;remove&#39;, depending on which is found</p>
 
@@ -4510,6 +4761,7 @@ including events that the collection has from it</p>
             <div class="content"><div class='highlight'><pre>      <span class="keyword">if</span> (view.close) { view.close(); }
       <span class="keyword">else</span> <span class="keyword">if</span> (view.remove) { view.remove(); }
 
+      <span class="keyword">this</span>.stopListening(view);
       <span class="keyword">this</span>.children.remove(view);
     }
 
@@ -4519,11 +4771,11 @@ including events that the collection has from it</p>
         </li>
         
         
-        <li id="section-233">
+        <li id="section-241">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-233">&#182;</a>
+                <a class="pilcrow" href="#section-241">&#182;</a>
               </div>
               <p>helper to check if the collection is empty</p>
 
@@ -4534,11 +4786,11 @@ including events that the collection has from it</p>
         </li>
         
         
-        <li id="section-234">
+        <li id="section-242">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-234">&#182;</a>
+                <a class="pilcrow" href="#section-242">&#182;</a>
               </div>
               <p>check if we&#39;re empty now</p>
 
@@ -4550,11 +4802,11 @@ including events that the collection has from it</p>
         </li>
         
         
-        <li id="section-235">
+        <li id="section-243">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-235">&#182;</a>
+                <a class="pilcrow" href="#section-243">&#182;</a>
               </div>
               <p>If empty, show the empty view</p>
 
@@ -4569,11 +4821,11 @@ including events that the collection has from it</p>
         </li>
         
         
-        <li id="section-236">
+        <li id="section-244">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-236">&#182;</a>
+                <a class="pilcrow" href="#section-244">&#182;</a>
               </div>
               <p>You might need to override this if you&#39;ve overridden appendHtml</p>
 
@@ -4586,11 +4838,11 @@ including events that the collection has from it</p>
         </li>
         
         
-        <li id="section-237">
+        <li id="section-245">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-237">&#182;</a>
+                <a class="pilcrow" href="#section-245">&#182;</a>
               </div>
               <p>Append the HTML to the collection&#39;s <code>el</code>.
 Override this method to do something other
@@ -4604,11 +4856,11 @@ than <code>.append</code>.</p>
         </li>
         
         
-        <li id="section-238">
+        <li id="section-246">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-238">&#182;</a>
+                <a class="pilcrow" href="#section-246">&#182;</a>
               </div>
               <p>buffering happens on reset events and initial renders
 in order to reduce the number of inserts into the
@@ -4624,11 +4876,11 @@ document, which are expensive.</p>
         </li>
         
         
-        <li id="section-239">
+        <li id="section-247">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-239">&#182;</a>
+                <a class="pilcrow" href="#section-247">&#182;</a>
               </div>
               <p>If we&#39;ve already rendered the main collection, just
 append the new items directly into the element.</p>
@@ -4642,11 +4894,11 @@ append the new items directly into the element.</p>
         </li>
         
         
-        <li id="section-240">
+        <li id="section-248">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-240">&#182;</a>
+                <a class="pilcrow" href="#section-248">&#182;</a>
               </div>
               <p>Internal method to set up the <code>children</code> object for
 storing all of the child views</p>
@@ -4660,11 +4912,11 @@ storing all of the child views</p>
         </li>
         
         
-        <li id="section-241">
+        <li id="section-249">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-241">&#182;</a>
+                <a class="pilcrow" href="#section-249">&#182;</a>
               </div>
               <p>Handle cleanup and other closing needs for
 the collection of views.</p>
@@ -4684,11 +4936,11 @@ the collection of views.</p>
         </li>
         
         
-        <li id="section-242">
+        <li id="section-250">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-242">&#182;</a>
+                <a class="pilcrow" href="#section-250">&#182;</a>
               </div>
               <p>Close the child views that this collection view
 is holding on to, if any</p>
@@ -4706,11 +4958,11 @@ is holding on to, if any</p>
         </li>
         
         
-        <li id="section-243">
+        <li id="section-251">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-243">&#182;</a>
+                <a class="pilcrow" href="#section-251">&#182;</a>
               </div>
               <h2 id="composite-view">Composite View</h2>
 
@@ -4719,11 +4971,11 @@ is holding on to, if any</p>
         </li>
         
         
-        <li id="section-244">
+        <li id="section-252">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-244">&#182;</a>
+                <a class="pilcrow" href="#section-252">&#182;</a>
               </div>
               <p>Used for rendering a branch-leaf, hierarchical structure.
 Extends directly from CollectionView and also renders an
@@ -4736,11 +4988,11 @@ an item view as <code>modelView</code>, for the top leaf</p>
         </li>
         
         
-        <li id="section-245">
+        <li id="section-253">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-245">&#182;</a>
+                <a class="pilcrow" href="#section-253">&#182;</a>
               </div>
               <p>Setting up the inheritance chain which allows changes to
 Marionette.CollectionView.prototype.constructor which allows overriding</p>
@@ -4754,11 +5006,11 @@ Marionette.CollectionView.prototype.constructor which allows overriding</p>
         </li>
         
         
-        <li id="section-246">
+        <li id="section-254">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-246">&#182;</a>
+                <a class="pilcrow" href="#section-254">&#182;</a>
               </div>
               <p>Configured the initial events that the composite view
 binds to. Override this method to prevent the initial
@@ -4771,11 +5023,11 @@ events, or to add your own initial events.</p>
         </li>
         
         
-        <li id="section-247">
+        <li id="section-255">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-247">&#182;</a>
+                <a class="pilcrow" href="#section-255">&#182;</a>
               </div>
               <p>Bind only after composite view is rendered to avoid adding child views
 to nonexistent itemViewContainer</p>
@@ -4795,11 +5047,11 @@ to nonexistent itemViewContainer</p>
         </li>
         
         
-        <li id="section-248">
+        <li id="section-256">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-248">&#182;</a>
+                <a class="pilcrow" href="#section-256">&#182;</a>
               </div>
               <p>Retrieve the <code>itemView</code> to be used when rendering each of
 the items in the collection. The default is to return
@@ -4821,11 +5073,11 @@ has been defined</p>
         </li>
         
         
-        <li id="section-249">
+        <li id="section-257">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-249">&#182;</a>
+                <a class="pilcrow" href="#section-257">&#182;</a>
               </div>
               <p>Serialize the collection for the view.
 You can override the <code>serializeData</code> method in your own view
@@ -4846,11 +5098,11 @@ definition, to provide custom serialization for your view&#39;s data.</p>
         </li>
         
         
-        <li id="section-250">
+        <li id="section-258">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-250">&#182;</a>
+                <a class="pilcrow" href="#section-258">&#182;</a>
               </div>
               <p>Renders the model once, and the collection once. Calling
 this again will tell the model&#39;s view to re-render itself
@@ -4870,11 +5122,11 @@ but the collection will not re-render.</p>
         </li>
         
         
-        <li id="section-251">
+        <li id="section-259">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-251">&#182;</a>
+                <a class="pilcrow" href="#section-259">&#182;</a>
               </div>
               <p>the ui bindings is done here and not at the end of render since they
 will not be available until after the model is rendered, but should be
@@ -4903,11 +5155,11 @@ available before the collection is rendered.</p>
         </li>
         
         
-        <li id="section-252">
+        <li id="section-260">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-252">&#182;</a>
+                <a class="pilcrow" href="#section-260">&#182;</a>
               </div>
               <p>Render an individual model, if we have one, as
 part of a composite view (branch / leaf). For example:
@@ -4927,11 +5179,11 @@ a treeview.</p>
         </li>
         
         
-        <li id="section-253">
+        <li id="section-261">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-253">&#182;</a>
+                <a class="pilcrow" href="#section-261">&#182;</a>
               </div>
               <p>You might need to override this if you&#39;ve overridden appendHtml</p>
 
@@ -4945,11 +5197,11 @@ a treeview.</p>
         </li>
         
         
-        <li id="section-254">
+        <li id="section-262">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-254">&#182;</a>
+                <a class="pilcrow" href="#section-262">&#182;</a>
               </div>
               <p>Appends the <code>el</code> of itemView instances to the specified
 <code>itemViewContainer</code> (a jQuery selector). Override this method to
@@ -4968,11 +5220,11 @@ HTML appended to the composite view instance.</p>
         </li>
         
         
-        <li id="section-255">
+        <li id="section-263">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-255">&#182;</a>
+                <a class="pilcrow" href="#section-263">&#182;</a>
               </div>
               <p>If we&#39;ve already rendered the main collection, just
 append the new items directly into the element.</p>
@@ -4987,11 +5239,11 @@ append the new items directly into the element.</p>
         </li>
         
         
-        <li id="section-256">
+        <li id="section-264">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-256">&#182;</a>
+                <a class="pilcrow" href="#section-264">&#182;</a>
               </div>
               <p>Internal method to ensure an <code>$itemViewContainer</code> exists, for the
 <code>appendHtml</code> method to use.</p>
@@ -5007,8 +5259,14 @@ append the new items directly into the element.</p>
     <span class="keyword">var</span> itemViewContainer = Marionette.getOption(containerView, <span class="string">"itemViewContainer"</span>);
     <span class="keyword">if</span> (itemViewContainer){
 
-      <span class="keyword">var</span> selector = _.isFunction(itemViewContainer) ? itemViewContainer.call(<span class="keyword">this</span>) : itemViewContainer;
-      container = containerView.$(selector);
+      <span class="keyword">var</span> selector = _.isFunction(itemViewContainer) ? itemViewContainer.call(containerView) : itemViewContainer;
+
+      <span class="keyword">if</span> (selector.charAt(<span class="number">0</span>) === <span class="string">"@"</span> &amp;&amp; containerView.ui) {
+        container = containerView.ui[selector.substr(<span class="number">4</span>)];
+      } <span class="keyword">else</span> {
+        container = containerView.$(selector);
+      }
+
       <span class="keyword">if</span> (container.length &lt;= <span class="number">0</span>) {
         throwError(<span class="string">"The specified `itemViewContainer` was not found: "</span> + containerView.itemViewContainer, <span class="string">"ItemViewContainerMissingError"</span>);
       }
@@ -5024,11 +5282,11 @@ append the new items directly into the element.</p>
         </li>
         
         
-        <li id="section-257">
+        <li id="section-265">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-257">&#182;</a>
+                <a class="pilcrow" href="#section-265">&#182;</a>
               </div>
               <p>Internal method to reset the <code>$itemViewContainer</code> on render</p>
 
@@ -5044,11 +5302,11 @@ append the new items directly into the element.</p>
         </li>
         
         
-        <li id="section-258">
+        <li id="section-266">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-258">&#182;</a>
+                <a class="pilcrow" href="#section-266">&#182;</a>
               </div>
               <h2 id="layout">Layout</h2>
 
@@ -5057,11 +5315,11 @@ append the new items directly into the element.</p>
         </li>
         
         
-        <li id="section-259">
+        <li id="section-267">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-259">&#182;</a>
+                <a class="pilcrow" href="#section-267">&#182;</a>
               </div>
               <p>Used for managing application layouts, nested layouts and
 multiple regions within an application or sub-application.</p>
@@ -5077,11 +5335,11 @@ Used for composite view management and sub-application areas.</p>
         </li>
         
         
-        <li id="section-260">
+        <li id="section-268">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-260">&#182;</a>
+                <a class="pilcrow" href="#section-268">&#182;</a>
               </div>
               <p>Ensure the regions are available when the <code>initialize</code> method
 is called.</p>
@@ -5100,11 +5358,11 @@ is called.</p>
         </li>
         
         
-        <li id="section-261">
+        <li id="section-269">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-261">&#182;</a>
+                <a class="pilcrow" href="#section-269">&#182;</a>
               </div>
               <p>Layout&#39;s render will use the existing region objects the
 first time it is called. Subsequent calls will close the
@@ -5120,11 +5378,11 @@ for the regions to the newly rendered DOM elements.</p>
         </li>
         
         
-        <li id="section-262">
+        <li id="section-270">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-262">&#182;</a>
+                <a class="pilcrow" href="#section-270">&#182;</a>
               </div>
               <p>a previously closed layout means we need to
 completely re-initialize the regions</p>
@@ -5138,11 +5396,11 @@ completely re-initialize the regions</p>
         </li>
         
         
-        <li id="section-263">
+        <li id="section-271">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-263">&#182;</a>
+                <a class="pilcrow" href="#section-271">&#182;</a>
               </div>
               <p>if this is the first render, don&#39;t do anything to
 reset the regions</p>
@@ -5155,11 +5413,11 @@ reset the regions</p>
         </li>
         
         
-        <li id="section-264">
+        <li id="section-272">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-264">&#182;</a>
+                <a class="pilcrow" href="#section-272">&#182;</a>
               </div>
               <p>If this is not the first render call, then we need to
 re-initializing the <code>el</code> for each region</p>
@@ -5175,11 +5433,11 @@ re-initializing the <code>el</code> for each region</p>
         </li>
         
         
-        <li id="section-265">
+        <li id="section-273">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-265">&#182;</a>
+                <a class="pilcrow" href="#section-273">&#182;</a>
               </div>
               <p>Handle closing regions, and then close the view itself.</p>
 
@@ -5194,11 +5452,11 @@ re-initializing the <code>el</code> for each region</p>
         </li>
         
         
-        <li id="section-266">
+        <li id="section-274">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-266">&#182;</a>
+                <a class="pilcrow" href="#section-274">&#182;</a>
               </div>
               <p>Add a single region, by name, to the layout</p>
 
@@ -5213,11 +5471,11 @@ re-initializing the <code>el</code> for each region</p>
         </li>
         
         
-        <li id="section-267">
+        <li id="section-275">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-267">&#182;</a>
+                <a class="pilcrow" href="#section-275">&#182;</a>
               </div>
               <p>Add multiple regions as a {name: definition, name2: def2} object literal</p>
 
@@ -5231,11 +5489,11 @@ re-initializing the <code>el</code> for each region</p>
         </li>
         
         
-        <li id="section-268">
+        <li id="section-276">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-268">&#182;</a>
+                <a class="pilcrow" href="#section-276">&#182;</a>
               </div>
               <p>Remove a single region from the Layout, by name</p>
 
@@ -5249,11 +5507,30 @@ re-initializing the <code>el</code> for each region</p>
         </li>
         
         
-        <li id="section-269">
+        <li id="section-277">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-269">&#182;</a>
+                <a class="pilcrow" href="#section-277">&#182;</a>
+              </div>
+              <p>Provides alternative access to regions
+Accepts the region name
+getRegion(&#39;main&#39;)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  getRegion: <span class="function"><span class="keyword">function</span><span class="params">(region)</span> {</span>
+    <span class="keyword">return</span> <span class="keyword">this</span>.regionManager.get(region);
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-278">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-278">&#182;</a>
               </div>
               <p>internal method to build regions</p>
 
@@ -5273,11 +5550,11 @@ re-initializing the <code>el</code> for each region</p>
         </li>
         
         
-        <li id="section-270">
+        <li id="section-279">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-270">&#182;</a>
+                <a class="pilcrow" href="#section-279">&#182;</a>
               </div>
               <p>Internal method to initialize the regions that have been defined in a
 <code>regions</code> attribute on this layout.</p>
@@ -5300,11 +5577,11 @@ re-initializing the <code>el</code> for each region</p>
         </li>
         
         
-        <li id="section-271">
+        <li id="section-280">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-271">&#182;</a>
+                <a class="pilcrow" href="#section-280">&#182;</a>
               </div>
               <p>Internal method to re-initialize all of the regions by updating the <code>el</code> that
 they point to</p>
@@ -5321,11 +5598,11 @@ they point to</p>
         </li>
         
         
-        <li id="section-272">
+        <li id="section-281">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-272">&#182;</a>
+                <a class="pilcrow" href="#section-281">&#182;</a>
               </div>
               <p>Internal method to initialize the region manager
 and all regions in it</p>
@@ -5345,67 +5622,202 @@ and all regions in it</p>
       <span class="keyword">this</span>.trigger(<span class="string">"region:remove"</span>, name, region);
     });
   }
-});
+});</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-282">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-282">&#182;</a>
+              </div>
+              <h2 id="behavior">Behavior</h2>
 
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-283">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-283">&#182;</a>
+              </div>
+              <p>A Behavior is an isolated set of DOM /
+user interactions that can be mixed into any View.
+Behaviors allow you to blackbox View specific interactions
+into portable logical chunks, keeping your views simple and your code DRY.</p>
 
-Marionette.Behavior = (<span class="function"><span class="keyword">function</span><span class="params">(_, Backbone)</span>{</span>
-  <span class="function"><span class="keyword">function</span> <span class="title">Behavior</span><span class="params">(options, view)</span>{</span>
-    <span class="keyword">this</span>.view = view;
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>Marionette.Behavior = (<span class="function"><span class="keyword">function</span><span class="params">(_, Backbone)</span>{</span>
+  <span class="function"><span class="keyword">function</span> <span class="title">Behavior</span><span class="params">(options, view)</span>{</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-284">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-284">&#182;</a>
+              </div>
+              <p>Setup reference to the view.
+this comes in handle when a behavior
+wants to directly talk up the chain
+to the view.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">this</span>.view = view;
     <span class="keyword">this</span>.defaults = _.result(<span class="keyword">this</span>, <span class="string">"defaults"</span>) || {};
     <span class="keyword">this</span>.options  = _.extend({}, <span class="keyword">this</span>.defaults, options);</pre></div></div>
             
         </li>
         
         
-        <li id="section-273">
+        <li id="section-285">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-273">&#182;</a>
+                <a class="pilcrow" href="#section-285">&#182;</a>
               </div>
-              <p>proxy behavior $ method to the view</p>
+              <p>proxy behavior $ method to the view
+this is useful for doing jquery DOM lookups
+scoped to behaviors view.</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>    <span class="keyword">this</span>.$ = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
       <span class="keyword">return</span> <span class="keyword">this</span>.view.$.apply(<span class="keyword">this</span>.view, arguments);
-    };
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-286">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-286">&#182;</a>
+              </div>
+              <p>Call the initialize method passing
+the arguments from the instance constructor</p>
 
-    <span class="keyword">this</span>.initialize.apply(<span class="keyword">this</span>, arguments);
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">this</span>.initialize.apply(<span class="keyword">this</span>, arguments);
   }
 
-  _.extend(Behavior.prototype, {
-    initialize: <span class="function"><span class="keyword">function</span><span class="params">()</span>{</span>},
+  _.extend(Behavior.prototype, Backbone.Events, {
+    initialize: <span class="function"><span class="keyword">function</span><span class="params">()</span>{</span>},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-287">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-287">&#182;</a>
+              </div>
+              <p>Setup class level proxy for triggerMethod.</p>
 
-    triggerMethod: Marionette.triggerMethod
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    triggerMethod: Marionette.triggerMethod
   });</pre></div></div>
             
         </li>
         
         
-        <li id="section-274">
+        <li id="section-288">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-274">&#182;</a>
+                <a class="pilcrow" href="#section-288">&#182;</a>
               </div>
-              <p>Borrow Backbones extend implementation</p>
+              <p>Borrow Backbones extend implementation
+this allows us to setup a proper
+inheritence pattern that follow in suite
+with the rest of Marionette views.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  _.extend(Behavior, {
-    extend: Backbone.View.extend
-  });
+            <div class="content"><div class='highlight'><pre>  Behavior.extend = Marionette.extend;
 
   <span class="keyword">return</span> Behavior;
-})(_, Backbone);
+})(_, Backbone);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-289">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-289">&#182;</a>
+              </div>
+              <h2 id="marionette-behaviors">Marionette.Behaviors</h2>
 
-Marionette.Behaviors = (<span class="function"><span class="keyword">function</span><span class="params">(Marionette, _)</span> {</span>
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-290">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-290">&#182;</a>
+              </div>
+              <p>Behaviors is a utility class that takes care of
+glueing your behavior instances to their given View.
+The most important part of this class is that you
+<strong>MUST</strong> override the class level behaviorsLookup
+method for things to work properly.</p>
 
-  <span class="function"><span class="keyword">function</span> <span class="title">Behaviors</span><span class="params">(view)</span> {</span>
-    <span class="keyword">this</span>.behaviors = Behaviors.parseBehaviors(view, view.behaviors);
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>Marionette.Behaviors = (<span class="function"><span class="keyword">function</span><span class="params">(Marionette, _)</span> {</span>
 
-    Behaviors.wrap(view, <span class="keyword">this</span>.behaviors, [
+  <span class="function"><span class="keyword">function</span> <span class="title">Behaviors</span><span class="params">(view)</span> {</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-291">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-291">&#182;</a>
+              </div>
+              <p>Behaviors defined on a view can be a flat object literal
+or it can be a function that returns an object.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">this</span>.behaviors = Behaviors.parseBehaviors(view, _.result(view, <span class="string">'behaviors'</span>));</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-292">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-292">&#182;</a>
+              </div>
+              <p>Wraps several of the view&#39;s methods
+calling the methods first on each behavior
+and then eventually calling the method on the view.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    Behaviors.wrap(view, <span class="keyword">this</span>.behaviors, [
       <span class="string">'bindUIElements'</span>, <span class="string">'unbindUIElements'</span>,
       <span class="string">'delegateEvents'</span>, <span class="string">'undelegateEvents'</span>,
       <span class="string">'onShow'</span>, <span class="string">'onClose'</span>,
@@ -5421,13 +5833,15 @@ Marionette.Behaviors = (<span class="function"><span class="keyword">function</s
         </li>
         
         
-        <li id="section-275">
+        <li id="section-293">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-275">&#182;</a>
+                <a class="pilcrow" href="#section-293">&#182;</a>
               </div>
-              <p>proxy behavior $el to the view&#39;s $el</p>
+              <p>proxy behavior $el to the view&#39;s $el.
+This is needed because a view&#39;s $el proxy
+is not set until after setElement is called.</p>
 
             </div>
             
@@ -5484,8 +5898,8 @@ Marionette.Behaviors = (<span class="function"><span class="keyword">function</s
       delegateEvents.apply(<span class="keyword">this</span>, args);
 
       _.each(behaviors, <span class="function"><span class="keyword">function</span><span class="params">(b)</span>{</span>
-        Marionette.bindEntityEvents(<span class="keyword">this</span>, <span class="keyword">this</span>.model, Marionette.getOption(b, <span class="string">"modelEvents"</span>));
-        Marionette.bindEntityEvents(<span class="keyword">this</span>, <span class="keyword">this</span>.collection, Marionette.getOption(b, <span class="string">"collectionEvents"</span>));
+        Marionette.bindEntityEvents(b, <span class="keyword">this</span>.model, Marionette.getOption(b, <span class="string">"modelEvents"</span>));
+        Marionette.bindEntityEvents(b, <span class="keyword">this</span>.collection, Marionette.getOption(b, <span class="string">"collectionEvents"</span>));
       }, <span class="keyword">this</span>);
     },
 
@@ -5506,25 +5920,58 @@ Marionette.Behaviors = (<span class="function"><span class="keyword">function</s
       _.each(behaviors, <span class="function"><span class="keyword">function</span><span class="params">(b, i)</span> {</span>
         <span class="keyword">var</span> _events = {};
         <span class="keyword">var</span> behaviorEvents = _.result(b, <span class="string">'events'</span>) || {};
-        <span class="keyword">var</span> behaviorUI = _.result(b, <span class="string">'ui'</span>);
-        <span class="keyword">var</span> ui = _.extend({}, viewUI, behaviorUI);
+        <span class="keyword">var</span> behaviorUI = _.result(b, <span class="string">'ui'</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-294">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-294">&#182;</a>
+              </div>
+              <p>Construct an internal UI hash first using
+the views UI hash and then the behaviors UI hash.
+This allows the user to use UI hash elements
+defined in the parent view as well as those
+defined in the given behavior.</p>
 
-        behaviorEvents = Marionette.normalizeUIKeys(behaviorEvents, ui);
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="keyword">var</span> ui = _.extend({}, viewUI, behaviorUI);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-295">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-295">&#182;</a>
+              </div>
+              <p>Normalize behavior events hash to allow
+a user to use the @ui. syntax.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        behaviorEvents = Marionette.normalizeUIKeys(behaviorEvents, ui);
 
         _.each(_.keys(behaviorEvents), <span class="function"><span class="keyword">function</span><span class="params">(key)</span> {</span></pre></div></div>
             
         </li>
         
         
-        <li id="section-276">
+        <li id="section-296">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-276">&#182;</a>
+                <a class="pilcrow" href="#section-296">&#182;</a>
               </div>
               <p>append white-space at the end of each key to prevent behavior key collisions
 this is relying on the fact backbone events considers &quot;click .foo&quot; the same  &quot;click .foo &quot;
 starts with an array of two so the first behavior has one space</p>
+<p>+2 is uses becauce new Array(1) or 0 is &quot;&quot; and not &quot; &quot;</p>
 
             </div>
             
@@ -5540,18 +5987,18 @@ starts with an array of two so the first behavior has one space</p>
 
       <span class="keyword">return</span> _behaviorsEvents;
     }
- };
+  };
 
   _.extend(Behaviors, {</pre></div></div>
             
         </li>
         
         
-        <li id="section-277">
+        <li id="section-297">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-277">&#182;</a>
+                <a class="pilcrow" href="#section-297">&#182;</a>
               </div>
               <p>placeholder method to be extended by the user
 should define the object that stores the behaviors
@@ -5564,9 +6011,26 @@ i.e.</p>
             
             <div class="content"><div class='highlight'><pre>    behaviorsLookup: <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
       <span class="keyword">throw</span> <span class="keyword">new</span> Error(<span class="string">"You must define where your behaviors are stored. See https://github.com/marionettejs/backbone.marionette/blob/master/docs/marionette.behaviors.md#behaviorslookup"</span>);
-    },
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-298">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-298">&#182;</a>
+              </div>
+              <p>Takes care of getting the behavior class
+given options and a key.
+If a user passes in options.behaviorClass
+default to using that. Otherwise delegate
+the lookup to the users behaviorsLookup implementation.</p>
 
-    getBehaviorClass: <span class="function"><span class="keyword">function</span><span class="params">(options, key)</span> {</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    getBehaviorClass: <span class="function"><span class="keyword">function</span><span class="params">(options, key)</span> {</span>
       <span class="keyword">if</span> (options.behaviorClass) {
         <span class="keyword">return</span> options.behaviorClass;
       }</pre></div></div>
@@ -5574,20 +6038,35 @@ i.e.</p>
         </li>
         
         
-        <li id="section-278">
+        <li id="section-299">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-278">&#182;</a>
+                <a class="pilcrow" href="#section-299">&#182;</a>
               </div>
               <p>Get behavior class can be either a flat object or a method</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>      <span class="keyword">return</span> _.isFunction(Behaviors.behaviorsLookup) ? Behaviors.behaviorsLookup.apply(<span class="keyword">this</span>, arguments)[key] : Behaviors.behaviorsLookup[key];
-    },
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-300">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-300">&#182;</a>
+              </div>
+              <p>Maps over a view&#39;s behaviors. Performing
+a lookup on each behavior and the instantiating
+said behavior passing its options and view.</p>
 
-    parseBehaviors: <span class="function"><span class="keyword">function</span><span class="params">(view, behaviors)</span>{</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    parseBehaviors: <span class="function"><span class="keyword">function</span><span class="params">(view, behaviors)</span>{</span>
       <span class="keyword">return</span> _.map(behaviors, <span class="function"><span class="keyword">function</span><span class="params">(options, key)</span>{</span>
         <span class="keyword">var</span> BehaviorClass = Behaviors.getBehaviorClass(options, key);
         <span class="keyword">return</span> <span class="keyword">new</span> BehaviorClass(options, view);
@@ -5597,11 +6076,11 @@ i.e.</p>
         </li>
         
         
-        <li id="section-279">
+        <li id="section-301">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-279">&#182;</a>
+                <a class="pilcrow" href="#section-301">&#182;</a>
               </div>
               <p>wrap view internal methods so that they delegate to behaviors.
 For example, onClose should trigger close on all of the behaviors and then close itself.
@@ -5624,11 +6103,11 @@ i.e.</p>
         </li>
         
         
-        <li id="section-280">
+        <li id="section-302">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-280">&#182;</a>
+                <a class="pilcrow" href="#section-302">&#182;</a>
               </div>
               <h2 id="approuter">AppRouter</h2>
 
@@ -5637,11 +6116,11 @@ i.e.</p>
         </li>
         
         
-        <li id="section-281">
+        <li id="section-303">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-281">&#182;</a>
+                <a class="pilcrow" href="#section-303">&#182;</a>
               </div>
               <p>Reduce the boilerplate code of handling route events
 and then calling a single method on another object.
@@ -5661,22 +6140,23 @@ just one giant router and controller.</p>
 
   constructor: <span class="function"><span class="keyword">function</span><span class="params">(options)</span>{</span>
     Backbone.Router.prototype.constructor.apply(<span class="keyword">this</span>, arguments);
-	
+
     <span class="keyword">this</span>.options = options || {};
 
     <span class="keyword">var</span> appRoutes = Marionette.getOption(<span class="keyword">this</span>, <span class="string">"appRoutes"</span>);
     <span class="keyword">var</span> controller = <span class="keyword">this</span>._getController();
     <span class="keyword">this</span>.processAppRoutes(controller, appRoutes);
+    <span class="keyword">this</span>.on(<span class="string">"route"</span>, <span class="keyword">this</span>._processOnRoute, <span class="keyword">this</span>);
   },</pre></div></div>
             
         </li>
         
         
-        <li id="section-282">
+        <li id="section-304">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-282">&#182;</a>
+                <a class="pilcrow" href="#section-304">&#182;</a>
               </div>
               <p>Similar to route method on a Backbone Router but
 method is called on the controller</p>
@@ -5691,11 +6171,60 @@ method is called on the controller</p>
         </li>
         
         
-        <li id="section-283">
+        <li id="section-305">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-283">&#182;</a>
+                <a class="pilcrow" href="#section-305">&#182;</a>
+              </div>
+              <p>process the route event and trigger the onRoute
+method call, if it exists</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  _processOnRoute: <span class="function"><span class="keyword">function</span><span class="params">(routeName, routeArgs)</span>{</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-306">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-306">&#182;</a>
+              </div>
+              <p>find the path that matched</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">var</span> routePath = _.invert(<span class="keyword">this</span>.appRoutes)[routeName];</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-307">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-307">&#182;</a>
+              </div>
+              <p>make sure an onRoute is there, and call it</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">if</span> (_.isFunction(<span class="keyword">this</span>.onRoute)){
+      <span class="keyword">this</span>.onRoute(routeName, routePath, routeArgs);
+    }
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-308">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-308">&#182;</a>
               </div>
               <p>Internal method to process the <code>appRoutes</code> for the
 router, and turn them in to routes that trigger the
@@ -5731,11 +6260,11 @@ specified method on the specified <code>controller</code>.</p>
         </li>
         
         
-        <li id="section-284">
+        <li id="section-309">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-284">&#182;</a>
+                <a class="pilcrow" href="#section-309">&#182;</a>
               </div>
               <h2 id="application">Application</h2>
 
@@ -5744,11 +6273,11 @@ specified method on the specified <code>controller</code>.</p>
         </li>
         
         
-        <li id="section-285">
+        <li id="section-310">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-285">&#182;</a>
+                <a class="pilcrow" href="#section-310">&#182;</a>
               </div>
               <p>Contain and manage the composite application as a whole.
 Stores and starts up <code>Region</code> objects, includes an
@@ -5774,11 +6303,11 @@ _.extend(Marionette.Application.prototype, Backbone.Events, {</pre></div></div>
         </li>
         
         
-        <li id="section-286">
+        <li id="section-311">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-286">&#182;</a>
+                <a class="pilcrow" href="#section-311">&#182;</a>
               </div>
               <p>Command execution, facilitated by Backbone.Wreqr.Commands</p>
 
@@ -5791,11 +6320,11 @@ _.extend(Marionette.Application.prototype, Backbone.Events, {</pre></div></div>
         </li>
         
         
-        <li id="section-287">
+        <li id="section-312">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-287">&#182;</a>
+                <a class="pilcrow" href="#section-312">&#182;</a>
               </div>
               <p>Request/response, facilitated by Backbone.Wreqr.RequestResponse</p>
 
@@ -5808,11 +6337,11 @@ _.extend(Marionette.Application.prototype, Backbone.Events, {</pre></div></div>
         </li>
         
         
-        <li id="section-288">
+        <li id="section-313">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-288">&#182;</a>
+                <a class="pilcrow" href="#section-313">&#182;</a>
               </div>
               <p>Add an initializer that is either run at when the <code>start</code>
 method is called, or run immediately if added after <code>start</code>
@@ -5827,11 +6356,11 @@ has already been called.</p>
         </li>
         
         
-        <li id="section-289">
+        <li id="section-314">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-289">&#182;</a>
+                <a class="pilcrow" href="#section-314">&#182;</a>
               </div>
               <p>kick off all of the application&#39;s processes.
 initializes all of the regions that have been added
@@ -5850,11 +6379,11 @@ to the app, and runs all of the initializer functions</p>
         </li>
         
         
-        <li id="section-290">
+        <li id="section-315">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-290">&#182;</a>
+                <a class="pilcrow" href="#section-315">&#182;</a>
               </div>
               <p>Add regions to your app.
 Accepts a hash of named strings or Region objects
@@ -5870,11 +6399,11 @@ addRegions({something: Region.extend({el: &quot;#someRegion&quot;}) });</p>
         </li>
         
         
-        <li id="section-291">
+        <li id="section-316">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-291">&#182;</a>
+                <a class="pilcrow" href="#section-316">&#182;</a>
               </div>
               <p>Close all regions in the app, without removing them</p>
 
@@ -5887,11 +6416,11 @@ addRegions({something: Region.extend({el: &quot;#someRegion&quot;}) });</p>
         </li>
         
         
-        <li id="section-292">
+        <li id="section-317">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-292">&#182;</a>
+                <a class="pilcrow" href="#section-317">&#182;</a>
               </div>
               <p>Removes a region from your app, by name
 Accepts the regions name
@@ -5906,11 +6435,11 @@ removeRegion(&#39;myRegion&#39;)</p>
         </li>
         
         
-        <li id="section-293">
+        <li id="section-318">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-293">&#182;</a>
+                <a class="pilcrow" href="#section-318">&#182;</a>
               </div>
               <p>Provides alternative access to regions
 Accepts the region name
@@ -5925,11 +6454,11 @@ getRegion(&#39;main&#39;)</p>
         </li>
         
         
-        <li id="section-294">
+        <li id="section-319">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-294">&#182;</a>
+                <a class="pilcrow" href="#section-319">&#182;</a>
               </div>
               <p>Create a module, attached to the application</p>
 
@@ -5940,11 +6469,11 @@ getRegion(&#39;main&#39;)</p>
         </li>
         
         
-        <li id="section-295">
+        <li id="section-320">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-295">&#182;</a>
+                <a class="pilcrow" href="#section-320">&#182;</a>
               </div>
               <p>Overwrite the module class if the user specifies one</p>
 
@@ -5955,11 +6484,11 @@ getRegion(&#39;main&#39;)</p>
         </li>
         
         
-        <li id="section-296">
+        <li id="section-321">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-296">&#182;</a>
+                <a class="pilcrow" href="#section-321">&#182;</a>
               </div>
               <p>slice the args, and add this application object as the
 first argument of the array</p>
@@ -5972,11 +6501,11 @@ first argument of the array</p>
         </li>
         
         
-        <li id="section-297">
+        <li id="section-322">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-297">&#182;</a>
+                <a class="pilcrow" href="#section-322">&#182;</a>
               </div>
               <p>see the Marionette.Module object for more information</p>
 
@@ -5988,11 +6517,11 @@ first argument of the array</p>
         </li>
         
         
-        <li id="section-298">
+        <li id="section-323">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-298">&#182;</a>
+                <a class="pilcrow" href="#section-323">&#182;</a>
               </div>
               <p>Internal method to set up the region manager</p>
 
@@ -6014,11 +6543,11 @@ first argument of the array</p>
         </li>
         
         
-        <li id="section-299">
+        <li id="section-324">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-299">&#182;</a>
+                <a class="pilcrow" href="#section-324">&#182;</a>
               </div>
               <p>Copy the <code>extend</code> function used by Backbone&#39;s classes</p>
 
@@ -6029,11 +6558,11 @@ first argument of the array</p>
         </li>
         
         
-        <li id="section-300">
+        <li id="section-325">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-300">&#182;</a>
+                <a class="pilcrow" href="#section-325">&#182;</a>
               </div>
               <h2 id="module">Module</h2>
 
@@ -6042,11 +6571,11 @@ first argument of the array</p>
         </li>
         
         
-        <li id="section-301">
+        <li id="section-326">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-301">&#182;</a>
+                <a class="pilcrow" href="#section-326">&#182;</a>
               </div>
               <p>A simple module system, used to create privacy and encapsulation in
 Marionette applications</p>
@@ -6055,19 +6584,34 @@ Marionette applications</p>
             
             <div class="content"><div class='highlight'><pre>Marionette.Module = <span class="function"><span class="keyword">function</span><span class="params">(moduleName, app, options)</span>{</span>
   <span class="keyword">this</span>.moduleName = moduleName;
-  <span class="keyword">this</span>.options = _.extend({}, <span class="keyword">this</span>.options, options);
-  <span class="keyword">this</span>.initialize = options.initialize || <span class="keyword">this</span>.initialize;</pre></div></div>
+  <span class="keyword">this</span>.options = _.extend({}, <span class="keyword">this</span>.options, options);</pre></div></div>
             
         </li>
         
         
-        <li id="section-302">
+        <li id="section-327">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-302">&#182;</a>
+                <a class="pilcrow" href="#section-327">&#182;</a>
               </div>
-              <p>store sub-modules</p>
+              <p>Allow for a user to overide the initialize
+for a given module instance.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">this</span>.initialize = options.initialize || <span class="keyword">this</span>.initialize;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-328">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-328">&#182;</a>
+              </div>
+              <p>Set up an internal store for sub-modules.</p>
 
             </div>
             
@@ -6078,20 +6622,48 @@ Marionette applications</p>
         </li>
         
         
-        <li id="section-303">
+        <li id="section-329">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-303">&#182;</a>
+                <a class="pilcrow" href="#section-329">&#182;</a>
               </div>
-              <p>store the configuration for this module</p>
+              <p>Set an internal reference to the app
+within a module.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="keyword">this</span>.app = app;
-  <span class="keyword">this</span>.startWithParent = <span class="literal">true</span>;
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">this</span>.app = app;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-330">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-330">&#182;</a>
+              </div>
+              <p>By default modules start with their parents.</p>
 
-  <span class="keyword">this</span>.triggerMethod = Marionette.triggerMethod;
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">this</span>.startWithParent = <span class="literal">true</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-331">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-331">&#182;</a>
+              </div>
+              <p>Setup a proxy to the trigger method implementation.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="keyword">this</span>.triggerMethod = Marionette.triggerMethod;
 
   <span class="keyword">if</span> (_.isFunction(<span class="keyword">this</span>.initialize)){
     <span class="keyword">this</span>.initialize(<span class="keyword">this</span>.options, moduleName, app);
@@ -6103,11 +6675,11 @@ Marionette.Module.extend = Marionette.extend;</pre></div></div>
         </li>
         
         
-        <li id="section-304">
+        <li id="section-332">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-304">&#182;</a>
+                <a class="pilcrow" href="#section-332">&#182;</a>
               </div>
               <p>Extend the Module prototype with events / listenTo, so that the module
 can be used as an event aggregator or pub/sub.</p>
@@ -6119,11 +6691,11 @@ can be used as an event aggregator or pub/sub.</p>
         </li>
         
         
-        <li id="section-305">
+        <li id="section-333">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-305">&#182;</a>
+                <a class="pilcrow" href="#section-333">&#182;</a>
               </div>
               <p>Initialize is an empty function by default. Override it with your own
 initialization logic when extending Marionette.Module.</p>
@@ -6135,11 +6707,11 @@ initialization logic when extending Marionette.Module.</p>
         </li>
         
         
-        <li id="section-306">
+        <li id="section-334">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-306">&#182;</a>
+                <a class="pilcrow" href="#section-334">&#182;</a>
               </div>
               <p>Initializer for a specific module. Initializers are run when the
 module&#39;s <code>start</code> method is called.</p>
@@ -6153,11 +6725,11 @@ module&#39;s <code>start</code> method is called.</p>
         </li>
         
         
-        <li id="section-307">
+        <li id="section-335">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-307">&#182;</a>
+                <a class="pilcrow" href="#section-335">&#182;</a>
               </div>
               <p>Finalizers are run when a module is stopped. They are used to teardown
 and finalize any variables, references, events and other code that the
@@ -6172,11 +6744,11 @@ module had set up.</p>
         </li>
         
         
-        <li id="section-308">
+        <li id="section-336">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-308">&#182;</a>
+                <a class="pilcrow" href="#section-336">&#182;</a>
               </div>
               <p>Start the module, and run all of its initializers</p>
 
@@ -6187,11 +6759,11 @@ module had set up.</p>
         </li>
         
         
-        <li id="section-309">
+        <li id="section-337">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-309">&#182;</a>
+                <a class="pilcrow" href="#section-337">&#182;</a>
               </div>
               <p>Prevent re-starting a module that is already started</p>
 
@@ -6202,11 +6774,11 @@ module had set up.</p>
         </li>
         
         
-        <li id="section-310">
+        <li id="section-338">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-310">&#182;</a>
+                <a class="pilcrow" href="#section-338">&#182;</a>
               </div>
               <p>start the sub-modules (depth-first hierarchy)</p>
 
@@ -6217,11 +6789,11 @@ module had set up.</p>
         </li>
         
         
-        <li id="section-311">
+        <li id="section-339">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-311">&#182;</a>
+                <a class="pilcrow" href="#section-339">&#182;</a>
               </div>
               <p>check to see if we should start the sub-module with this parent</p>
 
@@ -6235,11 +6807,11 @@ module had set up.</p>
         </li>
         
         
-        <li id="section-312">
+        <li id="section-340">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-312">&#182;</a>
+                <a class="pilcrow" href="#section-340">&#182;</a>
               </div>
               <p>run the callbacks to &quot;start&quot; the current module</p>
 
@@ -6256,11 +6828,11 @@ module had set up.</p>
         </li>
         
         
-        <li id="section-313">
+        <li id="section-341">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-313">&#182;</a>
+                <a class="pilcrow" href="#section-341">&#182;</a>
               </div>
               <p>Stop this module by running its finalizers and then stop all of
 the sub-modules for this module</p>
@@ -6272,11 +6844,11 @@ the sub-modules for this module</p>
         </li>
         
         
-        <li id="section-314">
+        <li id="section-342">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-314">&#182;</a>
+                <a class="pilcrow" href="#section-342">&#182;</a>
               </div>
               <p>if we are not initialized, don&#39;t bother finalizing</p>
 
@@ -6290,11 +6862,11 @@ the sub-modules for this module</p>
         </li>
         
         
-        <li id="section-315">
+        <li id="section-343">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-315">&#182;</a>
+                <a class="pilcrow" href="#section-343">&#182;</a>
               </div>
               <p>stop the sub-modules; depth-first, to make sure the
 sub-modules are stopped / finalized before parents</p>
@@ -6306,11 +6878,11 @@ sub-modules are stopped / finalized before parents</p>
         </li>
         
         
-        <li id="section-316">
+        <li id="section-344">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-316">&#182;</a>
+                <a class="pilcrow" href="#section-344">&#182;</a>
               </div>
               <p>run the finalizers</p>
 
@@ -6321,11 +6893,11 @@ sub-modules are stopped / finalized before parents</p>
         </li>
         
         
-        <li id="section-317">
+        <li id="section-345">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-317">&#182;</a>
+                <a class="pilcrow" href="#section-345">&#182;</a>
               </div>
               <p>reset the initializers and finalizers</p>
 
@@ -6340,11 +6912,11 @@ sub-modules are stopped / finalized before parents</p>
         </li>
         
         
-        <li id="section-318">
+        <li id="section-346">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-318">&#182;</a>
+                <a class="pilcrow" href="#section-346">&#182;</a>
               </div>
               <p>Configure the module with a definition function and any custom args
 that are to be passed in to the definition function</p>
@@ -6358,28 +6930,42 @@ that are to be passed in to the definition function</p>
         </li>
         
         
-        <li id="section-319">
+        <li id="section-347">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-319">&#182;</a>
+                <a class="pilcrow" href="#section-347">&#182;</a>
               </div>
               <p>Internal method: run the module definition function with the correct
 arguments</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  _runModuleDefinition: <span class="function"><span class="keyword">function</span><span class="params">(definition, customArgs)</span>{</span>
-    <span class="keyword">if</span> (!definition){ <span class="keyword">return</span>; }</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  _runModuleDefinition: <span class="function"><span class="keyword">function</span><span class="params">(definition, customArgs)</span>{</span></pre></div></div>
             
         </li>
         
         
-        <li id="section-320">
+        <li id="section-348">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-320">&#182;</a>
+                <a class="pilcrow" href="#section-348">&#182;</a>
+              </div>
+              <p>If there is no definition short circut the method.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">if</span> (!definition){ <span class="keyword">return</span>; }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-349">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-349">&#182;</a>
               </div>
               <p>build the correct list of arguments for the module definition</p>
 
@@ -6400,11 +6986,11 @@ arguments</p>
         </li>
         
         
-        <li id="section-321">
+        <li id="section-350">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-321">&#182;</a>
+                <a class="pilcrow" href="#section-350">&#182;</a>
               </div>
               <p>Internal method: set up new copies of initializers and finalizers.
 Calling this method will wipe out all existing initializers and
@@ -6421,11 +7007,11 @@ finalizers.</p>
         </li>
         
         
-        <li id="section-322">
+        <li id="section-351">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-322">&#182;</a>
+                <a class="pilcrow" href="#section-351">&#182;</a>
               </div>
               <p>Type methods to create modules</p>
 
@@ -6436,11 +7022,11 @@ finalizers.</p>
         </li>
         
         
-        <li id="section-323">
+        <li id="section-352">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-323">&#182;</a>
+                <a class="pilcrow" href="#section-352">&#182;</a>
               </div>
               <p>Create a module, hanging off the app parameter as the parent object.</p>
 
@@ -6452,11 +7038,11 @@ finalizers.</p>
         </li>
         
         
-        <li id="section-324">
+        <li id="section-353">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-324">&#182;</a>
+                <a class="pilcrow" href="#section-353">&#182;</a>
               </div>
               <p>get the custom args passed in after the module definition and
 get rid of the module name and definition function</p>
@@ -6469,13 +7055,15 @@ get rid of the module name and definition function</p>
         </li>
         
         
-        <li id="section-325">
+        <li id="section-354">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-325">&#182;</a>
+                <a class="pilcrow" href="#section-354">&#182;</a>
               </div>
-              <p>split the module names and get the length</p>
+              <p>Split the module names and get the number of submodules.
+i.e. an example module name of <code>Doge.Wow.Amaze</code> would
+then have the potential for 3 module definitions.</p>
 
             </div>
             
@@ -6485,11 +7073,11 @@ get rid of the module name and definition function</p>
         </li>
         
         
-        <li id="section-326">
+        <li id="section-355">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-326">&#182;</a>
+                <a class="pilcrow" href="#section-355">&#182;</a>
               </div>
               <p>store the module definition for the last module in the chain</p>
 
@@ -6501,11 +7089,11 @@ get rid of the module name and definition function</p>
         </li>
         
         
-        <li id="section-327">
+        <li id="section-356">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-327">&#182;</a>
+                <a class="pilcrow" href="#section-356">&#182;</a>
               </div>
               <p>Loop through all the parts of the module definition</p>
 
@@ -6520,11 +7108,11 @@ get rid of the module name and definition function</p>
         </li>
         
         
-        <li id="section-328">
+        <li id="section-357">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-328">&#182;</a>
+                <a class="pilcrow" href="#section-357">&#182;</a>
               </div>
               <p>Return the last module in the definition chain</p>
 
@@ -6540,11 +7128,11 @@ get rid of the module name and definition function</p>
         </li>
         
         
-        <li id="section-329">
+        <li id="section-358">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-329">&#182;</a>
+                <a class="pilcrow" href="#section-358">&#182;</a>
               </div>
               <p>Get an existing module of this name if we have one</p>
 
@@ -6557,11 +7145,11 @@ get rid of the module name and definition function</p>
         </li>
         
         
-        <li id="section-330">
+        <li id="section-359">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-330">&#182;</a>
+                <a class="pilcrow" href="#section-359">&#182;</a>
               </div>
               <p>Create a new module if we don&#39;t have one</p>
 
@@ -6573,11 +7161,11 @@ get rid of the module name and definition function</p>
         </li>
         
         
-        <li id="section-331">
+        <li id="section-360">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-331">&#182;</a>
+                <a class="pilcrow" href="#section-360">&#182;</a>
               </div>
               <p>store the module on the parent</p>
 
@@ -6587,16 +7175,47 @@ get rid of the module name and definition function</p>
     }
 
     <span class="keyword">return</span> module;
-  },
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-361">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-361">&#182;</a>
+              </div>
+              <h2 id="module-classes">Module Classes</h2>
+<p>Module classes can be used as an alternative to the define pattern.
+The extend function of a Module is identical to the extend functions
+on other Backbone and Marionette classes.
+This allows module lifecyle events like <code>onStart</code> and <code>onStop</code> to be called directly.</p>
 
-  getClass: <span class="function"><span class="keyword">function</span><span class="params">(moduleDefinition)</span> {</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  getClass: <span class="function"><span class="keyword">function</span><span class="params">(moduleDefinition)</span> {</span>
     <span class="keyword">var</span> ModuleClass = Marionette.Module;
 
     <span class="keyword">if</span> (!moduleDefinition) {
       <span class="keyword">return</span> ModuleClass;
-    }
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-362">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-362">&#182;</a>
+              </div>
+              <p>If all of the module&#39;s functionality is defined inside its class,
+then the class can be passed in directly. <code>MyApp.module(&quot;Foo&quot;, FooModule)</code>.</p>
 
-    <span class="keyword">if</span> (moduleDefinition.prototype <span class="keyword">instanceof</span> ModuleClass) {
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="keyword">if</span> (moduleDefinition.prototype <span class="keyword">instanceof</span> ModuleClass) {
       <span class="keyword">return</span> moduleDefinition;
     }
 
@@ -6606,11 +7225,11 @@ get rid of the module name and definition function</p>
         </li>
         
         
-        <li id="section-332">
+        <li id="section-363">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-332">&#182;</a>
+                <a class="pilcrow" href="#section-363">&#182;</a>
               </div>
               <p>Add the module definition and add a startWithParent initializer function.
 This is complicated because module definitions are heavily overloaded
@@ -6673,7 +7292,6 @@ and support an anonymous function, module class, or options object</p>
     });
   }
 });
-
 
 
   <span class="keyword">return</span> Marionette;
