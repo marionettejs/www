@@ -5,6 +5,7 @@
 require 'rgbapng'
 require 'middleman-deploy'
 require 'jeet'
+require 'redcarpet'
 
 activate :deploy do |deploy|
   deploy.method = :git
@@ -63,15 +64,34 @@ set :css_dir, 'stylesheets'
 set :js_dir, 'javascripts'
 set :images_dir, 'images'
 
+set :markdown_engine, :redcarpet
+set :markdown,
+  :fenced_code_blocks => true,
+  :smartypants => true,
+  :prettify => true,
+  :autolink => true,
+  :with_toc_data => true
+
+activate :syntax
+
+src = "backbone.marionette"
+dest = "annotated-src/#{src}.html"
+
+page  "docs/#{src}", :proxy => dest
+page  "docs/#{src}.html", :proxy => dest
+page  "annotated-src/#{src}", :proxy => dest
+
+page "docs/v1.8.1/*", :layout => "docs"
+
+
 # Build-specific configuration
 configure :build do
 
-  # enable pretty urls
-  activate :directory_indexes
-  page "/docs/backbone.marionette.html", :directory_index => false
-
   # For example, change the Compass output style for deployment
   activate :minify_css
+
+  # enable pretty urls
+  activate :directory_indexes
 
   # Minify Javascript on build
   activate :minify_javascript, ignore: [/downloads\/*/]
