@@ -63,6 +63,11 @@ set :images_dir, 'images'
 
 # Build-specific configuration
 configure :build do
+
+  # enable pretty urls
+  activate :directory_indexes
+  page "/docs/backbone.marionette.html", :directory_index => false
+
   # For example, change the Compass output style for deployment
   activate :minify_css
 

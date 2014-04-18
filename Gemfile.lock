@@ -101,6 +101,8 @@ GEM
       padrino-core (= 0.10.7)
     ptools (1.2.2)
     rack (1.4.5)
+    rack-contrib (1.1.0)
+      rack (>= 0.9.1)
     rack-protection (1.5.1)
       rack
     rack-test (0.6.2)
@@ -158,6 +160,7 @@ DEPENDENCIES
   middleman-deploy!
   oily_png
   rack
+  rack-contrib
   rake
   redcarpet
   therubyracer
