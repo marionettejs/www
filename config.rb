@@ -66,6 +66,7 @@ configure :build do
 
   # enable pretty urls
   activate :directory_indexes
+  page "/docs/backbone.marionette.html", :directory_index => false
 
   # For example, change the Compass output style for deployment
   activate :minify_css
@@ -77,7 +78,7 @@ configure :build do
   activate :cache_buster
 
   # Enable asset pipeline
-  activate :asset_hash, ignore: ['/docs/docco.css', 'favicon.png', '/images/og-standard.jpg', /downloads\/*/]
+  activate :asset_hash, ignore: ['favicon.png', '/images/og-standard.jpg', /downloads\/*/]
 
   # Use relative URLs
   activate :relative_assets
