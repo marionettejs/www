@@ -1,0 +1,98 @@
+@charset "UTF-8";
+@import 'compass';
+@import 'vendor/mo';
+@import 'vendor/prettify/prettify';
+@import 'vendor/prettify/marionette';
+@import 'rgbapng';
+@import 'jeet';
+@import 'fonts/fonts';
+@import 'variables';
+@import 'animations';
+@import 'base';
+@import 'ui';
+@import 'header';
+@import 'ribbon';
+@import 'code_samples';
+@import "about";
+@import "stickers";
+@import "screencasts";
+@import "downloads";
+@import "docs-layout";
+
+<%= Rouge::Themes::Base16::Solarized.render(:scope => '.highlight') %>
+
+pre {
+  background: lighten($light-blue, 5%);
+  margin-bottom: 16px;
+  font-size: 16px;
+}
+
+code {
+  background: lighten($light-blue, 5%);
+  color: #6a9fb5;
+}
+
+.docs,
+.docs body {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.docs__sidebar {
+  position: absolute;
+  left: 0;
+  width: 200px;
+  height: 100%;
+  background: $light-blue;
+  overflow: auto;
+  padding: 10px;
+  border-right: 1px solid darken($light-blue, 7%);
+
+  h3 {
+    font-size: 24px;
+  }
+
+  li {
+    margin: 0;
+    font-size: 15px;
+  }
+
+  a {
+    color: $seafoam;
+    text-decoration: none;
+  }
+}
+
+.docs__content {
+  position: absolute;
+  height: 100%;
+  left: 200px;
+  right: 0;
+  overflow: auto;
+  padding: 20px;
+
+  h1 {
+    color: darken($light-blue, 50%);
+  }
+
+  h2 {
+    font-size: 32px;
+  }
+
+  h3 {
+    font-size: 24px;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  ul {
+    li {
+      padding-left: 30px;
+      margin-bottom: 0px;
+    }
+  }
+}
+
