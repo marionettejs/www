@@ -22,12 +22,6 @@ Make your changes to the site in the source/ folder.
 Preview your changes in browser by pointing to http://localhost:4567
 
 
-Build and deploy a new version of the site
------
-
-    rake deploy
-
-
 Populate a new version of Marionette.js builds
 -----
 
@@ -35,8 +29,10 @@ There is a little bash script that collects and compresses all the files and add
 
     ./build-marionette 1.0.0-beta6
 
-Now push the new version online with:
 
-    middleman build --clean
-    middleman deploy
+Push your changes to Heroku
+-----
+
+    Login to heroku CLI Tools
+    `git push heroku {branchName}:master`
 
