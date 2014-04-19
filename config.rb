@@ -74,14 +74,7 @@ set :markdown,
 
 activate :syntax
 
-src = "backbone.marionette"
-dest = "annotated-src/#{src}.html"
-
-page  "docs/#{src}", :proxy => dest
-page  "docs/#{src}.html", :proxy => dest
-page  "annotated-src/#{src}", :proxy => dest
-
-page "docs/v1.8.1/*", :layout => "docs"
+page "docs/v1.8.2/*", :layout => "docs"
 
 
 # Build-specific configuration
@@ -89,9 +82,6 @@ configure :build do
 
   # For example, change the Compass output style for deployment
   activate :minify_css
-
-  # enable pretty urls
-  activate :directory_indexes
 
   # Minify Javascript on build
   activate :minify_javascript, ignore: [/downloads\/*/]
