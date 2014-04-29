@@ -1,6 +1,10 @@
 @import 'compass';
 @import 'compass/reset';
 @import 'fonts/fonts';
+@import  'vendor/_mo';
+
+$mariontte: #cf2227;
+$small-snap: 650px;
 
 * {
   @include box-sizing("border-box");
@@ -11,52 +15,134 @@ html {
   position: absolute;
   width: 100%;
   height: 100%;
-  color: #cf2227;
   text-align: center;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  border-top: solid 2px $mariontte;
 
   -webkit-font-smoothing: antialiased;
   @include background-image(radial-gradient(center, ellipse cover, rgba(255,255,255,.75) 0%, #d0dfe8 100%));
-
 }
 
-h1 {
-  margin-top: 30px;
-  font-size: 64px;
+.meetup-details {
+  font-weight: bold;
+  max-width: 600px;
+  margin: 50px auto 0;
+  text-align: left;
+  line-height: 35px;
+  font-size: 19px;
+  padding: 0 20px;
+}
+
+.contain {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.mid-cta {
+  margin: 70px 0;
+}
+
+.left {
+  float: left;
+}
+
+.headline {
+  color: $mariontte;
+
+  font: {
+    size: 54px;
+    weight: bold;
+  }
+
+  &.sub {
+    font-size: 40px;
+  }
+
+  @include below($small-snap) {
+    font-size: 40px;
+  }
+}
+
+.footer-signup-cta {
+  padding: 30px;
+  margin-top: 100px;
+  background: $mariontte;
 }
 
 .logo {
-  max-width: 303px;
+  max-width: 163px;
   margin: 60px 0;
+  @include below($small-snap) {
+    max-width: 100px;
+    margin: 20px 0;
+  }
 }
 
-.location {
-  font-weight: 100;
-  margin-right: -5px;
+.person {
+  overflow: hidden;
+  padding: 30px;
+  border-top: solid 1px #FFF;
+
+  &:nth-child(1) {
+    border-top: none;
+  }
 }
 
-.date {
-  font-weight: 200px;
+.image-wrap {
+  position: relative;
+  max-width: 190px;
+  overflow: hidden;
+  border: solid 1px rgb(197, 197, 197);
+  @include border-radius(10px);
 }
 
-#mc-embedded-subscribe-form {
+.logo-image {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  @include below($small-snap) {
+    display: none;
+  }
+}
+
+.person-image {
+  @include below($small-snap) {
+    width: 100px;
+  }
+}
+.details {
+  margin-left: 30px;
+  text-align: left;
+  line-height: 25px;
+}
+
+.talk-title {
+  font-weight: bold
+}
+
+.mc-embedded-subscribe-form {
   position: relative;
   max-width: 500px;
   display: block;
   margin: 0 auto;
 }
 
-#mc-embedded-subscribe {
+.mc-embedded-subscribe {
   position: absolute;
   right: 10px;
   top: 50%;
   margin-top: -18px;
   display: inline-block;
-  background: #e3ecf1;
+  background: $mariontte;
   border: 0;
   color: #FFF;
   padding: 10px;
-  font-size: 14px;
+
+  font: {
+    size: 14px;
+    width: bold;
+  }
+
   @include border-radius(4px);
 }
 
@@ -66,6 +152,7 @@ input[type="email"] {
   border: 0;
   font-size: 16px;
   padding: 14px;
+  border: solid 1px rgb(155, 155, 155);
 
   @include border-radius(4px);
   &:focus {
