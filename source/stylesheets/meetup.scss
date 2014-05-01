@@ -4,158 +4,175 @@
 @import  'vendor/_mo';
 
 $mariontte: #cf2227;
-$small-snap: 650px;
+$copy:      #8d8f91;
+$block:     25px;
 
 * {
+  -webkit-font-smoothing: antialiased;
+
   @include box-sizing("border-box");
 }
 
 html {
+  color:            $copy;
+  position:         absolute;
+  text-align:       left;
+  font-family:      "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   background-color: #FFF;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  border-top: solid 2px $mariontte;
 
-  -webkit-font-smoothing: antialiased;
+  @include size(100%);
   @include background-image(radial-gradient(center, ellipse cover, rgba(255,255,255,.75) 0%, #d0dfe8 100%));
 }
 
-.meetup-details {
-  font-weight: bold;
-  max-width: 600px;
-  margin: 50px auto 0;
-  text-align: left;
-  line-height: 35px;
-  font-size: 19px;
-  padding: 0 20px;
-}
-
-.contain {
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.mid-cta {
-  margin: 70px 0;
-}
-
-.left {
-  float: left;
-}
-
 .headline {
-  color: $mariontte;
+  display:    inline-block;
+
+  margin: {
+    left:   6px;
+    right: -6px;
+  }
+}
+
+.date {
+  font-weight: 400;
+}
+
+.header {
+  color:      #FFF;
+  height:     245px;
+  padding:    $block;
+  position:   relative;
+  text-align: center;
 
   font: {
-    size: 54px;
-    weight: bold;
+    size:   36px;
+    weight: 300;
   }
 
-  &.sub {
-    font-size: 40px;
+  background: image_url("skyline.jpg") {
+    size: cover;
+    repeat: no-repeat;
+    position: center center;
   }
-
-  @include below($small-snap) {
-    font-size: 40px;
-  }
-}
-
-.footer-signup-cta {
-  padding: 30px;
-  margin-top: 100px;
-  background: $mariontte;
 }
 
 .logo {
-  max-width: 163px;
-  margin: 60px 0;
-  @include below($small-snap) {
-    max-width: 100px;
-    margin: 20px 0;
+  margin: {
+    top:    -38px;
+    right:  -47px;
   }
+
+  @include pos(absolute, 50%, 50%);
+}
+
+.contain {
+  background: #ffffff;
+  max-width: 350px;
+  margin: $block*2 auto;
+}
+
+.location {
+  width:        190px;
+  padding:      $block;
+  font-size:    14px;
+  line-height:  23px;
+}
+
+.meetup-time {
+  clear:        both;
+  width:        190px;
+  padding:      $block;
+  font-size:    20px;
+  line-height:  29px;
+}
+
+.meetup-details, .talks {
+  background: lighten($copy, 42%);
+}
+
+.team {
+  padding: $block;
 }
 
 .person {
-  overflow: hidden;
-  padding: 30px;
-  border-top: solid 1px #FFF;
-
-  &:nth-child(1) {
-    border-top: none;
-  }
+  margin-bottom:  $block;
+  overflow:       hidden;
+  font-size:      16px;
 }
 
-.image-wrap {
+.details {
+  width:        60%;
+  font-size:    14px;
+  text-align:   left;
+  line-height:  25px;
+  padding-left: $block;
+}
+
+.image-wrap, {
+  width:    40%;
   position: relative;
-  max-width: 190px;
-  overflow: hidden;
-  border: solid 1px rgb(197, 197, 197);
-  @include border-radius(10px);
+
+  > img {
+    width: 100%;
+  }
 }
 
 .logo-image {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  @include below($small-snap) {
-    display: none;
-  }
+  height: 36px;
+
+  @include pos(absolute, false, 10px, 10px);
 }
 
-.person-image {
-  @include below($small-snap) {
-    width: 100px;
-  }
-}
-.details {
-  margin-left: 30px;
-  text-align: left;
-  line-height: 25px;
-}
 
 .talk-title {
   font-weight: bold
 }
 
 .mc-embedded-subscribe-form {
-  position: relative;
-  max-width: 500px;
-  display: block;
-  margin: 0 auto;
+  padding:        0 $block;
+  position:       relative;
+  margin-bottom:  $block;
 }
 
 .mc-embedded-subscribe {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  margin-top: -18px;
-  display: inline-block;
+  border:     0;
+  color:      #FFF;
+  cursor:     pointer;
+  display:    inline-block;
+  padding:    10px;
   background: $mariontte;
-  border: 0;
-  color: #FFF;
-  padding: 10px;
+  margin-top: -18px;
 
   font: {
     size: 14px;
-    width: bold;
+    weight: bold;
   }
 
+  @include pos(absolute, 50%, $block * 1.3);
   @include border-radius(4px);
 }
 
 input[type="email"] {
   width: 100%;
-  max-width: 500px;
-  border: 0;
   font-size: 16px;
-  padding: 14px;
-  border: solid 1px rgb(155, 155, 155);
+  padding: $block/1.4;
+  border: solid 1px lighten($copy, 40%);
 
   @include border-radius(4px);
   &:focus {
+    border: solid 1px lighten($copy, 10%);
     outline: none;
   }
+}
+
+.right {
+  float: right;
+}
+
+.left {
+  float: left;
+}
+
+.cl {
+  clear: both;
 }

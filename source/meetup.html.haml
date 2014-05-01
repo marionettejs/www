@@ -1,46 +1,46 @@
 = stylesheet_link_tag "meetup"
 
 .contain
-  = image_tag 'meetup_logo.png', class: "logo"
+  .header
+    %h1.headline NYC
+    %span.date 6.11.2014
+    = image_tag 'meetup_logo.png', class: "logo"
 
-  %h1.headline
-    Marionette.js Meetup
-
-  %ul.meetup-details
-    %li Wednesday, June 11, 7pm
-    %li 5 Washington St, Brooklyn, NY (7th floor Etsy Labs)
+  .meetup-details
+    %ul.left.location
+      %li 5 Washington St, Brooklyn, NY (7th floor Etsy Labs)
+    %a.map-link.right{href: "https://www.google.com/maps/preview?ie=UTF-8&q=Etsy+Incorporated&fb=1&gl=us&hq=etsy&hnear=0x89c24416947c2109:0x82765c7404007886,Brooklyn,+NY&cid=6551206087216185917&ei=n6NhU_HcC4SpyASv0YDAAQ&ved=0CLABEPwSMAs"}
+      %img{src: "http://maps.googleapis.com/maps/api/staticmap?center=5%20Washington%20St,%20Brooklyn,%20NY&zoom=14&size=160x160&sensor=false&markers=color:red%7C5%20Washington%20St,%20Brooklyn,%20NY"}
+    .cl
+  %p.meetup-time Wednesday </br> June 11, 2014 </br> at 7pm
 
   .mid-cta
     = render :haml, "signup_wrap"
 
-  %h2.headline.sub Hear from the team
+  .talks
+    %ul.team
+      %li.person
+        .image-wrap.left
+          = image_tag 'james_smith.png', class: "person-image"
+          %a{href: "http://bocoup.com/", target: "_blank"}
+            = image_tag 'bocoup.png', class: "logo-image"
+        .details.left
+          %h4.name James Smith
+          %h5.talk-title Backbone.Wreqr
 
-  %ul.team
-    %li.person
-      .image-wrap.left
-        = image_tag 'james_smith.png', class: "person-image"
-        %a{href: "http://bocoup.com/", target: "_blank"}
-          = image_tag 'bocoup.png', class: "logo-image"
-      .details.left
-        %h4.name James Smith
-        %h5.talk-title Backbone.Wreqr
-
-    %li.person
-      .image-wrap.left
-        = image_tag 'jason_laster.png', class: "person-image"
-        %a{href: "http://etsy.com/", target: "_blank"}
-          = image_tag 'etsy.png', class: "logo-image"
-      .details.left
-        %h4.name Jason Laster - Etsy
-        %h5.talk-title Cleaning up your views with behaviors.
-    %li.person
-      .image-wrap.left
-        = image_tag 'sam_saccone.png', class: "person-image"
-        %a{href: "http://mojotech.com/", target: "_blank"}
-          = image_tag 'mojotech-1.png', class: "logo-image"
-      .details.left
-        %h4.name Sam Saccone - MojoTech
-        %h5.talk-title Rapid prototyping with PARM.
-
-.footer-signup-cta
-  = render :haml, "signup_wrap"
+      %li.person
+        .image-wrap.left
+          = image_tag 'jason_laster.png', class: "person-image"
+          %a{href: "http://etsy.com/", target: "_blank"}
+            = image_tag 'etsy.png', class: "logo-image"
+        .details.left
+          %h4.name Jason Laster
+          %h5.talk-title Cleaning up your views with behaviors.
+      %li.person
+        .image-wrap.left
+          = image_tag 'sam_saccone.png', class: "person-image"
+          %a{href: "http://mojotech.com/", target: "_blank"}
+            = image_tag 'mojotech-1.png', class: "logo-image"
+        .details.left
+          %h4.name Sam Saccone
+          %h5.talk-title Rapid prototyping with PARM.
