@@ -18,7 +18,7 @@ html {
   position:         absolute;
   text-align:       left;
   font-family:      "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  background-color: #FFF;
+  background-color: #d0dfe8;
 
   @include size(100%);
   @include background-image(radial-gradient(center, ellipse cover, rgba(255,255,255,.75) 0%, #d0dfe8 100%));
