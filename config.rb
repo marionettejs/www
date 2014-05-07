@@ -74,7 +74,7 @@ set :markdown,
 
 activate :syntax
 
-page "docs/v1.8.2/*", :layout => "docs"
+page "docs/*", :layout => "docs"
 
 
 # Build-specific configuration
