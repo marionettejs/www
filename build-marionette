@@ -20,9 +20,11 @@ curl -L https://raw.github.com/marionettejs/backbone.babysitter/master/lib/backb
 
 curl -L https://raw.github.com/marionettejs/backbone.marionette/master/lib/backbone.marionette.js > backbone.marionette/backbone.marionette.js
 curl -L https://raw.github.com/marionettejs/backbone.marionette/master/lib/backbone.marionette.min.js > backbone.marionette/backbone.marionette.min.js
+curl -L https://raw.github.com/marionettejs/backbone.marionette/master/lib/backbone.marionette.map > backbone.marionette/backbone.marionette.map
 
 curl -L https://raw.github.com/marionettejs/backbone.marionette/master/lib/core/backbone.marionette.js > backbone.marionette/core/backbone.marionette.js
 curl -L https://raw.github.com/marionettejs/backbone.marionette/master/lib/core/backbone.marionette.min.js > backbone.marionette/core/backbone.marionette.min.js
+curl -L https://raw.github.com/marionettejs/backbone.marionette/master/lib/core/backbone.marionette.map > backbone.marionette/core/backbone.marionette.map
 
 curl -L https://raw.github.com/marionettejs/backbone.marionette/master/lib/core/amd/backbone.marionette.js > backbone.marionette/core/amd/backbone.marionette.js
 curl -L https://raw.github.com/marionettejs/backbone.marionette/master/lib/core/amd/backbone.marionette.min.js > backbone.marionette/core/amd/backbone.marionette.min.js
