@@ -10,7 +10,6 @@ $(function () {
     if (hit) return cache[str]
 
     return (cache[str] = str
-      .replace(STRING_DECAMELIZE_REGEXP, '$1_$2')
       .toLowerCase()
       .replace(STRING_DASHERIZE_REGEXP,'-'));
   }
