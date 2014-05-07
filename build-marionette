@@ -42,3 +42,5 @@ rm source/downloads/backbone.js
 rm source/downloads/jquery.js
 rm source/downloads/json2.js
 rm source/downloads/underscore.js
+
+rake generate_docs
