@@ -1,0 +1,2338 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>backbone.marionette.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>backbone.marionette.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p>Backbone.Marionette v0.8.4</p>
+<p>Copyright (C)2012 Derick Bailey, Muted Solutions, LLC
+Distributed Under MIT License</p>
+<p>Documentation and Full License Available at:
+<a href="http://github.com/derickbailey/backbone.marionette">http://github.com/derickbailey/backbone.marionette</a></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>Backbone.Marionette = (<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(Backbone, _, $)</span>{</span>
+  <span class="hljs-keyword">var</span> Marionette = {};
+
+  Marionette.version = <span class="hljs-string">"0.8.4"</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <h2 id="marionette-view">Marionette.View</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>The core view type that other Marionette views extend from.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  Marionette.View = Backbone.View.extend({</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Get the template or template id/selector for this view
+instance. You can set a <code>template</code> attribute in the view
+definition or pass a <code>template: &quot;whatever&quot;</code> parameter in
+to the constructor options. The <code>template</code> can also be
+a function that returns a selector string.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    getTemplateSelector: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      <span class="hljs-keyword">var</span> template;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Get the template from <code>this.options.template</code> or
+<code>this.template</code>. The <code>options</code> takes precedence.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.options &amp;&amp; <span class="hljs-keyword">this</span>.options.template){
+        template = <span class="hljs-keyword">this</span>.options.template;
+      } <span class="hljs-keyword">else</span> {
+        template = <span class="hljs-keyword">this</span>.template;
+      }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>check if it’s a function and execute it, if it is</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (_.isFunction(template)){
+        template  = template.call(<span class="hljs-keyword">this</span>);
+      }
+
+      <span class="hljs-keyword">return</span> template;
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>Serialize the model or collection for the view. If a model is
+found, <code>.toJSON()</code> is called. If a collection is found, <code>.toJSON()</code>
+is also called, but is used to populate an <code>items</code> array in the
+resulting data. If both are found, defaults to the model. 
+You can override the <code>serializeData</code> method in your own view 
+definition, to provide custom serialization for your view’s data.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    serializeData: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      <span class="hljs-keyword">var</span> data;
+
+      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.model) { 
+        data = <span class="hljs-keyword">this</span>.model.toJSON(); 
+      }
+      <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.collection) {
+        data = { items: <span class="hljs-keyword">this</span>.collection.toJSON() };
+      }
+
+      data = <span class="hljs-keyword">this</span>.mixinTemplateHelpers(data);
+
+      <span class="hljs-keyword">return</span> data;
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Mix in template helper methods. Looks for a
+<code>templateHelpers</code> attribute, which can either be an
+object literal, or a function that returns an object
+literal. All methods and attributes from this object
+are copies to the object passed in.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    mixinTemplateHelpers: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(target)</span>{</span>
+      target = target || {};
+      <span class="hljs-keyword">var</span> templateHelpers = <span class="hljs-keyword">this</span>.templateHelpers;
+      <span class="hljs-keyword">if</span> (_.isFunction(templateHelpers)){
+        templateHelpers = templateHelpers.call(<span class="hljs-keyword">this</span>);
+      }
+      <span class="hljs-keyword">return</span> _.extend(target, templateHelpers);
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Configure <code>triggers</code> to forward DOM events to view
+events. <code>triggers: {&quot;click .foo&quot;: &quot;do:foo&quot;}</code></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    configureTriggers: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.triggers) { <span class="hljs-keyword">return</span>; }
+
+      <span class="hljs-keyword">var</span> triggers = <span class="hljs-keyword">this</span>.triggers;
+      <span class="hljs-keyword">var</span> that = <span class="hljs-keyword">this</span>;
+      <span class="hljs-keyword">var</span> triggerEvents = {};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Allow <code>triggers</code> to be configured as a function</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (_.isFunction(triggers)){ triggers = triggers.call(<span class="hljs-keyword">this</span>); }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>Configure the triggers, prevent default
+action and stop propagation of DOM events</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      _.each(triggers, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value, key)</span>{</span>
+
+        triggerEvents[key] = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span>{</span>
+          <span class="hljs-keyword">if</span> (e &amp;&amp; e.preventDefault){ e.preventDefault(); }
+          <span class="hljs-keyword">if</span> (e &amp;&amp; e.stopPropagation){ e.stopPropagation(); }
+          that.trigger(value);
+        }
+
+      });
+
+      <span class="hljs-keyword">return</span> triggerEvents;
+    },
+
+    delegateEvents: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(events)</span>{</span>
+      events = events || <span class="hljs-keyword">this</span>.events;
+      <span class="hljs-keyword">if</span> (_.isFunction(events)){ events = events.call(<span class="hljs-keyword">this</span>)}
+
+      <span class="hljs-keyword">var</span> combinedEvents = {};
+      <span class="hljs-keyword">var</span> triggers = <span class="hljs-keyword">this</span>.configureTriggers();
+      _.extend(combinedEvents, events, triggers);
+
+      Backbone.View.prototype.delegateEvents.call(<span class="hljs-keyword">this</span>, combinedEvents);
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>Default <code>close</code> implementation, for removing a view from the
+DOM and unbinding it. Regions will call this method
+for you. You can specify an <code>onClose</code> method in your view to
+add custom code that is called after the view is closed.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    close: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.beforeClose) { <span class="hljs-keyword">this</span>.beforeClose(); }
+
+      <span class="hljs-keyword">this</span>.unbindAll();
+      <span class="hljs-keyword">this</span>.remove();
+
+      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.onClose) { <span class="hljs-keyword">this</span>.onClose(); }
+      <span class="hljs-keyword">this</span>.trigger(<span class="hljs-string">'close'</span>);
+      <span class="hljs-keyword">this</span>.unbind();
+    }
+  });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <h2 id="item-view">Item View</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>A single item view implementation that contains code for rendering
+with underscore.js templates, serializing the view’s model or collection,
+and calling several methods on extended views, such as <code>onRender</code>.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  Marionette.ItemView = Marionette.View.extend({
+    constructor: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      <span class="hljs-keyword">var</span> args = slice.call(<span class="hljs-built_in">arguments</span>);
+      Marionette.View.prototype.constructor.apply(<span class="hljs-keyword">this</span>, args);
+
+      _.bindAll(<span class="hljs-keyword">this</span>, <span class="hljs-string">"render"</span>);
+
+      <span class="hljs-keyword">this</span>.initialEvents();
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>Configured the initial events that the item view 
+binds to. Override this method to prevent the initial
+events, or to add your own initial events.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    initialEvents: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.collection){
+        <span class="hljs-keyword">this</span>.bindTo(<span class="hljs-keyword">this</span>.collection, <span class="hljs-string">"reset"</span>, <span class="hljs-keyword">this</span>.render, <span class="hljs-keyword">this</span>);
+      }
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>Render the view, defaulting to underscore.js templates.
+You can override this in your view definition.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    render: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      <span class="hljs-keyword">var</span> that = <span class="hljs-keyword">this</span>;
+
+      <span class="hljs-keyword">var</span> deferredRender = $.Deferred();
+
+      <span class="hljs-keyword">var</span> beforeRenderDone = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+        that.trigger(<span class="hljs-string">"before:render"</span>, that);
+        that.trigger(<span class="hljs-string">"item:before:render"</span>, that);
+
+        <span class="hljs-keyword">var</span> deferredData = that.serializeData();
+        $.when(deferredData).then(dataSerialized);
+      } 
+
+      <span class="hljs-keyword">var</span> dataSerialized = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(data)</span>{</span>
+        <span class="hljs-keyword">var</span> asyncRender = that.renderHtml(data);
+        $.when(asyncRender).then(templateRendered);
+      }
+
+      <span class="hljs-keyword">var</span> templateRendered = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(html)</span>{</span>
+        that.$el.html(html);
+        callDeferredMethod(that.onRender, onRenderDone, that);
+      }
+
+      <span class="hljs-keyword">var</span> onRenderDone = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+        that.trigger(<span class="hljs-string">"render"</span>, that);
+        that.trigger(<span class="hljs-string">"item:rendered"</span>, that);
+
+        deferredRender.resolve();
+      }
+
+      callDeferredMethod(<span class="hljs-keyword">this</span>.beforeRender, beforeRenderDone, <span class="hljs-keyword">this</span>);
+
+      <span class="hljs-keyword">return</span> deferredRender.promise();
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>Render the data for this item view in to some HTML.
+Override this method to replace the specific way in
+which an item view has it’s data rendered in to html.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    renderHtml: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(data)</span> {</span>
+      <span class="hljs-keyword">var</span> template = <span class="hljs-keyword">this</span>.getTemplateSelector();
+      <span class="hljs-keyword">return</span> Marionette.Renderer.render(template, data);
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>Override the default close event to add a few
+more events that are triggered.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    close: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      <span class="hljs-keyword">this</span>.trigger(<span class="hljs-string">'item:before:close'</span>);
+      Marionette.View.prototype.close.apply(<span class="hljs-keyword">this</span>, <span class="hljs-built_in">arguments</span>);
+      <span class="hljs-keyword">this</span>.trigger(<span class="hljs-string">'item:closed'</span>);
+    }
+  });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <h2 id="collection-view">Collection View</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>A view that iterates over a Backbone.Collection
+and renders an individual ItemView for each model.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  Marionette.CollectionView = Marionette.View.extend({
+    constructor: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      Marionette.View.prototype.constructor.apply(<span class="hljs-keyword">this</span>, <span class="hljs-built_in">arguments</span>);
+
+      _.bindAll(<span class="hljs-keyword">this</span>, <span class="hljs-string">"addItemView"</span>, <span class="hljs-string">"render"</span>);
+      <span class="hljs-keyword">this</span>.initialEvents();
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p>Configured the initial events that the collection view 
+binds to. Override this method to prevent the initial
+events, or to add your own initial events.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    initialEvents: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.collection){
+        <span class="hljs-keyword">this</span>.bindTo(<span class="hljs-keyword">this</span>.collection, <span class="hljs-string">"add"</span>, <span class="hljs-keyword">this</span>.addChildView, <span class="hljs-keyword">this</span>);
+        <span class="hljs-keyword">this</span>.bindTo(<span class="hljs-keyword">this</span>.collection, <span class="hljs-string">"remove"</span>, <span class="hljs-keyword">this</span>.removeItemView, <span class="hljs-keyword">this</span>);
+        <span class="hljs-keyword">this</span>.bindTo(<span class="hljs-keyword">this</span>.collection, <span class="hljs-string">"reset"</span>, <span class="hljs-keyword">this</span>.render, <span class="hljs-keyword">this</span>);
+      }
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <p>Handle a child item added to the collection</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    addChildView: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(item)</span>{</span>
+      <span class="hljs-keyword">var</span> ItemView = <span class="hljs-keyword">this</span>.getItemView();
+      <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.addItemView(item, ItemView);
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-26">&#182;</a>
+              </div>
+              <p>Loop through all of the items and render 
+each of them with the specified <code>itemView</code>.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    render: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      <span class="hljs-keyword">var</span> that = <span class="hljs-keyword">this</span>;
+      <span class="hljs-keyword">var</span> deferredRender = $.Deferred();
+      <span class="hljs-keyword">var</span> promises = [];
+      <span class="hljs-keyword">var</span> ItemView = <span class="hljs-keyword">this</span>.getItemView();
+
+      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.beforeRender) { <span class="hljs-keyword">this</span>.beforeRender(); }
+      <span class="hljs-keyword">this</span>.trigger(<span class="hljs-string">"collection:before:render"</span>, <span class="hljs-keyword">this</span>);
+
+      <span class="hljs-keyword">this</span>.closeChildren();
+
+      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.collection) {
+        <span class="hljs-keyword">this</span>.collection.each(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(item)</span>{</span>
+          <span class="hljs-keyword">var</span> promise = that.addItemView(item, ItemView);
+          promises.push(promise);
+        });
+      }
+
+      deferredRender.done(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.onRender) { <span class="hljs-keyword">this</span>.onRender(); }
+        <span class="hljs-keyword">this</span>.trigger(<span class="hljs-string">"collection:rendered"</span>, <span class="hljs-keyword">this</span>);
+      });
+
+      $.when.apply(<span class="hljs-keyword">this</span>, promises).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+        deferredRender.resolveWith(that);
+      });
+
+      <span class="hljs-keyword">return</span> deferredRender.promise();
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-27">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-27">&#182;</a>
+              </div>
+              <p>Retrieve the itemView type, either from <code>this.options.itemView</code>
+or from the <code>itemView</code> in the object definition. The “options”
+takes precedence.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    getItemView: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      <span class="hljs-keyword">var</span> itemView = <span class="hljs-keyword">this</span>.options.itemView || <span class="hljs-keyword">this</span>.itemView;
+
+      <span class="hljs-keyword">if</span> (!itemView){
+        <span class="hljs-keyword">var</span> err = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"An `itemView` must be specified"</span>);
+        err.name = <span class="hljs-string">"NoItemViewError"</span>;
+        <span class="hljs-keyword">throw</span> err;
+      }
+
+      <span class="hljs-keyword">return</span> itemView;
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-28">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-28">&#182;</a>
+              </div>
+              <p>Render the child item’s view and add it to the
+HTML for the collection view.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    addItemView: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(item, ItemView)</span>{</span>
+      <span class="hljs-keyword">var</span> that = <span class="hljs-keyword">this</span>;
+
+      <span class="hljs-keyword">var</span> view = <span class="hljs-keyword">this</span>.buildItemView(item, ItemView);
+      <span class="hljs-keyword">this</span>.bindTo(view, <span class="hljs-string">"all"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-29">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-29">&#182;</a>
+              </div>
+              <p>get the args, prepend the event name
+with “itemview:” and insert the child view
+as the first event arg (after the event name)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> args = slice.call(<span class="hljs-built_in">arguments</span>);
+        args[<span class="hljs-number">0</span>] = <span class="hljs-string">"itemview:"</span> + args[<span class="hljs-number">0</span>];
+        args.splice(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, view);
+
+        that.trigger.apply(that, args);
+      });
+
+      <span class="hljs-keyword">this</span>.storeChild(view);
+      <span class="hljs-keyword">this</span>.trigger(<span class="hljs-string">"item:added"</span>, view);
+
+      <span class="hljs-keyword">var</span> viewRendered = view.render();
+      $.when(viewRendered).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+        that.appendHtml(that, view);
+      });
+      
+      <span class="hljs-keyword">return</span> viewRendered;
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-30">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-30">&#182;</a>
+              </div>
+              <p>Build an <code>itemView</code> for every model in the collection. </p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    buildItemView: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(item, ItemView)</span>{</span>
+      <span class="hljs-keyword">var</span> view = <span class="hljs-keyword">new</span> ItemView({
+        model: item
+      });
+      <span class="hljs-keyword">return</span> view;
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-31">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-31">&#182;</a>
+              </div>
+              <p>Remove the child view and close it</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    removeItemView: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(item)</span>{</span>
+      <span class="hljs-keyword">var</span> view = <span class="hljs-keyword">this</span>.children[item.cid];
+      <span class="hljs-keyword">if</span> (view){
+        view.close();
+        <span class="hljs-keyword">delete</span> <span class="hljs-keyword">this</span>.children[item.cid];
+      }
+      <span class="hljs-keyword">this</span>.trigger(<span class="hljs-string">"item:removed"</span>, view);
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-32">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-32">&#182;</a>
+              </div>
+              <p>Append the HTML to the collection’s <code>el</code>.
+Override this method to do something other
+then <code>.append</code>.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    appendHtml: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(collectionView, itemView)</span>{</span>
+      collectionView.$el.append(itemView.el);
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-33">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-33">&#182;</a>
+              </div>
+              <p>Store references to all of the child <code>itemView</code>
+instances so they can be managed and cleaned up, later.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    storeChild: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(view)</span>{</span>
+      <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.children){
+        <span class="hljs-keyword">this</span>.children = {};
+      }
+      <span class="hljs-keyword">this</span>.children[view.model.cid] = view;
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-34">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-34">&#182;</a>
+              </div>
+              <p>Handle cleanup and other closing needs for
+the collection of views.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    close: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      <span class="hljs-keyword">this</span>.trigger(<span class="hljs-string">"collection:before:close"</span>);
+      <span class="hljs-keyword">this</span>.closeChildren();
+      Marionette.View.prototype.close.apply(<span class="hljs-keyword">this</span>, <span class="hljs-built_in">arguments</span>);
+      <span class="hljs-keyword">this</span>.trigger(<span class="hljs-string">"collection:closed"</span>);
+    },
+
+    closeChildren: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.children){
+        _.each(<span class="hljs-keyword">this</span>.children, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(childView)</span>{</span>
+          childView.close();
+        });
+      }
+    }
+  });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-35">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-35">&#182;</a>
+              </div>
+              <h2 id="composite-view">Composite View</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-36">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-36">&#182;</a>
+              </div>
+              
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-37">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-37">&#182;</a>
+              </div>
+              <p>Used for rendering a branch-leaf, hierarchical structure.
+Extends directly from CollectionView and also renders an
+an item view as <code>modelView</code>, for the top leaf</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  Marionette.CompositeView = Marionette.CollectionView.extend({
+    constructor: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(options)</span>{</span>
+      Marionette.CollectionView.apply(<span class="hljs-keyword">this</span>, <span class="hljs-built_in">arguments</span>);
+      <span class="hljs-keyword">this</span>.itemView = <span class="hljs-keyword">this</span>.getItemView();
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-38">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-38">&#182;</a>
+              </div>
+              <p>Retrieve the <code>itemView</code> to be used when rendering each of
+the items in the collection. The default is to return
+<code>this.itemView</code> or Marionette.CompositeView if no <code>itemView</code>
+has been defined</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    getItemView: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.itemView || <span class="hljs-keyword">this</span>.constructor;
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-39">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-39">&#182;</a>
+              </div>
+              <p>Renders the model once, and the collection once. Calling
+this again will tell the model’s view to re-render itself
+but the collection will not re-render.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    render: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      <span class="hljs-keyword">var</span> that = <span class="hljs-keyword">this</span>;
+      <span class="hljs-keyword">var</span> compositeRendered = $.Deferred();
+
+      <span class="hljs-keyword">var</span> modelIsRendered = <span class="hljs-keyword">this</span>.renderModel();
+      $.when(modelIsRendered).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(html)</span>{</span>
+        that.$el.html(html);
+        that.trigger(<span class="hljs-string">"composite:model:rendered"</span>);
+        that.trigger(<span class="hljs-string">"render"</span>);
+
+        <span class="hljs-keyword">var</span> collectionIsRendered = that.renderCollection();
+        $.when(collectionIsRendered).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+          compositeRendered.resolve();
+        });
+      });
+
+      compositeRendered.done(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+        that.trigger(<span class="hljs-string">"composite:rendered"</span>);
+      });
+
+      <span class="hljs-keyword">return</span> compositeRendered.promise();
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-40">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-40">&#182;</a>
+              </div>
+              <p>Render the collection for the composite view</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    renderCollection: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      <span class="hljs-keyword">var</span> collectionDeferred = Marionette.CollectionView.prototype.render.apply(<span class="hljs-keyword">this</span>, <span class="hljs-built_in">arguments</span>);
+      collectionDeferred.done(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+        <span class="hljs-keyword">this</span>.trigger(<span class="hljs-string">"composite:collection:rendered"</span>);
+      });
+      <span class="hljs-keyword">return</span> collectionDeferred.promise();
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-41">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-41">&#182;</a>
+              </div>
+              <p>Render an individual model, if we have one, as
+part of a composite view (branch / leaf). For example:
+a treeview.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    renderModel: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      <span class="hljs-keyword">var</span> data = {};
+      data = <span class="hljs-keyword">this</span>.serializeData();
+
+      <span class="hljs-keyword">var</span> template = <span class="hljs-keyword">this</span>.getTemplateSelector();
+      <span class="hljs-keyword">return</span> Marionette.Renderer.render(template, data);
+    }
+  });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-42">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-42">&#182;</a>
+              </div>
+              <h2 id="region-">Region </h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-43">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-43">&#182;</a>
+              </div>
+              
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-44">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-44">&#182;</a>
+              </div>
+              <p>Manage the visual regions of your composite application. See
+<a href="http://lostechies.com/derickbailey/2011/12/12/composite-js-apps-regions-and-region-managers/">http://lostechies.com/derickbailey/2011/12/12/composite-js-apps-regions-and-region-managers/</a></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  Marionette.Region = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(options)</span>{</span>
+    <span class="hljs-keyword">this</span>.options = options || {};
+
+    _.extend(<span class="hljs-keyword">this</span>, options);
+
+    <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.el){
+      <span class="hljs-keyword">var</span> err = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"An 'el' must be specified"</span>);
+      err.name = <span class="hljs-string">"NoElError"</span>;
+      <span class="hljs-keyword">throw</span> err;
+    }
+
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.initialize){
+      <span class="hljs-keyword">this</span>.initialize.apply(<span class="hljs-keyword">this</span>, <span class="hljs-built_in">arguments</span>);
+    }
+  };
+
+  _.extend(Marionette.Region.prototype, Backbone.Events, {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-45">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-45">&#182;</a>
+              </div>
+              <p>Displays a backbone view instance inside of the region.
+Handles calling the <code>render</code> method for you. Reads content
+directly from the <code>el</code> attribute. Also calls an optional
+<code>onShow</code> and <code>close</code> method on your view, just after showing
+or just before closing the view, respectively.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    show: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(view, appendMethod)</span>{</span>
+      <span class="hljs-keyword">this</span>.ensureEl();
+
+      <span class="hljs-keyword">this</span>.close();
+      <span class="hljs-keyword">this</span>.open(view, appendMethod);
+
+      <span class="hljs-keyword">this</span>.currentView = view;
+    },
+
+    ensureEl: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.$el || <span class="hljs-keyword">this</span>.$el.length === <span class="hljs-number">0</span>){
+        <span class="hljs-keyword">this</span>.$el = <span class="hljs-keyword">this</span>.getEl(<span class="hljs-keyword">this</span>.el);
+      }
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-46">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-46">&#182;</a>
+              </div>
+              <p>Override this method to change how the region finds the
+DOM element that it manages. Return a jQuery selector object.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    getEl: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(selector)</span>{</span>
+        <span class="hljs-keyword">return</span> $(selector);
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-47">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-47">&#182;</a>
+              </div>
+              <p>Internal method to render and display a view. Not meant 
+to be called from any external code.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    open: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(view, appendMethod)</span>{</span>
+      <span class="hljs-keyword">var</span> that = <span class="hljs-keyword">this</span>;
+      appendMethod = appendMethod || <span class="hljs-string">"html"</span>;
+
+      $.when(view.render()).then(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+        that.$el[appendMethod](view.el);
+        <span class="hljs-keyword">if</span> (view.onShow) { view.onShow(); }
+        <span class="hljs-keyword">if</span> (that.onShow) { that.onShow(view); }
+        view.trigger(<span class="hljs-string">"show"</span>);
+        that.trigger(<span class="hljs-string">"view:show"</span>, view);
+      });
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-48">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-48">&#182;</a>
+              </div>
+              <p>Close the current view, if there is one. If there is no
+current view, it does nothing and returns immediately.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    close: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      <span class="hljs-keyword">var</span> view = <span class="hljs-keyword">this</span>.currentView;
+      <span class="hljs-keyword">if</span> (!view){ <span class="hljs-keyword">return</span>; }
+
+      <span class="hljs-keyword">if</span> (view.close) { view.close(); }
+      <span class="hljs-keyword">this</span>.trigger(<span class="hljs-string">"view:closed"</span>, view);
+
+      <span class="hljs-keyword">delete</span> <span class="hljs-keyword">this</span>.currentView;
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-49">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-49">&#182;</a>
+              </div>
+              <p>Attach an existing view to the region. This 
+will not call <code>render</code> or <code>onShow</code> for the new view, 
+and will not replace the current HTML for the <code>el</code>
+of the region.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    attachView: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(view)</span>{</span>
+      <span class="hljs-keyword">this</span>.currentView = view;
+    }
+  });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-50">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-50">&#182;</a>
+              </div>
+              <h2 id="layout">Layout</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-51">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-51">&#182;</a>
+              </div>
+              
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-52">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-52">&#182;</a>
+              </div>
+              <p>Formerly known as Composite Region.</p>
+<p>Used for managing application layouts, nested layouts and
+multiple regions within an application or sub-application.</p>
+<p>A specialized view type that renders an area of HTML and then
+attaches <code>Region</code> instances to the specified <code>regions</code>.
+Used for composite view management and sub-application areas.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  Marionette.Layout = Marionette.ItemView.extend({
+    constructor: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+      <span class="hljs-keyword">this</span>.vent = <span class="hljs-keyword">new</span> Backbone.Marionette.EventAggregator();
+      Backbone.Marionette.ItemView.apply(<span class="hljs-keyword">this</span>, <span class="hljs-built_in">arguments</span>);
+      <span class="hljs-keyword">this</span>.regionManagers = {};
+    },
+
+    render: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+      <span class="hljs-keyword">this</span>.initializeRegions();
+      <span class="hljs-keyword">return</span> Backbone.Marionette.ItemView.prototype.render.call(<span class="hljs-keyword">this</span>, <span class="hljs-built_in">arguments</span>);
+    },
+
+    close: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+      <span class="hljs-keyword">this</span>.closeRegions();
+      Backbone.Marionette.ItemView.prototype.close.call(<span class="hljs-keyword">this</span>, <span class="hljs-built_in">arguments</span>);
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-53">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-53">&#182;</a>
+              </div>
+              <p>Initialize the regions that have been defined in a
+<code>regions</code> attribute on this layout. The key of the
+hash becomes an attribute on the layout object directly.
+For example: <code>regions: { menu: &quot;.menu-container&quot; }</code>
+will product a <code>layout.menu</code> object which is a region
+that controls the <code>.menu-container</code> DOM element.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    initializeRegions: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+      <span class="hljs-keyword">var</span> that = <span class="hljs-keyword">this</span>;
+      _.each(<span class="hljs-keyword">this</span>.regions, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(selector, name)</span> {</span>
+        <span class="hljs-keyword">var</span> regionManager = <span class="hljs-keyword">new</span> Backbone.Marionette.Region({
+            el: selector,
+
+            getEl: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(selector)</span>{</span>
+              <span class="hljs-keyword">return</span> that.$(selector);
+            }
+        });
+        that.regionManagers[name] = regionManager;
+        that[name] = regionManager;
+      });
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-54">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-54">&#182;</a>
+              </div>
+              <p>Close all of the regions that have been opened by
+this layout. This method is called when the layout
+itself is closed.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    closeRegions: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+      <span class="hljs-keyword">var</span> that = <span class="hljs-keyword">this</span>;
+      _.each(<span class="hljs-keyword">this</span>.regionManagers, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(manager, name)</span> {</span>
+        manager.close();
+        <span class="hljs-keyword">delete</span> that[name];
+      });
+      <span class="hljs-keyword">this</span>.regionManagers = {};
+    }
+  });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-55">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-55">&#182;</a>
+              </div>
+              <h2 id="approuter">AppRouter</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-56">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-56">&#182;</a>
+              </div>
+              
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-57">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-57">&#182;</a>
+              </div>
+              <p>Reduce the boilerplate code of handling route events
+and then calling a single method on another object.
+Have your routers configured to call the method on
+your object, directly.</p>
+<p>Configure an AppRouter with <code>appRoutes</code>.</p>
+<p>App routers can only take one <code>controller</code> object. 
+It is recommended that you divide your controller
+objects in to smaller peices of related functionality
+and have multiple routers / controllers, instead of
+just one giant router and controller.</p>
+<p>You can also add standard routes to an AppRouter.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  
+  Marionette.AppRouter = Backbone.Router.extend({
+
+    constructor: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(options)</span>{</span>
+      Backbone.Router.prototype.constructor.call(<span class="hljs-keyword">this</span>, options);
+
+      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.appRoutes){
+        <span class="hljs-keyword">var</span> controller = <span class="hljs-keyword">this</span>.controller;
+        <span class="hljs-keyword">if</span> (options &amp;&amp; options.controller) {
+          controller = options.controller;
+        }
+        <span class="hljs-keyword">this</span>.processAppRoutes(controller, <span class="hljs-keyword">this</span>.appRoutes);
+      }
+    },
+
+    processAppRoutes: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(controller, appRoutes)</span>{</span>
+      <span class="hljs-keyword">var</span> method, methodName;
+      <span class="hljs-keyword">var</span> route, routesLength, i;
+      <span class="hljs-keyword">var</span> routes = [];
+      <span class="hljs-keyword">var</span> router = <span class="hljs-keyword">this</span>;
+
+      <span class="hljs-keyword">for</span>(route <span class="hljs-keyword">in</span> appRoutes){
+        <span class="hljs-keyword">if</span> (appRoutes.hasOwnProperty(route)){
+          routes.unshift([route, appRoutes[route]]);
+        }
+      }
+
+      routesLength = routes.length;
+      <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; routesLength; i++){
+        route = routes[i][<span class="hljs-number">0</span>];
+        methodName = routes[i][<span class="hljs-number">1</span>];
+        method = controller[methodName];
+
+        <span class="hljs-keyword">if</span> (!method){
+          <span class="hljs-keyword">var</span> msg = <span class="hljs-string">"Method '"</span> + methodName + <span class="hljs-string">"' was not found on the controller"</span>;
+          <span class="hljs-keyword">var</span> err = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(msg);
+          err.name = <span class="hljs-string">"NoMethodError"</span>;
+          <span class="hljs-keyword">throw</span> err;
+        }
+
+        method = _.bind(method, controller);
+        router.route(route, methodName, method);
+      }
+    }
+  });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-58">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-58">&#182;</a>
+              </div>
+              <h2 id="composite-application">Composite Application</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-59">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-59">&#182;</a>
+              </div>
+              
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-60">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-60">&#182;</a>
+              </div>
+              <p>Contain and manage the composite application as a whole.
+Stores and starts up <code>Region</code> objects, includes an
+event aggregator as <code>app.vent</code></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  Marionette.Application = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(options)</span>{</span>
+    <span class="hljs-keyword">this</span>.initCallbacks = <span class="hljs-keyword">new</span> Marionette.Callbacks();
+    <span class="hljs-keyword">this</span>.vent = <span class="hljs-keyword">new</span> Marionette.EventAggregator();
+    _.extend(<span class="hljs-keyword">this</span>, options);
+  };
+
+  _.extend(Marionette.Application.prototype, Backbone.Events, {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-61">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-61">&#182;</a>
+              </div>
+              <p>Add an initializer that is either run at when the <code>start</code>
+method is called, or run immediately if added after <code>start</code>
+has already been called.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    addInitializer: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(initializer)</span>{</span>
+      <span class="hljs-keyword">this</span>.initCallbacks.add(initializer);
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-62">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-62">&#182;</a>
+              </div>
+              <p>kick off all of the application’s processes.
+initializes all of the regions that have been added
+to the app, and runs all of the initializer functions</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    start: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(options)</span>{</span>
+      <span class="hljs-keyword">this</span>.trigger(<span class="hljs-string">"initialize:before"</span>, options);
+      <span class="hljs-keyword">this</span>.initCallbacks.run(<span class="hljs-keyword">this</span>, options);
+      <span class="hljs-keyword">this</span>.trigger(<span class="hljs-string">"initialize:after"</span>, options);
+
+      <span class="hljs-keyword">this</span>.trigger(<span class="hljs-string">"start"</span>, options);
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-63">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-63">&#182;</a>
+              </div>
+              <p>Add regions to your app. 
+Accepts a hash of named strings or Region objects
+addRegions({something: “#someRegion”})
+addRegions{{something: Region.extend({el: “#someRegion”}) });</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    addRegions: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(regions)</span>{</span>
+      <span class="hljs-keyword">var</span> regionValue, regionObj, region;
+
+      <span class="hljs-keyword">for</span>(region <span class="hljs-keyword">in</span> regions){
+        <span class="hljs-keyword">if</span> (regions.hasOwnProperty(region)){
+          regionValue = regions[region];
+    
+          <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> regionValue === <span class="hljs-string">"string"</span>){
+            regionObj = <span class="hljs-keyword">new</span> Marionette.Region({
+              el: regionValue
+            });
+          } <span class="hljs-keyword">else</span> {
+            regionObj = <span class="hljs-keyword">new</span> regionValue();
+          }
+
+          <span class="hljs-keyword">this</span>[region] = regionObj;
+        }
+      }
+    }
+  });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-64">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-64">&#182;</a>
+              </div>
+              <h2 id="bindto-event-binding">BindTo: Event Binding</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-65">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-65">&#182;</a>
+              </div>
+              
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-66">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-66">&#182;</a>
+              </div>
+              <p>BindTo facilitates the binding and unbinding of events
+from objects that extend <code>Backbone.Events</code>. It makes
+unbinding events, even with anonymous callback functions,
+easy. </p>
+<p>Thanks to Johnny Oshika for this code.
+<a href="http://stackoverflow.com/questions/7567404/backbone-js-repopulate-or-recreate-the-view/7607853#7607853">http://stackoverflow.com/questions/7567404/backbone-js-repopulate-or-recreate-the-view/7607853#7607853</a></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  Marionette.BindTo = {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-67">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-67">&#182;</a>
+              </div>
+              <p>Store the event binding in array so it can be unbound
+easily, at a later point in time.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    bindTo: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(obj, eventName, callback, context)</span> {</span>
+      context = context || <span class="hljs-keyword">this</span>;
+      obj.on(eventName, callback, context);
+
+      <span class="hljs-keyword">if</span> (!<span class="hljs-keyword">this</span>.bindings) { <span class="hljs-keyword">this</span>.bindings = []; }
+
+      <span class="hljs-keyword">var</span> binding = { 
+        obj: obj, 
+        eventName: eventName, 
+        callback: callback, 
+        context: context 
+      }
+
+      <span class="hljs-keyword">this</span>.bindings.push(binding);
+
+      <span class="hljs-keyword">return</span> binding;
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-68">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-68">&#182;</a>
+              </div>
+              <p>Unbind from a single binding object. Binding objects are
+returned from the <code>bindTo</code> method call. </p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    unbindFrom: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(binding)</span>{</span>
+      binding.obj.off(binding.eventName, binding.callback);
+      <span class="hljs-keyword">this</span>.bindings = _.reject(<span class="hljs-keyword">this</span>.bindings, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(bind)</span>{</span><span class="hljs-keyword">return</span> bind === binding});
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-69">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-69">&#182;</a>
+              </div>
+              <p>Unbind all of the events that we have stored.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    unbindAll: <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+      <span class="hljs-keyword">var</span> that = <span class="hljs-keyword">this</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-70">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-70">&#182;</a>
+              </div>
+              <p>The <code>unbindFrom</code> call removes elements from the array
+while it is being iterated, so clone it first.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">var</span> bindings = _.map(<span class="hljs-keyword">this</span>.bindings, _.identity);
+      _.each(bindings, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(binding, index)</span> {</span>
+        that.unbindFrom(binding);
+      });
+    }
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-71">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-71">&#182;</a>
+              </div>
+              <h2 id="callbacks">Callbacks</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-72">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-72">&#182;</a>
+              </div>
+              
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-73">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-73">&#182;</a>
+              </div>
+              <p>A simple way of managing a collection of callbacks
+and executing them at a later point in time, using jQuery’s
+<code>Deferred</code> object.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  Marionette.Callbacks = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    <span class="hljs-keyword">this</span>.deferred = $.Deferred();
+    <span class="hljs-keyword">this</span>.promise = <span class="hljs-keyword">this</span>.deferred.promise();
+  };
+
+  _.extend(Marionette.Callbacks.prototype, {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-74">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-74">&#182;</a>
+              </div>
+              <p>Add a callback to be executed. Callbacks added here are
+guaranteed to execute, even if they are added after the 
+<code>run</code> method is called.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    add: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(callback)</span>{</span>
+      <span class="hljs-keyword">this</span>.promise.done(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(context, options)</span>{</span>
+        callback.call(context, options);
+      });
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-75">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-75">&#182;</a>
+              </div>
+              <p>Run all registered callbacks with the context specified. 
+Additional callbacks can be added after this has been run 
+and they will still be executed.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    run: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(context, options)</span>{</span>
+      <span class="hljs-keyword">this</span>.deferred.resolve(context, options);
+    }
+  });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-76">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-76">&#182;</a>
+              </div>
+              <h2 id="event-aggregator">Event Aggregator</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-77">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-77">&#182;</a>
+              </div>
+              
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-78">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-78">&#182;</a>
+              </div>
+              <p>A pub-sub object that can be used to decouple various parts
+of an application through event-driven architecture.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  Marionette.EventAggregator = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(options)</span>{</span>
+    _.extend(<span class="hljs-keyword">this</span>, options);
+  };
+
+  _.extend(Marionette.EventAggregator.prototype, Backbone.Events, Marionette.BindTo, {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-79">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-79">&#182;</a>
+              </div>
+              <p>Assumes the event aggregator itself is the 
+object being bound to.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    bindTo: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventName, callback, context)</span>{</span>
+      <span class="hljs-keyword">return</span> Marionette.BindTo.bindTo.call(<span class="hljs-keyword">this</span>, <span class="hljs-keyword">this</span>, eventName, callback, context);
+    }
+  });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-80">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-80">&#182;</a>
+              </div>
+              <h2 id="template-cache">Template Cache</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-81">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-81">&#182;</a>
+              </div>
+              
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-82">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-82">&#182;</a>
+              </div>
+              <p>Manage templates stored in <code>&lt;script&gt;</code> blocks,
+caching them for faster access.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  Marionette.TemplateCache = {
+    templates: {},
+    loaders: {},</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-83">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-83">&#182;</a>
+              </div>
+              <p>Get the specified template by id. Either
+retrieves the cached version, or loads it
+from the DOM.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    get: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(templateId)</span>{</span>
+      <span class="hljs-keyword">var</span> that = <span class="hljs-keyword">this</span>;
+      <span class="hljs-keyword">var</span> templateRetrieval = $.Deferred();
+      <span class="hljs-keyword">var</span> cachedTemplate = <span class="hljs-keyword">this</span>.templates[templateId];
+
+      <span class="hljs-keyword">if</span> (cachedTemplate){
+        templateRetrieval.resolve(cachedTemplate);
+      } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">var</span> loader = <span class="hljs-keyword">this</span>.loaders[templateId];
+        <span class="hljs-keyword">if</span>(loader) {
+          templateRetrieval = loader;
+        } <span class="hljs-keyword">else</span> {
+          <span class="hljs-keyword">this</span>.loaders[templateId] = templateRetrieval;
+
+          <span class="hljs-keyword">this</span>.loadTemplate(templateId, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(template)</span>{</span>
+            <span class="hljs-keyword">delete</span> that.loaders[templateId];
+            that.templates[templateId] = template;
+            templateRetrieval.resolve(template);
+          });
+        }
+
+      }
+
+      <span class="hljs-keyword">return</span> templateRetrieval.promise();
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-84">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-84">&#182;</a>
+              </div>
+              <p>Load a template from the DOM, by default. Override
+this method to provide your own template retrieval,
+such as asynchronous loading from a server.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    loadTemplate: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(templateId, callback)</span>{</span>
+      <span class="hljs-keyword">var</span> template = $(templateId).html();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-85">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-85">&#182;</a>
+              </div>
+              <p>Make sure we have a template before trying to compile it</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (!template || template.length === <span class="hljs-number">0</span>){
+        <span class="hljs-keyword">var</span> msg = <span class="hljs-string">"Could not find template: '"</span> + templateId + <span class="hljs-string">"'"</span>;
+        <span class="hljs-keyword">var</span> err = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(msg);
+        err.name = <span class="hljs-string">"NoTemplateError"</span>;
+        <span class="hljs-keyword">throw</span> err;
+      }
+
+      template = <span class="hljs-keyword">this</span>.compileTemplate(template);
+
+      callback.call(<span class="hljs-keyword">this</span>, template);
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-86">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-86">&#182;</a>
+              </div>
+              <p>Pre-compile the template before caching it. Override
+this method if you do not need to pre-compile a template
+(JST / RequireJS for example) or if you want to change
+the template engine used (Handebars, etc).</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    compileTemplate: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(rawTemplate)</span>{</span>
+      <span class="hljs-keyword">return</span> _.template(rawTemplate);
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-87">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-87">&#182;</a>
+              </div>
+              <p>Clear templates from the cache. If no arguments
+are specified, clears all templates:
+<code>clear()</code></p>
+<p>If arguments are specified, clears each of the 
+specified templates from the cache:
+<code>clear(&quot;#t1&quot;, &quot;#t2&quot;, &quot;...&quot;)</code></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    clear: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+      <span class="hljs-keyword">var</span> i;
+      <span class="hljs-keyword">var</span> length = <span class="hljs-built_in">arguments</span>.length;
+
+      <span class="hljs-keyword">if</span> (length &gt; <span class="hljs-number">0</span>){
+        <span class="hljs-keyword">for</span>(i=<span class="hljs-number">0</span>; i&lt;length; i++){
+          <span class="hljs-keyword">delete</span> <span class="hljs-keyword">this</span>.templates[<span class="hljs-built_in">arguments</span>[i]];
+        }
+      } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">this</span>.templates = {};
+      }
+    }
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-88">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-88">&#182;</a>
+              </div>
+              <h2 id="renderer">Renderer</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-89">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-89">&#182;</a>
+              </div>
+              
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-90">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-90">&#182;</a>
+              </div>
+              <p>Render a template with data by passing in the template
+selector and the data to render.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  Marionette.Renderer = {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-91">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-91">&#182;</a>
+              </div>
+              <p>Render a template with data. The <code>template</code> parameter is
+passed to the <code>TemplateCache</code> object to retrieve the
+actual template. Override this method to provide your own
+custom rendering and template handling for all of Marionette.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    render: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(template, data)</span>{</span>
+      <span class="hljs-keyword">var</span> that = <span class="hljs-keyword">this</span>;
+      <span class="hljs-keyword">var</span> asyncRender = $.Deferred();
+
+      <span class="hljs-keyword">var</span> templateRetrieval = Marionette.TemplateCache.get(template);
+
+      $.when(templateRetrieval).then(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(template)</span>{</span>
+        <span class="hljs-keyword">var</span> html = that.renderTemplate(template, data);
+        asyncRender.resolve(html);
+      });
+
+      <span class="hljs-keyword">return</span> asyncRender.promise();
+    },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-92">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-92">&#182;</a>
+              </div>
+              <p>Default implementation uses underscore.js templates. Override
+this method to use your own templating engine.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    renderTemplate: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(template, data)</span>{</span>
+      <span class="hljs-keyword">var</span> html = template(data);
+      <span class="hljs-keyword">return</span> html;
+    }
+
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-93">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-93">&#182;</a>
+              </div>
+              <h2 id="modules">Modules</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-94">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-94">&#182;</a>
+              </div>
+              
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-95">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-95">&#182;</a>
+              </div>
+              <p>The “Modules” object builds modules on an
+object that it is attached to. It should not be
+used on it’s own, but should be attached to
+another object that will define modules.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  Marionette.Modules = {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-96">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-96">&#182;</a>
+              </div>
+              <p>Add modules to the application, providing direct
+access to your applicaiton object, Backbone, 
+Marionette, jQuery and Underscore as parameters 
+to a callback function.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    module: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(moduleNames, moduleDefinition)</span>{</span>
+      <span class="hljs-keyword">var</span> moduleName, module, moduleOverride;
+      <span class="hljs-keyword">var</span> parentModule = <span class="hljs-keyword">this</span>;
+      <span class="hljs-keyword">var</span> parentApp = <span class="hljs-keyword">this</span>;
+      <span class="hljs-keyword">var</span> moduleNames = moduleNames.split(<span class="hljs-string">"."</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-97">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-97">&#182;</a>
+              </div>
+              <p>Loop through all the parts of the module definition</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">var</span> length = moduleNames.length;
+      <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; length; i++){
+        <span class="hljs-keyword">var</span> isLastModuleInChain = (i === length-<span class="hljs-number">1</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-98">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-98">&#182;</a>
+              </div>
+              <p>Get the module name, and check if it exists on
+the current parent already</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        moduleName = moduleNames[i];
+        module = parentModule[moduleName];</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-99">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-99">&#182;</a>
+              </div>
+              <p>Create a new module if we don’t have one already</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (!module){ 
+          module = <span class="hljs-keyword">new</span> Marionette.Application();
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-100">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-100">&#182;</a>
+              </div>
+              <p>Check to see if we need to run the definition
+for the module. Only run the definition if one
+is supplied, and if we’re at the last segment
+of the “Module.Name” chain.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (isLastModuleInChain &amp;&amp; moduleDefinition){
+          moduleOverride = moduleDefinition(module, parentApp, Backbone, Marionette, jQuery, _);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-101">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-101">&#182;</a>
+              </div>
+              <p>If we have a module override, use it instead.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>          <span class="hljs-keyword">if</span> (moduleOverride){
+            module = moduleOverride;
+          }
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-102">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-102">&#182;</a>
+              </div>
+              <p>If the defined module is not what we are
+currently storing as the module, replace it</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (parentModule[moduleName] !== module){
+          parentModule[moduleName] = module;
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-103">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-103">&#182;</a>
+              </div>
+              <p>Reset the parent module so that the next child
+in the list will be added to the correct parent</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        parentModule = module;
+      }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-104">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-104">&#182;</a>
+              </div>
+              <p>Return the last module in the definition chain</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">return</span> module;
+    }
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-105">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-105">&#182;</a>
+              </div>
+              <h2 id="helpers">Helpers</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-106">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-106">&#182;</a>
+              </div>
+              
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-107">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-107">&#182;</a>
+              </div>
+              <p>For slicing <code>arguments</code> in functions</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">var</span> slice = <span class="hljs-built_in">Array</span>.prototype.slice;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-108">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-108">&#182;</a>
+              </div>
+              <p>Copy the <code>extend</code> function used by Backbone’s classes</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">var</span> extend = Marionette.View.extend;
+  Marionette.Region.extend = extend;
+  Marionette.Application.extend = extend;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-109">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-109">&#182;</a>
+              </div>
+              <p>Copy the <code>modules</code> feature on to the <code>Application</code> object</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  Marionette.Application.prototype.module = Marionette.Modules.module;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-110">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-110">&#182;</a>
+              </div>
+              <p>Copy the features of <code>BindTo</code> on to these objects</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  _.extend(Marionette.View.prototype, Marionette.BindTo);
+  _.extend(Marionette.Application.prototype, Marionette.BindTo);
+  _.extend(Marionette.Region.prototype, Marionette.BindTo);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-111">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-111">&#182;</a>
+              </div>
+              <p>A simple wrapper method for deferring a callback until 
+after another method has been called, passing the
+results of the first method to the second. Uses jQuery’s
+deferred / promise objects, and $.when/then to make it
+work.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">var</span> callDeferredMethod = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(fn, callback, context)</span>{</span>
+    <span class="hljs-keyword">var</span> promise;
+    <span class="hljs-keyword">if</span> (fn) { promise = fn.call(context); }
+    $.when(promise).then(callback);
+  }
+
+
+  <span class="hljs-keyword">return</span> Marionette;
+})(Backbone, _, window.jQuery || window.Zepto || window.ender);</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
