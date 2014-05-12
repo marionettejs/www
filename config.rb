@@ -64,17 +64,17 @@ set :css_dir, 'stylesheets'
 set :js_dir, 'javascripts'
 set :images_dir, 'images'
 
-set :markdown_engine, :redcarpet
-set :markdown,
-  :fenced_code_blocks => true,
-  :smartypants => true,
-  :prettify => true,
-  :autolink => true,
-  :with_toc_data => true
+# set :markdown_engine, :redcarpet
+# set :markdown,
+#   :fenced_code_blocks => true,
+#   :smartypants => true,
+#   :prettify => true,
+#   :autolink => true,
+#   :with_toc_data => true
 
-activate :syntax
-
-page "docs/*", :layout => "docs"
+# activate :syntax
+#
+# page "docs/*", :layout => "docs"
 
 
 # Build-specific configuration
@@ -90,7 +90,7 @@ configure :build do
   activate :cache_buster
 
   # Enable asset pipeline
-  activate :asset_hash, ignore: ['favicon.png', '/images/og-standard.jpg', /downloads\/*/]
+  activate :asset_hash, ignore: ['favicon.png', '/images/og-standard.jpg', /docs\/*/, /downloads\/*/]
 
   # Use relative URLs
   activate :relative_assets
