@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Marionette.CompositeView : Documentation</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="assets_/css/shCore.css">
+        <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
+        <link rel="stylesheet" href="assets_/css/main.css">
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="content">
+
+<h1>Marionette.CompositeView</h1>
+
+<p>A <code>CompositeView</code> extends from <code>CollectionView</code> to be used as a 
+composite view for scenarios where it should represent both a 
+branch and leaf in a tree structure, or for scenarios where a
+collection needs to be rendered within a wrapper template.</p>
+
+<p>For example, if you're rendering a treeview control, you may 
+want to render a collection view with a model and template so 
+that it will show a parent item with children in the tree.</p>
+
+<p>You can specify a <code>modelView</code> to use for the model. If you don't
+specify one, it will default to the <code>Marionette.ItemView</code>.</p>
+
+<pre class="brush:js">
+
+CompositeView = Backbone.Marionette.CompositeView.extend({
+  template: "#leaf-branch-template"
+});
+
+new CompositeView({
+  model: someModel,
+  collection: someCollection
+});
+</pre>
+
+<p>For more examples, see my blog post on 
+<a href="http://lostechies.com/derickbailey/2012/04/05/composite-views-tree-structures-tables-and-more/">using the composite view.</a></p>
+
+<h2>Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
+
+<ul>
+<li><a href="#Documentation Index">Documentation Index</a></li>
+<li><a href="#Composite Model <code>template</code">Composite Model <code>template</code></a></li>
+<li><a href="#CompositeView's <code>itemViewContainer</code">CompositeView's <code>itemViewContainer</code></a></li>
+<li><a href="#CompositeView's <code>appendHtml</code">CompositeView's <code>appendHtml</code></a></li>
+<li><a href="#Recursive By Default">Recursive By Default</a></li>
+<li><a href="#Model And Collection Rendering">Model And Collection Rendering</a></li>
+<li><a href="#Events And Callbacks">Events And Callbacks</a></li>
+<li><a href="#Organizing UI elements">Organizing UI elements</a></li>
+<li><a href="#modelEvents and collectionEvents">modelEvents and collectionEvents</a></li>
+</ul>
+
+<h2>Documentation Index <a href="#Documentation Index" id="Documentation Index" class="deep-link">#</a></h2>
+
+<ul>
+<li><a href="#composite-model-template">Composite Model <code>template</code></a></li>
+<li><a href="#compositeviews-itemviewcontainer">CompositeView's <code>itemViewContainer</code></a></li>
+<li><a href="#compositeviews-appendhtml">CompositeView's <code>appendHtml</code></a></li>
+<li><a href="#recursive-by-default">Recursive By Default</a></li>
+<li><a href="#model-and-collection-rendering">Model And Collection Rendering</a></li>
+<li><a href="#events-and-callbacks">Events And Callbacks</a></li>
+<li><a href="#organizing-ui-elements">Organizing UI elements</a></li>
+<li><a href="#modelevents-and-collectionevents">modelEvents and collectionEvents</a></li>
+</ul>
+
+<h2>Composite Model <code>template</code> <a href="#Composite Model `template`" id="Composite Model `template`" class="deep-link">#</a></h2>
+
+<p>When a <code>CompositeView</code> is rendered, the <code>model</code> will be rendered
+with the <code>template</code> that the view is configured with. You can
+override the template by passing it in as a constructor option:</p>
+
+<pre class="brush:js">
+
+new MyComp({
+  template: "#some-template"
+});
+</pre>
+
+<h2>CompositeView's <code>itemViewContainer</code> <a href="#CompositeView's `itemViewContainer`" id="CompositeView's `itemViewContainer`" class="deep-link">#</a></h2>
+
+<p>By default the composite view uses the same <code>appendHtml</code> method that the
+collection view provides. This means the view will call jQuery's <code>.append</code> 
+to move the HTML contents from the item view instance in to the collection
+view's <code>el</code>. </p>
+
+<p>This is typically not very useful as a composite view will usually render
+a container DOM element in which the item views should be placed.</p>
+
+<p>For example, if you are building a table view, and want to append each
+item from the collection in to the <code>&lt;tbody&gt;</code> of the table, you might
+do this with a template:</p>
+
+<pre class="brush:html">
+
+<script id="row-template" type="text/html">
+  <td><%= someData %></td>
+  <td><%= moreData %></td>
+  <td><%= stuff %></td>
+</script>
+
+<script id="table-template" type="text/html">
+  <table>
+    <thead>
+      <tr>
+        <th>Some Column</th>
+        <th>Another Column</th>
+        <th>Still More</th>
+      </tr>
+    </thead>
+
+    <!-- want to insert collection items, here -->
+    <tbody></tbody>
+
+    <tfoot>
+      <tr>
+        <td colspan="3">some footer information</td>
+      </tr>
+    </tfoot>
+  </table>
+</script>
+</pre>
+
+<p>To get your itemView instances to render within the <code>&lt;tbody&gt;</code> of this
+table structure, specify an <code>itemViewContainer</code> in your composite view,
+like this:</p>
+
+<pre class="brush:js">
+
+RowView = Backbone.Marionette.ItemView.extend({
+  tagName: "tr",
+  template: "#row-template"
+});
+
+TableView = Backbone.Marionette.CompositeView.extend({
+  itemView: RowView,
+
+  // specify a jQuery selector to put the itemView instances in to
+  itemViewContainer: "tbody",
+
+  template: "#table-template"
+});
+</pre>
+
+<p>This will put all of the <code>itemView</code> instances in to the <code>&lt;tbody&gt;</code> tag of
+the composite view's rendered template, correctly producing the table
+structure.</p>
+
+<p>Alternatively, you can specify a function as the <code>itemViewContainer</code>. This
+function needs to return a jQuery selector string, or a jQuery selector
+object.</p>
+
+<pre class="brush:js">
+
+TableView = Backbone.Marionette.CompositeView.extend({
+  // ...
+
+  itemViewContainer: function(){
+    return "#tbody"
+  }
+});
+</pre>
+
+<p>Using a function allows for logic to be used for the selector. However,
+only one value can be returned. Upon returning the first value, it will
+be cached and that value will be used for the remainder of that view
+instance' lifecycle.</p>
+
+<h2>CompositeView's <code>appendHtml</code> <a href="#CompositeView's `appendHtml`" id="CompositeView's `appendHtml`" class="deep-link">#</a></h2>
+
+<p>Sometimes the <code>itemViewContainer</code> configuration is insuficient for
+specifying where the itemView instance should be placed. If this is the
+case, you can override the <code>appendHtml</code> method with your own implementation.</p>
+
+<p>For example:</p>
+
+<pre class="brush:js">
+
+TableView = Backbone.Marionette.CompositeView.extend({
+  itemView: RowView,
+
+  template: "#table-template",
+
+  appendHtml: function(collectionView, itemView, index){
+    collectionView.$("tbody").append(itemView.el);
+  }
+});
+</pre>
+
+<p>For more information on the parameters of this method, see the
+<a href="https://github.com/marionettejs/backbone.marionette/blob/master/docs/marionette.collectionview.md">CollectionView's documentation</a>.</p>
+
+<h2>Recursive By Default <a href="#Recursive By Default" id="Recursive By Default" class="deep-link">#</a></h2>
+
+<p>The default rendering mode for a <code>CompositeView</code> assumes a
+hierarchical, recursive structure. If you configure a composite
+view without specifying an <code>itemView</code>, you'll get the same
+composite view type rendered for each item in the collection. If
+you need to override this, you can specify a <code>itemView</code> in the
+composite view's definition:</p>
+
+<pre class="brush:js">
+
+var ItemView = Backbone.Marionette.ItemView.extend({});
+
+var CompView = Backbone.Marionette.CompositeView.extend({
+  itemView: ItemView
+});
+</pre>
+
+<h2>Model And Collection Rendering <a href="#Model And Collection Rendering" id="Model And Collection Rendering" class="deep-link">#</a></h2>
+
+<p>The model and collection for the composite view will re-render
+themselves under the following conditions:</p>
+
+<ul>
+<li>When the collection's "reset" event is fired, it will only re-render the collection within the composite, and not the wrapper template</li>
+<li>When the collection has a model added to it (the "add" event is fired), it will render that one item to the rendered list</li>
+<li>When the collection has a model removed (the "remove" event is fired), it will remove that one item from the rendered list</li>
+</ul>
+
+<p>You can also manually re-render either or both of them:</p>
+
+<ul>
+<li>If you want to re-render everything, call the <code>.render()</code> method</li>
+<li>If you want to re-render the model's view, you can call <code>.renderModel()</code></li>
+<li>If you want to re-render the collection's views, you can call <code>.renderCollection()</code></li>
+</ul>
+
+<h2>Events And Callbacks <a href="#Events And Callbacks" id="Events And Callbacks" class="deep-link">#</a></h2>
+
+<p>During the course of rendering a composite, several events will
+be triggered. These events are triggered with the <a href="./marionette.functions.md">Marionette.triggerMethod</a>
+function, which calls a corresponding "on{EventName}" method on the view.</p>
+
+<ul>
+<li>"composite:model:rendered" / <code>onCompositeModelRendered</code> - after the <code>modelView</code> has been rendered</li>
+<li>"composite:collection:rendered" / <code>onCompositeCollectionRendered</code> - after the collection of models has been rendered</li>
+<li>"render" / <code>onRender</code> and "composite:rendered" / <code>onCompositeRendered</code> - after everything has been rendered</li>
+</ul>
+
+<p>Additionally, after the composite view has been rendered, an 
+<code>onRender</code> method will be called. You can implement this in 
+your view to provide custom code for dealing with the view's 
+<code>el</code> after it has been rendered:</p>
+
+<pre class="brush:js">
+
+Backbone.Marionette.CompositeView.extend({
+  onRender: function(){
+    // do stuff here
+  }
+});
+</pre>
+
+<h2>Organizing UI elements <a href="#Organizing UI elements" id="Organizing UI elements" class="deep-link">#</a></h2>
+
+<p>Similar to ItemView, you can organize the UI elements inside the
+CompositeView by specifying them in the <code>UI</code> hash. It should be
+noted that the elements that can be accessed via this hash are
+the elements that are directly rendered by the composite view
+template, not those belonging to the collection.</p>
+
+<p>The UI elements will be accessible as soon as the composite view
+template is rendered (and before the collection is rendered),
+which means you can even access them in the <code>onBeforeRender</code> method.</p>
+
+<h2>modelEvents and collectionEvents <a href="#modelEvents and collectionEvents" id="modelEvents and collectionEvents" class="deep-link">#</a></h2>
+
+<p>CompositeViews can bind directly to model events and collection events
+in a declarative manner:</p>
+
+<pre class="brush:js">
+
+Marionette.CompositeView.extend({
+  modelEvents: {
+    "change": "modelChanged"
+  },
+
+  collectionEvents: {
+    "add": "modelAdded"
+  }
+});
+</pre>
+
+<p>For more information, see the <a href="./marionette.view.md">Marionette.View</a> documentation.</p>
+            </div>
+        </div>
+        <script src="assets_/js/lib/jquery.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
+        <script src="assets_/js/main.js"></script>
+    </body>
+</html>
+

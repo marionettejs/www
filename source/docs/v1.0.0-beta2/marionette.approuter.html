@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Marionette.AppRouter : Documentation</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="assets_/css/shCore.css">
+        <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
+        <link rel="stylesheet" href="assets_/css/main.css">
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="content">
+
+<h1>Marionette.AppRouter</h1>
+
+<p>Reduce the boilerplate code of handling route events and then calling a single method on another object.
+Have your routers configured to call the method on your object, directly.</p>
+
+<h2>Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
+
+<ul>
+<li><a href="#Configure Routes">Configure Routes</a></li>
+<li><a href="#Specify A Controller">Specify A Controller</a></li>
+</ul>
+
+<h2>Configure Routes <a href="#Configure Routes" id="Configure Routes" class="deep-link">#</a></h2>
+
+<p>Configure an AppRouter with <code>appRoutes</code>. The route definition is passed on to Backbone's standard routing
+handlers. This means that you define routes like you normally would. Instead of providing a callback
+method that exists on the router, though, you provide a callback method that exists on the <code>controller</code>
+that you specify for the router instance (see below).</p>
+
+<pre class="brush:js">
+
+MyRouter = Backbone.Marionette.AppRouter.extend({
+  // "someMethod" must exist at controller.someMethod
+  appRoutes: {
+    "some/route": "someMethod"
+  },
+
+  /* standard routes can be mixed with appRoutes/Controllers above */
+  routes : {
+    "some/otherRoute" : "someOtherMethod"
+  },
+  someOtherMethod : function(){
+    // do something here.
+  }
+
+});
+</pre>
+
+<p>You can also add standard routes to an AppRouter, with methods on the router.</p>
+
+<h2>Specify A Controller <a href="#Specify A Controller" id="Specify A Controller" class="deep-link">#</a></h2>
+
+<p>App routers can only use one <code>controller</code> object. You can either specify this
+directly in the router definition:</p>
+
+<pre class="brush:js">
+
+someController = {
+  someMethod: function(){ /*...*/ }
+};
+
+Backbone.Marionette.AppRouter.extend({
+  controller: someController
+});
+</pre>
+
+<p>Or in a parameter to the constructor:</p>
+
+<pre class="brush:js">
+
+myObj = {
+  someMethod: function(){ /*...*/ }
+};
+
+new MyRouter({
+  controller: myObj
+});
+</pre>
+
+<p>Or</p>
+
+<p>The object that is used as the <code>controller</code> has no requirements, other than it will 
+contain the methods that you specified in the <code>appRoutes</code>.</p>
+
+<p>It is recommended that you divide your controller objects into smaller pieces of related functionality
+and have multiple routers / controllers, instead of just one giant router and controller.</p>
+            </div>
+        </div>
+        <script src="assets_/js/lib/jquery.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
+        <script src="assets_/js/main.js"></script>
+    </body>
+</html>
+
