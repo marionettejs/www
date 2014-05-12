@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Marionette.CollectionView : Documentation</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="assets_/css/shCore.css">
+        <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
+        <link rel="stylesheet" href="assets_/css/main.css">
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="content">
+
+<h1>Marionette.CollectionView</h1>
+
+<p>The <code>CollectionView</code> will loop through all of the models in the
+specified collection, render each of them using a specified <code>itemView</code>,
+then append the results of the item view's <code>el</code> to the collection view's
+<code>el</code>.</p>
+
+<p>CollectionView extends directly from Marionette.View. Please see 
+<a href="marionette.view.md">the Marionette.View documentation</a> 
+for more information on available features and functionality.</p>
+
+<p>Additionally, interactions with Marionette.Region
+will provide features such as <code>onShow</code> callbacks, etc. Please see
+<a href="marionette.region.md">the Region documentation</a> for more information.</p>
+
+<h2>Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
+
+<ul>
+<li><a href="#Documentation Index">Documentation Index</a></li>
+<li><a href="#CollectionView's <code>itemView</code">CollectionView's <code>itemView</code></a></li>
+<li><a href="#CollectionView's <code>itemViewOptions</code">CollectionView's <code>itemViewOptions</code></a></li>
+<li><a href="#CollectionView's <code>emptyView</code">CollectionView's <code>emptyView</code></a></li>
+<li><a href="#CollectionView's <code>buildItemView</code">CollectionView's <code>buildItemView</code></a></li>
+<li><a href="#Callback Methods">Callback Methods</a></li>
+<li><a href="#CollectionView Events">CollectionView Events</a></li>
+<li><a href="#CollectionView's <code>itemViewEventPrefix</code">CollectionView's <code>itemViewEventPrefix</code></a></li>
+<li><a href="#CollectionView render">CollectionView render</a></li>
+<li><a href="#CollectionView">CollectionView</a></li>
+<li><a href="#CollectionView">CollectionView</a></li>
+<li><a href="#CollectionView's appendHtml">CollectionView's appendHtml</a></li>
+<li><a href="#CollectionView's children">CollectionView's children</a></li>
+<li><a href="#CollectionView close">CollectionView close</a></li>
+</ul>
+
+<h2>Documentation Index <a href="#Documentation Index" id="Documentation Index" class="deep-link">#</a></h2>
+
+<ul>
+<li><a href="#collectionviews-itemview">CollectionView's <code>itemView</code></a></li>
+<li><a href="#collectionviews-itemviewoptions">CollectionView's <code>itemViewOptions</code></a></li>
+<li><a href="#collectionviews-emptyview">CollectionView's <code>emptyView</code></a></li>
+<li><a href="#collectionviews-builditemview">CollectionView's <code>buildItemView</code></a></li>
+<li><a href="#callback-methods">Callback Methods</a>
+<ul><li><a href="#onbeforerender-callback">onBeforeRender callback</a></li>
+<li><a href="#onrender-callback">onRender callback</a></li>
+<li><a href="#beforeclose-callback">onBeforeClose callback</a></li>
+<li><a href="#onclose-callback">onClose callback</a></li>
+<li><a href="#onbeforeitemadded-callback">onBeforeItemAdded callback</a></li>
+<li><a href="#onafteritemadded-callback">onAfterItemAdded callback</a></li>
+<li><a href="#onitemremoved-callback">onItemRemoved callback</a></li></ul></li>
+<li><a href="#collectionview-events">CollectionView Events</a>
+<ul><li><a href="#beforerender-event">"before:render" event</a></li>
+<li><a href="#render-event">"render" event</a></li>
+<li><a href="#beforeclose-event">"before:close" event</a></li>
+<li><a href="#closed--collectionclosed-event">"closed" / "collection:closed" event</a></li>
+<li><a href="#beforeitemadded--afteritemadded-event">"before:item:added" / "after:item:added" event</a></li>
+<li><a href="#itemremoved-event">"item:removed" event</a></li>
+<li><a href="#itemview-event-bubbling-from-child-views">"itemview:*" event bubbling from child views</a></li></ul></li>
+<li><a href="#collectionviews-itemvieweventprefix">CollectionView's <code>itemViewEventPrefix</code></a></li>
+<li><a href="#collectionview-render">CollectionView render</a></li>
+<li><a href="#collectionview-automatic-rendering">CollectionView: Automatic Rendering</a></li>
+<li><a href="#collectionview-re-render-collection">CollectionView: Re-render Collection</a></li>
+<li><a href="#collectionviews-appendhtml">CollectionView's appendHtml</a></li>
+<li><a href="#collectionviews-children">CollectionView's children</a></li>
+<li><a href="#collectionview-close">CollectionView close</a></li>
+</ul>
+
+<h2>CollectionView's <code>itemView</code> <a href="#CollectionView's `itemView`" id="CollectionView's `itemView`" class="deep-link">#</a></h2>
+
+<p>Specify an <code>itemView</code> in your collection view definition. This must be
+a Backbone view object definition, not an instance. It can be any 
+<code>Backbone.View</code> or be derived from <code>Marionette.ItemView</code>.</p>
+
+<pre class="brush:js">
+
+MyItemView = Backbone.Marionette.ItemView.extend({});
+
+Backbone.Marionette.CollectionView.extend({
+  itemView: MyItemView
+});
+</pre>
+
+<p>Item views must be defined before they are referenced by the 
+<code>itemView</code> attribute in a collection view definition. Use <code>getItemView</code> 
+to lookup the definition as child views are instantiated.</p>
+
+<p>Alternatively, you can specify an <code>itemView</code> in the options for
+the constructor:</p>
+
+<pre class="brush:js">
+
+MyCollectionView = Backbone.Marionette.CollectionView.extend({...});
+
+new MyCollectionView({
+  itemView: MyItemView
+});
+</pre>
+
+<p>If you do not specify an <code>itemView</code>, an exception will be thrown
+stating that you must specify an <code>itemView</code>.</p>
+
+<p>If you need a view specific to your model, you can override 
+<code>getItemView</code>:</p>
+
+<pre class="brush:js">
+
+Backbone.Marionette.CollectionView.extend({
+  getItemView: function(item) {
+    // some logic to calculate which view to return
+    return someItemSpecificView;
+  }
+})
+</pre>
+
+<h2>CollectionView's <code>itemViewOptions</code> <a href="#CollectionView's `itemViewOptions`" id="CollectionView's `itemViewOptions`" class="deep-link">#</a></h2>
+
+<p>There may be scenarios where you need to pass data from your parent
+collection view in to each of the itemView instances. To do this, provide
+a <code>itemViewOptions</code> definition on your collection view as an object
+literal. This will be passed to the constructor of your itemView as part
+of the <code>options</code>.</p>
+
+<pre class="brush:js">
+
+ItemView = Backbone.Marionette.ItemView({
+  initialize: function(options){
+    console.log(options.foo); // => "bar"
+  }
+});
+
+CollectionView = Backbone.Marionette.CollectionView({
+  itemView: ItemView,
+
+  itemViewOptions: {
+    foo: "bar"
+  } 
+});
+</pre>
+
+<p>You can also specify the <code>itemViewOptions</code> as a function, if you need to
+calculate the values to return at runtime. The model will be passed into
+the function should you need access to it when calculating
+<code>itemViewOptions</code>. The function must return an object, and the attributes 
+of the object will be copied to the <code>itemView</code> instance's options.</p>
+
+<pre class="brush:js">
+
+CollectionView = Backbone.Marionette.CollectionView({
+  itemViewOptions: function(model, index) {
+    // do some calculations based on the model
+    return {
+      foo: "bar",
+      itemIndex: index
+    }   
+  }  
+});
+</pre>
+
+<h2>CollectionView's <code>emptyView</code> <a href="#CollectionView's `emptyView`" id="CollectionView's `emptyView`" class="deep-link">#</a></h2>
+
+<p>When a collection has no items, and you need to render a view other than
+the list of itemViews, you can specify an <code>emptyView</code> attribute on your
+collection view.</p>
+
+<pre class="brush:js">
+
+NoItemsView = Backbone.Marionette.ItemView.extend({
+  template: "#show-no-items-message-template"
+});
+
+Backbone.Marionette.CollectionView.extend({
+  // ...
+
+  emptyView: NoItemsView
+});
+</pre>
+
+<p>Or, if you need the <code>emptyView</code>'s type chosen dynamically, specify <code>getEmptyView</code>:</p>
+
+<pre class="brush:js">
+
+Backbone.Marionette.CollectionView.extend({
+  // ...
+
+  getEmptyView: function() {
+    // custom logic
+    return NoItemsView;
+  }
+</pre>
+
+<p>This will render the <code>emptyView</code> and display the message that needs to
+be displayed when there are no items.</p>
+
+<h2>CollectionView's <code>buildItemView</code> <a href="#CollectionView's `buildItemView`" id="CollectionView's `buildItemView`" class="deep-link">#</a></h2>
+
+<p>When a custom view instance needs to be created for the <code>itemView</code> that
+represents an item, override the <code>buildItemView</code> method. This method
+takes three parameters and returns a view instance to be used as the
+item view.</p>
+
+<pre class="brush:js">
+
+buildItemView: function(item, ItemViewType, itemViewOptions){
+  // build the final list of options for the item view type
+  var options = _.extend({model: item}, itemViewOptions);
+  // create the item view instance
+  var view = new ItemViewType(options);
+  // return it
+  return view;
+},
+</pre>
+
+<h2>Callback Methods <a href="#Callback Methods" id="Callback Methods" class="deep-link">#</a></h2>
+
+<p>There are several callback methods that can be provided on a
+<code>CollectionView</code>. If they are found, they will be called by the
+view's base methods. These callback methods are intended to be
+handled within the view definition directly.</p>
+
+<h3>onBeforeRender callback</h3>
+
+<p>A <code>onBeforeRender</code> callback will be called just prior to rendering
+the collection view.</p>
+
+<pre class="brush:js">
+
+Backbone.Marionette.CollectionView.extend({
+  onBeforeRender: function(){
+    // do stuff here
+  }
+});
+</pre>
+
+<h3>onRender callback</h3>
+
+<p>After the view has been rendered, a <code>onRender</code> method will be called.
+You can implement this in your view to provide custom code for dealing
+with the view's <code>el</code> after it has been rendered:</p>
+
+<pre class="brush:js">
+
+Backbone.Marionette.CollectionView.extend({
+  onRender: function(){
+    // do stuff here
+  }
+});
+</pre>
+
+<h3>onBeforeClose callback</h3>
+
+<p>This method is called just before closing the view.</p>
+
+<pre class="brush:js">
+
+Backbone.Marionette.CollectionView.extend({
+  onBeforeClose: function(){
+    // do stuff here
+  }
+});
+</pre>
+
+<h3>onClose callback</h3>
+
+<p>This method is called just after closing the view.</p>
+
+<pre class="brush:js">
+
+Backbone.Marionette.CollectionView.extend({
+  onClose: function(){
+    // do stuff here
+  }
+});
+</pre>
+
+<h3>onBeforeItemAdded callback</h3>
+
+<p>This callback function allows you to know when an item / item view
+instance is about to be added to the collection view. It provides access to
+the view instance for the item that was added.</p>
+
+<pre class="brush:js">
+
+Backbone.Marionette.CollectionView.extend({
+  onBeforeItemAdded: function(itemView){
+    // work with the itemView instance, here
+  }
+});
+</pre>
+
+<h3>onAfterItemAdded callback</h3>
+
+<p>This callback function allows you to know when an item / item view
+instance has been added to the collection view. It provides access to
+the view instance for the item that was added.</p>
+
+<pre class="brush:js">
+
+Backbone.Marionette.CollectionView.extend({
+  onAfterItemAdded: function(itemView){
+    // work with the itemView instance, here
+  }
+});
+</pre>
+
+<h3>onItemRemoved callback</h3>
+
+<p>This callback function allows you to know when an item / item view
+instance has been deleted or removed from the
+collection.</p>
+
+<pre class="brush:js">
+
+Backbone.Marionette.CollectionView.extend({
+  onItemRemoved: function(itemView){
+    // work with the itemView instance, here
+  }
+});
+</pre>
+
+<h2>CollectionView Events <a href="#CollectionView Events" id="CollectionView Events" class="deep-link">#</a></h2>
+
+<p>There are several events that will be triggered during the life
+of a collection view. Each of these events is called with the
+<a href="./marionette.functions.md">Marionette.triggerMethod</a> function,
+which calls a corresponding "on{EventName}" method on the
+view instance (see <a href="#callback-methods">above</a>).</p>
+
+<h3>"before:render" event</h3>
+
+<p>Triggers just prior to the view being rendered. Also triggered as 
+"collection:before:render" / <code>onCollectionBeforeRender</code>.</p>
+
+<pre class="brush:js">
+
+MyView = Backbone.Marionette.CollectionView.extend({...});
+
+var myView = new MyView();
+
+myView.on("before:render", function(){
+  alert("the collection view is about to be rendered");
+});
+
+myView.render();
+</pre>
+
+<h3>"render" event</h3>
+
+<p>A "collection:rendered" / <code>onCollectionRendered</code> event will also be fired. This allows you to
+add more than one callback to execute after the view is rendered,
+and allows parent views and other parts of the application to
+know that the view was rendered.</p>
+
+<pre class="brush:js">
+
+MyView = Backbone.Marionette.CollectionView.extend({...});
+
+var myView = new MyView();
+
+myView.on("render", function(){
+  alert("the collection view was rendered!");
+});
+
+myView.on("collection:rendered", function(){
+  alert("the collection view was rendered!");
+});
+
+myView.render();
+</pre>
+
+<h3>"before:close" event</h3>
+
+<p>Triggered just before closing the view. A "collection:before:close" /
+<code>onCollectionBeforeClose</code> event will also be fired</p>
+
+<pre class="brush:js">
+
+MyView = Backbone.Marionette.CollectionView.extend({...});
+
+var myView = new MyView();
+
+myView.on("collection:before:close", function(){
+  alert("the collection view is about to be closed");
+});
+
+myView.close();
+</pre>
+
+<h3>"closed" / "collection:closed" event</h3>
+
+<p>Triggered just after closing the view, both with corresponding
+method calls.</p>
+
+<pre class="brush:js">
+
+MyView = Backbone.Marionette.CollectionView.extend({...});
+
+var myView = new MyView();
+
+myView.on("collection:closed", function(){
+  alert("the collection view is now closed");
+});
+
+myView.close();
+</pre>
+
+<h3>"before:item:added" / "after:item:added" event</h3>
+
+<p>The "before:item:added" event and corresponding <code>onBeforeItemAdded</code>
+method are triggered just after creating a new itemView instance for 
+an item that was added to the collection, but before the
+view is rendered and added to the DOM.</p>
+
+<p>The "after:item:added" event and corresponding <code>onAfterItemAdded</code>
+method are triggered after rendering the view and adding it to the
+view's DOM element.</p>
+
+<pre class="brush:js">
+
+var MyCV = Marionette.CollectionView.extend({
+  // ...
+
+  onBeforeItemAdded: function(){
+    // ...
+  },
+
+  onAfterItemAdded: function(){
+    // ...
+  }
+});
+
+var cv = new MyCV({...});
+
+cv.on("before:item:added", function(viewInstance){
+  // ...
+});
+
+cv.on("after:item:added", function(viewInstance){
+  // ...
+});
+</pre>
+
+<h3>"item:removed" event</h3>
+
+<p>Triggered after an itemView instance has been closed and
+removed, when its item was deleted or removed from the
+collection.</p>
+
+<pre class="brush:js">
+
+cv.on("item:removed", function(viewInstance){
+  // ...
+});
+</pre>
+
+<h3>"itemview:*" event bubbling from child views</h3>
+
+<p>When an item view within a collection view triggers an
+event, that event will bubble up through the parent 
+collection view with "itemview:" prepended to the event
+name. </p>
+
+<p>That is, if a child view triggers "do:something", the 
+parent collection view will then trigger "itemview:do:something".</p>
+
+<pre class="brush:js">
+
+// set up basic collection
+var myModel = new MyModel();
+var myCollection = new MyCollection();
+myCollection.add(myModel);
+
+// get the collection view in place
+colView = new CollectionView({
+  collection: myCollection
+});
+colView.render();
+
+// bind to the collection view's events that were bubbled
+// from the child view
+colView.on("itemview:do:something", function(childView, msg){
+  alert("I said, '" + msg + "'");
+});
+
+// hack, to get the child view and trigger from it
+var childView = colView.children[myModel.cid];
+childView.trigger("do:something", "do something!");
+</pre>
+
+<p>The result of this will be an alert box that says 
+"I said, 'do something!'". </p>
+
+<p>Also note that you would not normally grab a reference to
+the child view the way this is showing. I'm merely using
+that hack as a way to demonstrate the event bubbling. 
+Normally, you would have your item view listening to DOM
+events or model change events, and then triggering an event
+of its own based on that.</p>
+
+<h2>CollectionView's <code>itemViewEventPrefix</code> <a href="#CollectionView's `itemViewEventPrefix`" id="CollectionView's `itemViewEventPrefix`" class="deep-link">#</a></h2>
+
+<p>You can customize the event prefix for events that are forwarded
+through the collection view. To do this, set the <code>itemViewEventPrefix</code>
+on the collection view.</p>
+
+<pre class="brush:js">
+
+var CV = Marionette.CollectionView.extend({
+  itemViewEventPrefix: "some:prefix"
+});
+
+var c = new CV({
+  collection: myCol
+});
+
+c.on("some:prefix:render", function(){
+  // item view was rendered
+});
+
+c.render();
+</pre>
+
+<p>The <code>itemViewEventPrefix</code> can be provided in the view definition or
+in the constructor function call, to get a view instance.</p>
+
+<h2>CollectionView render <a href="#CollectionView render" id="CollectionView render" class="deep-link">#</a></h2>
+
+<p>The <code>render</code> method of the collection view is responsible for
+rendering the entire collection. It loops through each of the
+items in the collection and renders them individually as an
+<code>itemView</code>.</p>
+
+<pre class="brush:js">
+
+MyCollectionView = Backbone.Marionette.CollectionView.extend({...});
+
+new MyCollectionView().render().done(function(){
+  // all of the children are now rendered. do stuff here.
+});
+</pre>
+
+<h2>CollectionView: Automatic Rendering <a href="#CollectionView" id="CollectionView" class="deep-link">#</a></h2>
+
+<p>The collection view binds to the "add", "remove" and "reset" events of the
+collection that is specified. </p>
+
+<p>When the collection for the view is "reset", the view will call <code>render</code> on
+itself and re-render the entire collection.</p>
+
+<p>When a model is added to the collection, the collection view will render that
+one model in to the collection of item views.</p>
+
+<p>When a model is removed from a collection (or destroyed / deleted), the collection
+view will close and remove that model's item view.</p>
+
+<h2>CollectionView: Re-render Collection <a href="#CollectionView" id="CollectionView" class="deep-link">#</a></h2>
+
+<p>If you need to re-render the entire collection, you can call the
+<code>view.render</code> method. This method takes care of closing all of
+the child views that may have previously been opened.</p>
+
+<h2>CollectionView's appendHtml <a href="#CollectionView's appendHtml" id="CollectionView's appendHtml" class="deep-link">#</a></h2>
+
+<p>By default the collection view will call jQuery's <code>.append</code> to
+move the HTML contents from the item view instance in to the collection
+view's <code>el</code>. </p>
+
+<p>You can override this by specifying an <code>appendHtml</code> method in your 
+view definition. This method takes three parameters and has no return
+value.</p>
+
+<pre class="brush:js">
+
+Backbone.Marionette.CollectionView.extend({
+
+    // The default implementation:
+  appendHtml: function(collectionView, itemView, index){
+    collectionView.$el.append(itemView.el);
+  }
+
+});
+</pre>
+
+<p>The first parameter is the instance of the collection view that 
+will receive the HTML from the second parameter, the current item
+view instance. </p>
+
+<p>The third parameter, <code>index</code>, is the index of the
+model that this itemView instance represents, in the collection 
+that the model came from. This is useful for sorting a collection
+and displaying the sorted list in the correct order on the screen.</p>
+
+<h2>CollectionView's children <a href="#CollectionView's children" id="CollectionView's children" class="deep-link">#</a></h2>
+
+<p>The CollectionView uses <a href="https://github.com/marionettejs/backbone.babysitter">Backbone.BabySitter</a>
+to store and manage its child views. This allows you to easily access
+the views within the collection view, iterate them, find them by
+a given indexer such as the view's model or collection, and more.</p>
+
+<pre class="brush:js">
+
+var cv = new Marionette.CollectionView({
+  collection: someCollection
+});
+
+cv.render();
+
+
+// retrieve a view by model
+var v = cv.children.findByModel(someModel);
+
+// iterate over all of the views and process them
+cv.children.each(function(view){
+
+  // process the `view` here
+
+});
+</pre>
+
+<p>For more information on the available features and functionality of
+the <code>.children</code>, see the <a href="https://github.com/marionettejs/backbone.babysitter">Backbone.BabySitter documentation</a>.</p>
+
+<h2>CollectionView close <a href="#CollectionView close" id="CollectionView close" class="deep-link">#</a></h2>
+
+<p>CollectionView implements a <code>close</code> method, which is called by the 
+region managers automatically. As part of the implementation, the 
+following are performed:</p>
+
+<ul>
+<li>unbind all <code>listenTo</code> events</li>
+<li>unbind all custom view events</li>
+<li>unbind all DOM events</li>
+<li>unbind all item views that were rendered</li>
+<li>remove <code>this.el</code> from the DOM</li>
+<li>call an <code>onClose</code> event on the view, if one is provided</li>
+</ul>
+
+<p>By providing an <code>onClose</code> event in your view definition, you can
+run custom code for your view that is fired after your view has been
+closed and cleaned up. This lets you handle any additional clean up
+code without having to override the <code>close</code> method.</p>
+
+<pre class="brush:js">
+
+Backbone.Marionette.CollectionView.extend({
+  onClose: function(){
+    // custom cleanup or closing code, here
+  }
+});
+</pre>
+            </div>
+        </div>
+        <script src="assets_/js/lib/jquery.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
+        <script src="assets_/js/main.js"></script>
+    </body>
+</html>
+
