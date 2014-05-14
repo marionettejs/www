@@ -12,6 +12,9 @@ This website is built using Middleman (http://middlemanapp.com), Sass and Compas
     bundle
     npm install -g docco
 
+    // install mdoc to generate docs
+    npm install mdoc
+
 Update the site
 -----
 
@@ -35,4 +38,3 @@ Push your changes to Heroku
 
     Login to heroku CLI Tools
     `git push heroku {branchName}:master`
-

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Marionette.ItemView : Documentation</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="assets_/css/shCore.css">
+        <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
+        <link rel="stylesheet" href="assets_/css/main.css">
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="content">
+
+<h1>Marionette.ItemView</h1>
+
+<p>An <code>ItemView</code> is a view that represents a single item. That item may be a
+<code>Backbone.Model</code> or may be a <code>Backbone.Collection</code>. Whichever it is though, it
+will be treated as a single item.</p>
+
+<p>ItemView extends directly from Marionette.View. Please see
+<a href="marionette.view.md">the Marionette.View documentation</a>
+for more information on available features and functionality.</p>
+
+<p>Additionally, interactions with Marionette.Region
+will provide features such as <code>onShow</code> callbacks, etc. Please see
+<a href="marionette.region.md">the Region documentation</a> for more information.</p>
+
+<h2>Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
+
+<ul>
+<li><a href="#Documentation Index">Documentation Index</a></li>
+<li><a href="#ItemView render">ItemView render</a></li>
+<li><a href="#Rendering A Collection In An ItemView">Rendering A Collection In An ItemView</a></li>
+<li><a href="#Events and Callback Methods">Events and Callback Methods</a></li>
+<li><a href="#ItemView serializeData">ItemView serializeData</a></li>
+<li><a href="#Organizing UI Elements">Organizing UI Elements</a></li>
+<li><a href="#modelEvents and collectionEvents">modelEvents and collectionEvents</a></li>
+</ul>
+
+<h2>Documentation Index <a href="#Documentation Index" id="Documentation Index" class="deep-link">#</a></h2>
+
+<ul>
+<li><a href="#itemview-render">ItemView render</a></li>
+<li><a href="#rendering-a-collection-in-an-itemview">Rendering A Collection In An ItemView</a></li>
+<li><a href="#events-and-callback-methods">Events and Callback Methods</a>
+<ul><li><a href="#beforerender--onbeforerender-event">"before:render" / onBeforeRender event</a></li>
+<li><a href="#render--onrender-event">"render" / onRender event</a></li>
+<li><a href="#beforeclose--onbeforeclose-event">"before:close" / onBeforeClose event</a></li>
+<li><a href="#close--onclose-event">"close" / onClose event</a></li></ul></li>
+<li><a href="#itemview-serializedata">ItemView serializeData</a></li>
+<li><a href="#organizing-ui-elements">Organizing ui elements</a></li>
+<li><a href="#modelevents-and-collectionevents">modelEvents and collectionEvents</a></li>
+</ul>
+
+<h2>ItemView render <a href="#ItemView render" id="ItemView render" class="deep-link">#</a></h2>
+
+<p>An item view has a <code>render</code> method built in to it, and uses the
+<code>Renderer</code> object to do the actual rendering.</p>
+
+<p>You should provide a <code>template</code> attribute on the item view, which
+will be either a jQuery selector:</p>
+
+<pre class="brush:js">
+
+MyView = Backbone.Marionette.ItemView.extend({
+  template: "#some-template"
+});
+
+new MyView().render();
+</pre>
+
+<p>.. or a function taking a single argument: the object returned by <a href="#itemview-serializedata">ItemView.serializeData</a>:</p>
+
+<pre class="brush:js">
+
+my_template_html = '<div><%= args.name %></div>'
+MyView = Backbone.Marionette.ItemView.extend({
+  template : function(serialized_model) {
+    var name = serialized_model.name;
+    return _.template(my_template_html, {
+        name : name,
+        some_custom_attribute : some_custom_key
+    }, {variable: 'args'});
+  }
+});
+
+new MyView().render();
+</pre>
+
+<p>Note that using a template function allows passing custom arguments into the _.template function,
+including a third "settings" argument, as used in the example above.</p>
+
+<p>According to the <a href="http://underscorejs.org/#template">Underscore docs</a>, using the "variable" setting
+"can significantly improve the speed at which a template is able to render." Using this setting
+also requires you to read data arguments from an object, as demonstrated in the example above.</p>
+
+<h2>Rendering A Collection In An ItemView <a href="#Rendering A Collection In An ItemView" id="Rendering A Collection In An ItemView" class="deep-link">#</a></h2>
+
+<p>While the most common way to render a Backbone.Collection is to use
+a <code>CollectionView</code> or <code>CompositeView</code>, if you just need to render a
+simple list that does not need a lot of interaction, it does not
+always make sense to use these. A Backbone.Collection can be
+rendered with a simple ItemView, using the templates to iterate
+over an <code>items</code> array.</p>
+
+<pre class="brush:js">
+
+<script id="some-template" type="text/html">
+  <ul>
+    <% _.each(items, function(item){ %>
+    <li> <%= item.someAttribute %> </li>
+    <% }); %>
+  </ul>
+</script>
+</pre>
+
+<p>The important thing to note here, is the use of <code>items</code> as the
+variable to iterate in the <code>_.each</code> call. This will always be the
+name of the variable that contains your collection's items.</p>
+
+<p>Then, from JavaScript, you can define and use an ItemView with this
+template, like this:</p>
+
+<pre class="brush:js">
+
+var MyItemsView = Marionette.ItemView.extend({
+  template: "#some-template"
+});
+
+var view = new MyItemsView({
+  collection: someCollection
+});
+
+// show the view via a region or calling the .render method directly
+</pre>
+
+<p>Rendering this view will convert the <code>someCollection</code> collection in to
+the <code>items</code> array for your template to use.</p>
+
+<p>For more information on when you would want to do this, and what options
+you have for retrieving an individual item that was clicked or
+otherwise interacted with, see the blog post on
+<a href="http://lostechies.com/derickbailey/2011/10/11/backbone-js-getting-the-model-for-a-clicked-element/">Getting The Model For A Clicked Element</a>.</p>
+
+<h2>Events and Callback Methods <a href="#Events and Callback Methods" id="Events and Callback Methods" class="deep-link">#</a></h2>
+
+<p>There are several events and callback methods that are called
+for an ItemView. These events and methods are triggered with the
+<a href="./marionette.functions.md">Marionette.triggerMethod</a> function, which
+triggers the event and a corresponding "on{EventName}" method.</p>
+
+<h3>"before:render" / onBeforeRender event</h3>
+
+<p>Triggered before an ItemView is rendered. Also triggered as
+"item:before:render" / <code>onItemBeforeRender</code>.</p>
+
+<pre class="brush:js">
+
+Backbone.Marionette.ItemView.extend({
+  onBeforeRender: function(){
+    // set up final bits just before rendering the view's `el`
+  }
+});
+</pre>
+
+<h3>"render" / onRender event</h3>
+
+<p>Triggered after the view has been rendered.
+You can implement this in your view to provide custom code for dealing
+with the view's <code>el</code> after it has been rendered.</p>
+
+<p>Also triggered as "item:rendered" / <code>onItemRender</code>.</p>
+
+<pre class="brush:js">
+
+Backbone.Marionette.ItemView.extend({
+  onRender: function(){
+    // manipulate the `el` here. it's already
+    // been rendered, and is full of the view's
+    // HTML, ready to go.
+  }
+});
+</pre>
+
+<h3>"before:close" / onBeforeClose event</h3>
+
+<p>Triggered just prior to closing the view, when the view's <code>close()</code>
+method has been called. Also triggered as "item:before:close" /
+<code>onItemBeforeClose</code>.</p>
+
+<pre class="brush:js">
+
+Backbone.Marionette.ItemView.extend({
+  onBeforeClose: function(){
+    // manipulate the `el` here. it's already
+    // been rendered, and is full of the view's
+    // HTML, ready to go.
+  }
+});
+</pre>
+
+<h3>"close" / onClose event</h3>
+
+<p>Triggered just after the view has been closed. Also triggered
+as "item:closed" / <code>onItemClose</code>.</p>
+
+<pre class="brush:js">
+
+Backbone.Marionette.ItemView.extend({
+  onClose: function(){
+    // custom closing and cleanup goes here
+  }
+});
+</pre>
+
+<h2>ItemView serializeData <a href="#ItemView serializeData" id="ItemView serializeData" class="deep-link">#</a></h2>
+
+<p>Item views will serialize a model or collection, by default, by
+calling <code>.toJSON</code> on either the model or collection. If both a model
+and collection are attached to an item view, the model will be used
+as the data source. The results of the data serialization will be passed to the template
+that is rendered.</p>
+
+<p>If the serialization is a model, the results are passed in directly:</p>
+
+<pre class="brush:js">
+
+var myModel = new MyModel({foo: "bar"});
+
+new MyItemView({
+  template: "#myItemTemplate",
+  model: myModel
+});
+
+MyItemView.render();
+</pre>
+
+<pre class="brush:html">
+
+<script id="myItemTemplate" type="template">
+  Foo is: <%= foo %>
+</script>
+</pre>
+
+<p>If the serialization is a collection, the results are passed in as an
+<code>items</code> array:</p>
+
+<pre class="brush:js">
+
+var myCollection = new MyCollection([{foo: "bar"}, {foo: "baz"}]);
+
+new MyItemView({
+  template: "#myCollectionTemplate",
+  collection: myCollection
+});
+
+MyItemView.render();
+</pre>
+
+<pre class="brush:html">
+
+<script id="myCollectionTemplate" type="template">
+  <% _.each(items, function(item){ %>
+    Foo is: <%= foo %>
+  <% }); %>
+</script>
+</pre>
+
+<p>If you need custom serialization for your data, you can provide a
+<code>serializeData</code> method on your view. It must return a valid JSON
+object, as if you had called <code>.toJSON</code> on a model or collection.</p>
+
+<pre class="brush:js">
+
+Backbone.Marionette.ItemView.extend({
+  serializeData: function(){
+    return {
+      "some attribute": "some value"
+    }
+  }
+});
+</pre>
+
+<h2>Organizing UI Elements <a href="#Organizing UI Elements" id="Organizing UI Elements" class="deep-link">#</a></h2>
+
+<p>As documented in <a href="./marionette.view.md">Marionette.View</a>, you can specify a <code>ui</code> hash in your <code>view</code> that
+maps UI elements by their jQuery selectors. This is especially useful if you access the
+same UI element more than once in your view's code. Instead of
+duplicating the selector, you can simply reference it by
+<code>this.ui.elementName</code>:</p>
+
+<p>You can also use the ui hash values from within events and trigger keys using the <code>"@ui.elementName"</code>: syntax</p>
+
+<pre class="brush:js">
+
+Backbone.Marionette.ItemView.extend({
+  tagName: "tr",
+
+  ui: {
+    checkbox: "input[type=checkbox]"
+  },
+
+  onRender: function() {
+    if (this.model.get('selected')) {
+      this.ui.checkbox.addClass('checked');
+    }
+  }
+});
+</pre>
+
+<h2>modelEvents and collectionEvents <a href="#modelEvents and collectionEvents" id="modelEvents and collectionEvents" class="deep-link">#</a></h2>
+
+<p>ItemViews can bind directly to model events and collection events
+in a declarative manner:</p>
+
+<pre class="brush:js">
+
+Marionette.ItemView.extend({
+  modelEvents: {
+    "change": "modelChanged"
+  },
+
+  collectionEvents: {
+    "add": "modelAdded"
+  }
+});
+</pre>
+
+<p>For more information, see the <a href="./marionette.view.md">Marionette.View</a> documentation.</p>
+            </div>
+        </div>
+        <script src="assets_/js/lib/jquery.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
+        <script src="assets_/js/main.js"></script>
+    </body>
+</html>
+

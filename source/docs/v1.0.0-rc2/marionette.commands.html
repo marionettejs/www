@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Marionette.commands : Documentation</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="assets_/css/shCore.css">
+        <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
+        <link rel="stylesheet" href="assets_/css/main.css">
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="content">
+
+<h1>Marionette.commands</h1>
+
+<p>An application level command execution system. This allows components in
+an application to state that some work needs to be done, but without having
+to be explicitly coupled to the component that is performing the work.</p>
+
+<p>No response is allowed from the execution of a command. It's a "fire-and-forget"
+scenario.</p>
+
+<p>Facilitated by <a href="https://github.com/marionettejs/backbone.wreqr">Backbone.Wreqr</a>'s 
+Commands object.</p>
+
+<h2>Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
+
+<ul>
+<li><a href="#Documentation Index">Documentation Index</a></li>
+<li><a href="#Register A Command">Register A Command</a></li>
+<li><a href="#Execute A Command">Execute A Command</a></li>
+<li><a href="#Remove / Replace Commands">Remove / Replace Commands</a></li>
+</ul>
+
+<h2>Documentation Index <a href="#Documentation Index" id="Documentation Index" class="deep-link">#</a></h2>
+
+<ul>
+<li><a href="#register-a-command">Register A Command</a></li>
+<li><a href="#execute-a-command">Execute A Command</a></li>
+<li><a href="#remove--replace-commands">Remove / Replace Commands</a></li>
+</ul>
+
+<h2>Register A Command <a href="#Register A Command" id="Register A Command" class="deep-link">#</a></h2>
+
+<p>To register a command, call <code>App.commands.addHandler</code> and provide a name for
+the command to handle, and a callback method.</p>
+
+<pre class="brush:js">
+
+var App = new Marionette.Application();
+
+App.commands.addHandler("foo", function(bar){
+  console.log(bar);
+});
+</pre>
+
+<h2>Execute A Command <a href="#Execute A Command" id="Execute A Command" class="deep-link">#</a></h2>
+
+<p>To execute a command, either call <code>App.commands.execute</code> or the more direct
+route of <code>App.execute</code>, providing the name of the command to execute and
+any parameters the command needs:</p>
+
+<pre class="brush:js">
+
+App.execute("foo", "baz");
+// outputs "baz" to the console, from command registered above
+</pre>
+
+<h2>Remove / Replace Commands <a href="#Remove / Replace Commands" id="Remove / Replace Commands" class="deep-link">#</a></h2>
+
+<p>To remove a command, call <code>App.commands.removeHandler</code> and provide the
+name of the command to remove. </p>
+
+<p>To remove all commands, call <code>App.commands.removeAllHandlers()</code>.</p>
+
+<p>To replace a command, simply register a new handler for an existing
+command name. There can be only one command handler for a given command name.</p>
+            </div>
+        </div>
+        <script src="assets_/js/lib/jquery.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
+        <script src="assets_/js/main.js"></script>
+    </body>
+</html>
+

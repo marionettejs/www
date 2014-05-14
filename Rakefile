@@ -48,11 +48,15 @@ def generate_marionette_docs
       tag = tag.gsub("\n", "")
       system("git checkout tags/#{tag}")
 
-      FileUtils.mkdir_p("#{site_path}/source/docs/#{tag}")
       filenames = Dir.glob('docs/*.md')
+
+      if filenames.count > 0
+        FileUtils.mkdir_p("#{site_path}/source/docs/#{tag}")
+      end
+
       filenames.each do |filename|
         newfilename = File.basename(filename, ".*" )
-        FileUtils.cp(filename, "#{site_path}/source/docs/#{tag}/#{newfilename}.html.md")
+        FileUtils.cp(filename, "#{site_path}/source/docs/#{tag}/#{newfilename}.md")
       end
     end
 
@@ -60,14 +64,35 @@ def generate_marionette_docs
     describe = `git describe --tags --always`.strip
     current_tag = describe.gsub("\n", "")
     system("git checkout tags/#{current_tag}")
+    FileUtils.mkdir_p("#{site_path}/source/docs/current")
     filenames = Dir.glob('docs/*.md')
     filenames.each do |filename|
       newfilename = File.basename(filename, ".*" )
-      FileUtils.cp(filename, "#{site_path}/source/docs/#{newfilename}.html.md")
+      FileUtils.cp(filename, "#{site_path}/source/docs/current/#{newfilename}.md")
     end
 
   end
 
+  # generate current docs
+  tags.each do |tag|
+
+    if File.directory?("#{site_path}/source/docs/#{tag}")
+      Dir.chdir("#{site_path}/source/docs/#{tag}") do
+
+        system("node ../../doc-assets/build.js");
+        system("rm *.md");
+
+      end
+    end
+  end
+
+  Dir.chdir("#{site_path}/source/docs/current") do
+
+    system("node ../../doc-assets/build.js");
+    system("rm *.md");
+
+  end
+  
   print "Generating annotated src data from #{repo_path}... "
   FileUtils.mkdir_p("#{site_path}/backbone.marionette/#{current_tag}")
   system("curl https://raw.githubusercontent.com/marionettejs/backbone.marionette/#{current_tag}/lib/backbone.marionette.js > backbone.marionette/#{current_tag}/backbone.marionette.js")

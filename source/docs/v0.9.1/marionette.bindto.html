@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Marionette.BindTo : Documentation</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="assets_/css/shCore.css">
+        <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
+        <link rel="stylesheet" href="assets_/css/main.css">
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="content">
+
+<h1>Marionette.BindTo</h1>
+
+<p>The <code>BindTo</code> object provides event binding management and facilitates simple
+event binding and unbinding for any object that extends from <code>Backbone.Events</code>.</p>
+
+<h2>Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
+
+<ul>
+<li><a href="#Bind Events">Bind Events</a></li>
+<li><a href="#Unbind A Single Event">Unbind A Single Event</a></li>
+<li><a href="#Unbind All Events">Unbind All Events</a></li>
+</ul>
+
+<h2>Bind Events <a href="#Bind Events" id="Bind Events" class="deep-link">#</a></h2>
+
+<pre class="brush:js">
+
+var binder = _.extend({}, Backbone.Marionette.BindTo);
+
+var model = new MyModel();
+
+var handler = {
+  doIt: function(){}
+}
+binder.bindTo(model, "change:foo", handler.doIt);
+</pre>
+
+<p>You can optionally specify a 4th parameter as the context in which the callback
+method for the event will be executed:</p>
+
+<pre class="brush:js">
+
+binder.bindTo(model, "change:foo", someCallback, someContext);
+</pre>
+
+<h2>Unbind A Single Event <a href="#Unbind A Single Event" id="Unbind A Single Event" class="deep-link">#</a></h2>
+
+<p>When you call <code>bindTo</code>, it returns a "binding" object that can be
+used to unbind from a single event with the <code>unbindFrom</code> method:</p>
+
+<pre class="brush:js">
+
+var binding = binder.bindTo(model, "change:foo", someCallback, someContext);
+
+// later in the code
+binder.unbindFrom(binding);
+</pre>
+
+<p>This will unbind the event that was configured with the binding
+object, and remove it from the BindTo bindings.</p>
+
+<h2>Unbind All Events <a href="#Unbind All Events" id="Unbind All Events" class="deep-link">#</a></h2>
+
+<p>You can call <code>unbindAll</code> to unbind all events that were bound with the
+<code>bindTo</code> method:</p>
+
+<pre class="brush:js">
+
+binder.unbindAll();
+</pre>
+
+<p>This even works with in-line callback functions.</p>
+            </div>
+        </div>
+        <script src="assets_/js/lib/jquery.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
+        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
+        <script src="assets_/js/main.js"></script>
+    </body>
+</html>
+
