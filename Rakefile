@@ -9,13 +9,8 @@ require "fileutils"
 def git_initialize(repository)
   unless File.exist?(".git")
     system "git init"
-    system "git remote add origin git@github.com:marionettejs/#{repository}.git"
+    system "git remote add heroku git@heroku.com:#{repository}.git"
   end
-end
-
-def git_update
-  system "git fetch origin"
-  system "git reset --hard origin/master"
 end
 
 def marionette_path
@@ -92,7 +87,7 @@ def generate_marionette_docs
     system("rm *.md");
 
   end
-  
+
   print "Generating annotated src data from #{repo_path}... "
   FileUtils.mkdir_p("#{site_path}/backbone.marionette/#{current_tag}")
   system("curl https://raw.githubusercontent.com/marionettejs/backbone.marionette/#{current_tag}/lib/backbone.marionette.js > backbone.marionette/#{current_tag}/backbone.marionette.js")
@@ -138,28 +133,24 @@ task :backfill_anotated_source do
 end
 
 desc "Build and deploy the website to github pages"
-task :deploy => :docco do |t, args|
+task :deploy do
   require "highline/import"
   message = "Deploy marionettejs.com"
 
   mkdir_p "build"
 
   Dir.chdir "build" do
-    git_initialize("marionettejs.github.com")
-    git_update
+    git_initialize("marionette-www")
   end
 
   build
 
   Dir.chdir "build" do
+    system "cp ../config.ru ."
+    system "cp ../Procfile ."
     system "git add -A"
     system "git commit -m '#{message.gsub("'", "\\'")}'"
-    system "git push origin master"
+    system "git push --force heroku master"
   end
 
-end
-
-desc "Build annotated source code"
-task :docco do
-  `./build-docco`
 end
