@@ -8,7 +8,6 @@ end
 
 # Serve files from the build directory
 use Rack::TryStatic,
-  root: 'build',
   urls: %w[/],
   try: ['.html', 'index.html', '/index.html']
 
