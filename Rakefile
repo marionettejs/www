@@ -91,7 +91,7 @@ def generate_marionette_docs
   print "Generating annotated src data from #{repo_path}... "
   FileUtils.mkdir_p("#{site_path}/backbone.marionette/#{current_tag}")
   system("curl https://raw.githubusercontent.com/marionettejs/backbone.marionette/#{current_tag}/lib/backbone.marionette.js > backbone.marionette/#{current_tag}/backbone.marionette.js")
-  system("docco backbone.marionette/#{current_tag}/backbone.marionette.js -o source/annotated-src/")
+  system("./node_modules/.bin/docco backbone.marionette/#{current_tag}/backbone.marionette.js -o source/annotated-src/")
   system("rm -rdf backbone.marionette");
   puts "Built #{repo_path}"
 end
@@ -117,7 +117,7 @@ def get_anotated_source
     tag = tag.gsub("\n", "")
     FileUtils.mkdir_p("#{site_path}/backbone.marionette/#{tag}")
     system("curl https://raw.githubusercontent.com/marionettejs/backbone.marionette/#{tag}/lib/backbone.marionette.js > backbone.marionette/#{tag}/backbone.marionette.js")
-    system("docco backbone.marionette/#{tag}/backbone.marionette.js -o source/annotated-src/#{tag}")
+    system("./node_modules/.bin/docco backbone.marionette/#{tag}/backbone.marionette.js -o source/annotated-src/#{tag}")
   end
 
   system("rm -rdf backbone.marionette");

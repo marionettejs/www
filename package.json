@@ -1,0 +1,7 @@
+{
+  "name": "marionette-www",
+  "dependencies": {
+    "mdoc": "~0.3.4",
+    "docco": "~0.6.3"
+  }
+}

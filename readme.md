@@ -7,13 +7,8 @@ Installation
 
 This website is built using Middleman (http://middlemanapp.com), Sass and Compass.  All the dependencies are automatically installed with the help of Bundler.
 
-    git clone the repository
-    cd cloned repository
-    bundle
-    npm install -g docco
-
-    // install mdoc to generate docs
-    npm install mdoc
+    `$ bundle`
+    `$ npm install`
 
 Update the site
 -----
