@@ -23,6 +23,11 @@ end
 
 def build
   system "middleman build"
+
+  Dir.chdir "build" do
+    system "cp ../config.ru ."
+    system "cp ../Procfile ."
+  end
 end
 
 def generate_marionette_docs
@@ -132,6 +137,10 @@ task :backfill_anotated_source do
   get_anotated_source
 end
 
+task :build do
+  build
+end
+
 desc "Build and deploy the website to github pages"
 task :deploy do
   require "highline/import"
@@ -146,8 +155,6 @@ task :deploy do
   build
 
   Dir.chdir "build" do
-    system "cp ../config.ru ."
-    system "cp ../Procfile ."
     system "git add -A"
     system "git commit -m '#{message.gsub("'", "\\'")}'"
     system "git push --force heroku master"
