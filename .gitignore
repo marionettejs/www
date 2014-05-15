@@ -19,3 +19,4 @@ source/stylesheets/.git
 *.swo
 .DS_Store
 *.zip
+node_modules
