@@ -1,4 +1,4 @@
-Editing the homepage for Marionette.js
+Marionette.js WWW source
 =============
 
 
