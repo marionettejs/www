@@ -5,7 +5,7 @@ Editing the homepage for Marionette.js
 Installation
 -----------
 
-This website is built using Middleman (http://middlemanapp.com), Sass and Compass.  All the dependencies are automatically installed with the help of Bundler.
+This website is built using Middleman (http://middlemanapp.com), Sass, Compass and a few node modules. All the dependencies are automatically installed with the help of Bundler and npm.
 
     `$ bundle`
     `$ npm install`
