@@ -7,8 +7,8 @@ Installation
 
 This website is built using Middleman (http://middlemanapp.com), Sass, Compass and a few node modules. All the dependencies are automatically installed with the help of Bundler and npm.
 
-    `$ bundle`
-    `$ npm install`
+     $ bundle
+     $ npm install
 
 Update the site
 -----
