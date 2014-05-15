@@ -60,7 +60,8 @@ def generate_marionette_docs
       end
     end
 
-    # checkout last tag
+    # checkout latest tag
+    system("git checkout master")
     describe = `git describe --tags --always`.strip
     current_tag = describe.gsub("\n", "")
     system("git checkout tags/#{current_tag}")
@@ -96,6 +97,7 @@ def generate_marionette_docs
   print "Generating annotated src data from #{repo_path}... "
   FileUtils.mkdir_p("#{site_path}/backbone.marionette/#{current_tag}")
   system("curl https://raw.githubusercontent.com/marionettejs/backbone.marionette/#{current_tag}/lib/backbone.marionette.js > backbone.marionette/#{current_tag}/backbone.marionette.js")
+  system("./node_modules/.bin/docco backbone.marionette/#{current_tag}/backbone.marionette.js -o source/annotated-src/#{current_tag}/")
   system("./node_modules/.bin/docco backbone.marionette/#{current_tag}/backbone.marionette.js -o source/annotated-src/")
   system("rm -rdf backbone.marionette");
   puts "Built #{repo_path}"
