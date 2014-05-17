@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Marionette.Behaviors : Documentation</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/doc-assets/css/main.css">
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="content">
+
+<h1>Marionette.Behaviors</h1>
+
+<p>&#39;Marionette.Behaviors&#39; is a utility class that takes care of glueing your <code>behavior</code> instances to their given <code>View</code>.
+The most important part of this class is that you <strong>MUST</strong> override the class level <code>behaviorsLookup</code> method for things to work properly.</p>
+
+<h2>Documentation Index</h2>
+
+<ul>
+<li><a href="#api">API</a>
+
+<ul>
+<li><a href="#behaviorslookup">Behaviors Lookup</a></li>
+<li><a href="#getbehaviorclass">getBehaviorClass</a></li>
+<li><a href="#behaviorclass">behaviorClass</a></li>
+</ul></li>
+</ul>
+
+<h2>API</h2>
+
+<p>There are two class level methods that you can override on the <code>Behaviors</code> class. The rest of the class is tied to under the hood implementation details of views.</p>
+
+<h3>behaviorsLookup</h3>
+
+<p>This method defines where your behavior classes are stored. A simple implementation might look something like this.</p>
+
+<pre><code class="js">Marionette.Behaviors.behaviorsLookup = function() {
+    return window.Behaviors;
+}
+</code></pre>
+
+<p>By default the behaviors are looked up by their key value in a given views behavior hash.</p>
+
+<p>In this sample (using the default <code>getBehaviorClass</code> implementation) your code will expect the following behaviors to be present in <code>window.Behaviors.DestroyWarn</code> and <code>window.Behaviors.ToolTip</code></p>
+
+<pre><code class="js">var MyView = Marionette.ItemView.extend({
+    behaviors: {
+        DestroyWarn: {
+            message: &quot;you are destroying all your data is now gone!&quot;
+        },
+        ToolTip: {
+            text: &quot;what a nice mouse you have&quot;
+        }
+    }
+});
+</code></pre>
+
+<h3>getBehaviorClass</h3>
+
+<p>This method has a default implementation that is simple to override. It is responsible for the lookup of single behavior from within the <code>Behaviors.behaviorsLookup</code> or elsewhere.</p>
+
+<pre><code class="js">getBehaviorClass: function(options, key) {
+    if (options.behaviorClass) {
+        return options.behaviorClass;
+    }
+
+    return Behaviors.behaviorsLookup[key];
+}
+</code></pre>
+
+<h3>behaviorClass</h3>
+
+<p>This property lets you pass a <code>class</code> in for the <code>behavior</code> to use (bypassing the normal key based lookup). This is nice to have when the behavior is a dependency of the view in <a href="http://requirejs.org/">requirejs</a>. Properties passed in this way will be used in <code>getBehaviorClass</code>.</p>
+
+<pre><code class="js">define([&#39;lib/tooltip&#39;], function(Tooltip) {
+  var View = Marionette.ItemView.extend({
+     behaviors: {
+        Tooltip: {
+          behaviorClass: Tooltip,
+          message: &quot;hello world&quot;
+        }
+     }
+  });
+});
+</code></pre>
+
+            </div>
+        </div>
+        <script src="/doc-assets/js/lib/jquery.js"></script>
+        <script src="/doc-assets/js/lib/prettify/prettify.js"></script>
+        <script src="/doc-assets/js/main.js"></script>
+    </body>
+</html>
+

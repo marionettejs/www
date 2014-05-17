@@ -4,9 +4,7 @@
         <meta charset="utf-8">
         <title>Marionette.Renderer : Documentation</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="assets_/css/shCore.css">
-        <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
-        <link rel="stylesheet" href="assets_/css/main.css">
+        <link rel="stylesheet" href="/doc-assets/css/main.css">
     </head>
     <body>
         <div id="wrapper">
@@ -18,32 +16,22 @@
 process, in order to create a consistent and re-usable method of
 rendering a template with or without data.</p>
 
-<h2>Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
-
-<ul>
-<li><a href="#Basic Usage">Basic Usage</a></li>
-<li><a href="#Custom Template Selection And Rendering">Custom Template Selection And Rendering</a></li>
-<li><a href="#Using Pre-compiled Templates">Using Pre-compiled Templates</a></li>
-</ul>
-
-<h2>Basic Usage <a href="#Basic Usage" id="Basic Usage" class="deep-link">#</a></h2>
+<h2>Basic Usage</h2>
 
 <p>The basic usage of the <code>Renderer</code> is to call the <code>render</code> method.
 This method returns a jQuery <code>promise</code> object, which will provide
 the HTML that was rendered when it resolves.</p>
 
-<pre class="brush:js">
-
-var template = "#some-template";
-var data = {foo: "bar"};
+<pre><code class="js">var template = &quot;#some-template&quot;;
+var data = {foo: &quot;bar&quot;};
 var render = Backbone.Marionette.Renderer.render(template, data);
 
 render.done(function(html){
   // do something with the HTML here
 });
-</pre>
+</code></pre>
 
-<h2>Custom Template Selection And Rendering <a href="#Custom Template Selection And Rendering" id="Custom Template Selection And Rendering" class="deep-link">#</a></h2>
+<h2>Custom Template Selection And Rendering</h2>
 
 <p>By default, the renderer will take a jQuery selector object as
 the first parameter, and a JSON data object as the optional
@@ -57,17 +45,15 @@ the <code>TemplateCache</code> object. </p>
 <p>If you wish to override the template engine used, change the 
 <code>renderTemplate</code> method to work however you want:</p>
 
-<pre class="brush:js">
-
-Backbone.Marionette.Renderer.render = function(template, data){
+<pre><code class="js">Backbone.Marionette.Renderer.render = function(template, data){
   return $(template).tmpl(data);
 });
-</pre>
+</code></pre>
 
 <p>This implementation will replace the default Underscore.js 
 rendering with jQuery templates rendering.</p>
 
-<h2>Using Pre-compiled Templates <a href="#Using Pre-compiled Templates" id="Using Pre-compiled Templates" class="deep-link">#</a></h2>
+<h2>Using Pre-compiled Templates</h2>
 
 <p>You can easily replace the standard template rendering functionality
 with a pre-compiled template, such as those provided by the JST or TPL
@@ -76,30 +62,26 @@ plugins for AMD/RequireJS. </p>
 <p>To do this, just override the <code>render</code> method to return your executed 
 template with the data.</p>
 
-<pre class="brush:js">
-
-Backbone.Marionette.Renderer.render = function(template, data){
+<pre><code class="js">Backbone.Marionette.Renderer.render = function(template, data){
   return template(data);
 });
-</pre>
+</code></pre>
 
-<p>Then you can specify the pre-compiled template function as your view's
+<p>Then you can specify the pre-compiled template function as your view&#39;s
 <code>template</code> attribute:</p>
 
-<pre class="brush:js">
-
-var myPrecompiledTemplate = _.template("<div>some template</div>");
+<pre><code class="js">var myPrecompiledTemplate = _.template(&quot;&lt;div&gt;some template&lt;/div&gt;&quot;);
 
 Backbone.Marionette.ItemView.extend({
   template: myPrecompiledTemplate
 });
-</pre>
+</code></pre>
+
             </div>
         </div>
-        <script src="assets_/js/lib/jquery.js"></script>
-        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
-        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
-        <script src="assets_/js/main.js"></script>
+        <script src="/doc-assets/js/lib/jquery.js"></script>
+        <script src="/doc-assets/js/lib/prettify/prettify.js"></script>
+        <script src="/doc-assets/js/main.js"></script>
     </body>
 </html>
 
