@@ -51,6 +51,12 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   margin: 20px 0 0px 20px;
 }
 
+.form-control {
+  width: 90%;
+  height: 25px;
+  margin-bottom: 10px;
+}
+
 pre table {
     border-spacing: 0;
 }
@@ -163,7 +169,7 @@ html {
 }
 
 #marionette-docs {
-  margin: 20px 0;
+  margin: 10px 0 20px;
 }
 
 #content {
