@@ -4,14 +4,21 @@
         <meta charset="utf-8">
         <title>Marionette functions : Documentation</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="assets_/css/shCore.css">
-        <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
-        <link rel="stylesheet" href="assets_/css/main.css">
+        <link rel="stylesheet" href="/doc-assets/css/bootstrap.css">
+        <link rel="stylesheet" href="/doc-assets/css/main.css">
     </head>
     <body>
         <div id="wrapper">
             <div id="content">
 
+<a id="improve" href="#" class="btn btn-default">
+  <i class="glyphicon glyphicon-edit">&nbsp;</i>
+  Improve this doc
+</a>
+<a id="source" href="#" class="btn btn-default">
+  <i class="glyphicon glyphicon-eye-open">&nbsp;</i>
+  View the source
+</a>
 <h1>Marionette functions</h1>
 
 <p>Marionette provides a set of utility / helper functions that are used to
@@ -19,64 +26,52 @@ facilitate common behaviors throughout the framework. These functions may
 be useful to those that are building on top of Marionette, as the provide
 a way to get the same behaviors and conventions from your own code.</p>
 
-<h2>Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
-
-<ul>
-<li><a href="#Marionette.triggerMethod">Marionette.triggerMethod</a></li>
-<li><a href="#Marionette.addEventBinder">Marionette.addEventBinder</a></li>
-<li><a href="#Marionette.extend">Marionette.extend</a></li>
-</ul>
-
-<h2>Marionette.triggerMethod <a href="#Marionette.triggerMethod" id="Marionette.triggerMethod" class="deep-link">#</a></h2>
+<h2>Marionette.triggerMethod</h2>
 
 <p>Trigger an event and a corresponding method on the target object.</p>
 
 <p>When an event is triggered, the first letter of each section of the 
-event name is capitalized, and the word "on" is tagged on to the front 
+event name is capitalized, and the word &quot;on&quot; is tagged on to the front 
 of it. Examples:</p>
 
 <ul>
-<li><code>triggerMethod("render")</code> fires the "onRender" function</li>
-<li><code>triggerMethod("before:close")</code> fires the "onBeforeClose" function</li>
+<li><code>triggerMethod(&quot;render&quot;)</code> fires the &quot;onRender&quot; function</li>
+<li><code>triggerMethod(&quot;before:close&quot;)</code> fires the &quot;onBeforeClose&quot; function</li>
 </ul>
 
 <p>All arguments that are passed to the triggerMethod call are passed along to both the event and the method, with the exception of the event name not being passed to the corresponding method.</p>
 
-<p><code>triggerMethod("foo", bar)</code> will call <code>onFoo: function(bar){...})</code></p>
+<p><code>triggerMethod(&quot;foo&quot;, bar)</code> will call <code>onFoo: function(bar){...})</code></p>
 
-<h2>Marionette.addEventBinder <a href="#Marionette.addEventBinder" id="Marionette.addEventBinder" class="deep-link">#</a></h2>
+<h2>Marionette.addEventBinder</h2>
 
 <p>Add a <a href="https://github.com/marionettejs/backbone.eventbinder">Backbone.EventBinder</a>
 instance to any target object. This method attaches an <code>eventBinder</code> to
 the target object, and then copies the necessary methods to the target
-while maintaining the event binder in it's own object. </p>
+while maintaining the event binder in it&#39;s own object. </p>
 
-<pre class="brush:js">
-
-myObj = {};
+<pre><code class="js">myObj = {};
 
 Marionette.addEventBinder(myObj);
 
-myObj.bindTo(aModel, "foo", function(){...});
-</pre>
+myObj.bindTo(aModel, &quot;foo&quot;, function(){...});
+</code></pre>
 
-<p>This allows the event binder's implementation to vary independently
+<p>This allows the event binder&#39;s implementation to vary independently
 of it being attached to the view. For example, the internal structure
 used to store the events can change without worry about it interfering
-with Marionette's views.</p>
+with Marionette&#39;s views.</p>
 
-<h2>Marionette.extend <a href="#Marionette.extend" id="Marionette.extend" class="deep-link">#</a></h2>
+<h2>Marionette.extend</h2>
 
-<p>Backbone's <code>extend</code> function is a useful utility to have, and is used in
+<p>Backbone&#39;s <code>extend</code> function is a useful utility to have, and is used in
 various places in Marionette. To make the use of this method more consistent,
-Backbone's <code>extend</code> has been aliased to <code>Marionette.extend</code>. This allows
+Backbone&#39;s <code>extend</code> has been aliased to <code>Marionette.extend</code>. This allows
 you to get the extend functionality for your object without having to
 decide if you want to use Backbone.View or Backbone.Model or another
 Backbone object to grab the method from.</p>
 
-<pre class="brush:js">
-
-var Foo = function(){};
+<pre><code class="js">var Foo = function(){};
 
 // use Marionette.extend to make Foo extendable, just like other
 // Backbone and Marionette objects
@@ -92,13 +87,13 @@ var Bar = Foo.extend({
 
 // Create an instance of Bar
 var b = new Bar();
-</pre>
+</code></pre>
+
             </div>
         </div>
-        <script src="assets_/js/lib/jquery.js"></script>
-        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
-        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
-        <script src="assets_/js/main.js"></script>
+        <script src="/doc-assets/js/lib/jquery.js"></script>
+        <script src="/doc-assets/js/lib/prettify/prettify.js"></script>
+        <script src="/doc-assets/js/main.js"></script>
     </body>
 </html>
 

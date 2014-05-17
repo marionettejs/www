@@ -4,14 +4,21 @@
         <meta charset="utf-8">
         <title>Marionette.Callbacks : Documentation</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="assets_/css/shCore.css">
-        <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
-        <link rel="stylesheet" href="assets_/css/main.css">
+        <link rel="stylesheet" href="/doc-assets/css/bootstrap.css">
+        <link rel="stylesheet" href="/doc-assets/css/main.css">
     </head>
     <body>
         <div id="wrapper">
             <div id="content">
 
+<a id="improve" href="#" class="btn btn-default">
+  <i class="glyphicon glyphicon-edit">&nbsp;</i>
+  Improve this doc
+</a>
+<a id="source" href="#" class="btn btn-default">
+  <i class="glyphicon glyphicon-eye-open">&nbsp;</i>
+  View the source
+</a>
 <h1>Marionette.Callbacks</h1>
 
 <p>The <code>Callbacks</code> object assists in managing a collection of callback
@@ -30,16 +37,7 @@ methods, and executing them, in an async-safe manner.</p>
 specified context for each of the callbacks, and supplying the
 provided options to the callbacks.</p>
 
-<h2>Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
-
-<ul>
-<li><a href="#Documentation Index">Documentation Index</a></li>
-<li><a href="#Basic Usage">Basic Usage</a></li>
-<li><a href="#Specify Context Per-Callback">Specify Context Per-Callback</a></li>
-<li><a href="#Advanced / Async Use">Advanced / Async Use</a></li>
-</ul>
-
-<h2>Documentation Index <a href="#Documentation Index" id="Documentation Index" class="deep-link">#</a></h2>
+<h2>Documentation Index</h2>
 
 <ul>
 <li><a href="#basic-usage">Basic Usage</a></li>
@@ -47,48 +45,44 @@ provided options to the callbacks.</p>
 <li><a href="#advanced--async-use">Advanced / Async Use</a></li>
 </ul>
 
-<h2>Basic Usage <a href="#Basic Usage" id="Basic Usage" class="deep-link">#</a></h2>
+<h2>Basic Usage</h2>
 
-<pre class="brush:js">
-
-var callbacks = new Backbone.Marionette.Callbacks();
+<pre><code class="js">var callbacks = new Backbone.Marionette.Callbacks();
 
 callbacks.add(function(options){
-  alert("I'm a callback with " + options.value + "!");
+  alert(&quot;I&#39;m a callback with &quot; + options.value + &quot;!&quot;);
 });
 
-callbacks.run({value: "options"}, someContext);
-</pre>
+callbacks.run({value: &quot;options&quot;}, someContext);
+</code></pre>
 
-<p>This example will display an alert box that says "I'm a callback
-with options!". The executing context for each of the callback
+<p>This example will display an alert box that says &quot;I&#39;m a callback
+with options!&quot;. The executing context for each of the callback
 methods has been set to the <code>someContext</code> object, which is an optional
 parameter that can be any valid JavaScript object.</p>
 
-<h2>Specify Context Per-Callback <a href="#Specify Context Per-Callback" id="Specify Context Per-Callback" class="deep-link">#</a></h2>
+<h2>Specify Context Per-Callback</h2>
 
 <p>You can optionally specify the context that you want each callback to be
 executed with, when adding a callback:</p>
 
-<pre class="brush:js">
-
-var callbacks = new Backbone.Marionette.Callbacks();
+<pre><code class="js">var callbacks = new Backbone.Marionette.Callbacks();
 
 callbacks.add(function(options){
-  alert("I'm a callback with " + options.value + "!");
+  alert(&quot;I&#39;m a callback with &quot; + options.value + &quot;!&quot;);
 
    // specify callback context as second parameter
 }, myContext);
 
 
 // the `someContext` context is ignored by the above callback
-callbacks.run({value: "options"}, someContext);
-</pre>
+callbacks.run({value: &quot;options&quot;}, someContext);
+</code></pre>
 
 <p>This will run the specified callback with the <code>myContext</code> object set as
 <code>this</code> in the callback, instead of <code>someContext</code>.</p>
 
-<h2>Advanced / Async Use <a href="#Advanced / Async Use" id="Advanced / Async Use" class="deep-link">#</a></h2>
+<h2>Advanced / Async Use</h2>
 
 <p>The <code>Callbacks</code> executes each callback in an async-friendly
 manner, and can be used to facilitate async callbacks.
@@ -97,12 +91,12 @@ to manage initializers (see above).</p>
 
 <p>It can also be used to guarantee callback execution in an event
 driven scenario, much like the application initializers.</p>
+
             </div>
         </div>
-        <script src="assets_/js/lib/jquery.js"></script>
-        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
-        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
-        <script src="assets_/js/main.js"></script>
+        <script src="/doc-assets/js/lib/jquery.js"></script>
+        <script src="/doc-assets/js/lib/prettify/prettify.js"></script>
+        <script src="/doc-assets/js/main.js"></script>
     </body>
 </html>
 

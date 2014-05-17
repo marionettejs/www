@@ -4,14 +4,21 @@
         <meta charset="utf-8">
         <title>Marionette.Application : Documentation</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="assets_/css/shCore.css">
-        <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
-        <link rel="stylesheet" href="assets_/css/main.css">
+        <link rel="stylesheet" href="/doc-assets/css/bootstrap.css">
+        <link rel="stylesheet" href="/doc-assets/css/main.css">
     </head>
     <body>
         <div id="wrapper">
             <div id="content">
 
+<a id="improve" href="#" class="btn btn-default">
+  <i class="glyphicon glyphicon-edit">&nbsp;</i>
+  Improve this doc
+</a>
+<a id="source" href="#" class="btn btn-default">
+  <i class="glyphicon glyphicon-eye-open">&nbsp;</i>
+  View the source
+</a>
 <h1>Marionette.Application</h1>
 
 <p>The <code>Backbone.Marionette.Application</code> object is the hub of your composite 
@@ -23,30 +30,17 @@ route.</p>
 <p>The <code>Application</code> is meant to be instantiated directly, although you can extend
 it to add your own functionality.</p>
 
-<pre class="brush:js">
+<pre><code class="js">MyApp = new Backbone.Marionette.Application();
+</code></pre>
 
-MyApp = new Backbone.Marionette.Application();
-</pre>
-
-<h2>Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
-
-<ul>
-<li><a href="#Adding Initializers">Adding Initializers</a></li>
-<li><a href="#Application Event">Application Event</a></li>
-<li><a href="#Starting An Application">Starting An Application</a></li>
-<li><a href="#app.vent">app.vent</a></li>
-</ul>
-
-<h2>Adding Initializers <a href="#Adding Initializers" id="Adding Initializers" class="deep-link">#</a></h2>
+<h2>Adding Initializers</h2>
 
 <p>Your application needs to do useful things, like displaying content in your
 regions, starting up your routers, and more. To accomplish these tasks and
 ensure that your <code>Application</code> is fully configured, you can add initializer
 callbacks to the application.</p>
 
-<pre class="brush:js">
-
-MyApp.addInitializer(function(options){
+<pre><code class="js">MyApp.addInitializer(function(options){
   // do useful stuff here
   var myView = new MyView({
     model: options.someModel
@@ -58,7 +52,7 @@ MyApp.addInitializer(function(options){
   new MyAppRouter();
   Backbone.history.start();
 });
-</pre>
+</code></pre>
 
 <p>These callbacks will be executed when you start your application,
 and are bound to the application object as the context for
@@ -72,7 +66,7 @@ add them to the app object. If you add them before the app is
 started, they will run when the <code>start</code> method is called. If you
 add them after the app is started, they will run immediately.</p>
 
-<h2>Application Event <a href="#Application Event" id="Application Event" class="deep-link">#</a></h2>
+<h2>Application Event</h2>
 
 <p>The <code>Application</code> object raises a few events during its lifecycle. These events
 can be used to do additional processing of your application. For example, you
@@ -83,28 +77,26 @@ want to wait until your entire application is initialized to start the
 <p>The events that are currently triggered, are:</p>
 
 <ul>
-<li><strong>"initialize:before"</strong>: fired just before the initializers kick off</li>
-<li><strong>"initialize:after"</strong>: fires just after the initializers have finished</li>
-<li><strong>"start"</strong>: fires after all initializers and after the initializer events</li>
+<li><strong>&quot;initialize:before&quot;</strong>: fired just before the initializers kick off</li>
+<li><strong>&quot;initialize:after&quot;</strong>: fires just after the initializers have finished</li>
+<li><strong>&quot;start&quot;</strong>: fires after all initializers and after the initializer events</li>
 </ul>
 
-<pre class="brush:js">
-
-MyApp.bind("initialize:before", function(options){
-  options.moreData = "Yo dawg, I heard you like options so I put some options in your options!"
+<pre><code class="js">MyApp.bind(&quot;initialize:before&quot;, function(options){
+  options.moreData = &quot;Yo dawg, I heard you like options so I put some options in your options!&quot;
 });
 
-MyApp.bind("initialize:after", function(options){
+MyApp.bind(&quot;initialize:after&quot;, function(options){
   if (Backbone.history){
     Backbone.history.start();
   }
 });
-</pre>
+</code></pre>
 
 <p>The <code>options</code> parameter is passed through the <code>start</code> method of the application
 object (see below).</p>
 
-<h2>Starting An Application <a href="#Starting An Application" id="Starting An Application" class="deep-link">#</a></h2>
+<h2>Starting An Application</h2>
 
 <p>Once you have your application configured, you can kick everything off by 
 calling: <code>MyApp.start(options)</code>.</p>
@@ -114,39 +106,35 @@ to each of your initializer functions, as well as the initialize events. This
 allows you to provide extra configuration for various parts of your app, at
 initialization/start of the app, instead of just at definition.</p>
 
-<pre class="brush:js">
-
-var options = {
-  something: "some value",
-  another: "#some-selector"
+<pre><code class="js">var options = {
+  something: &quot;some value&quot;,
+  another: &quot;#some-selector&quot;
 };
 
 MyApp.start(options);
-</pre>
+</code></pre>
 
-<h2>app.vent: Event Aggregator <a href="#app.vent" id="app.vent" class="deep-link">#</a></h2>
+<h2>app.vent: Event Aggregator</h2>
 
 <p>Every application instance comes with an instance of <code>Marionette.EventAggregator</code> 
 called <code>app.vent</code>.</p>
 
-<pre class="brush:js">
+<pre><code class="js">MyApp = new Backbone.Marionette.Application();
 
-MyApp = new Backbone.Marionette.Application();
-
-MyApp.vent.on("foo", function(){
-  alert("bar");
+MyApp.vent.on(&quot;foo&quot;, function(){
+  alert(&quot;bar&quot;);
 });
 
-MyApp.vent.trigger("foo"); // => alert box "bar"
-</pre>
+MyApp.vent.trigger(&quot;foo&quot;); // =&gt; alert box &quot;bar&quot;
+</code></pre>
 
 <p>See the <code>Marionette.EventAggregator</code> documentation below, for more details.</p>
+
             </div>
         </div>
-        <script src="assets_/js/lib/jquery.js"></script>
-        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
-        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
-        <script src="assets_/js/main.js"></script>
+        <script src="/doc-assets/js/lib/jquery.js"></script>
+        <script src="/doc-assets/js/lib/prettify/prettify.js"></script>
+        <script src="/doc-assets/js/main.js"></script>
     </body>
 </html>
 

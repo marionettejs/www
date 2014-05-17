@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Marionette.Controller : Documentation</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/doc-assets/css/bootstrap.css">
+        <link rel="stylesheet" href="/doc-assets/css/main.css">
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="content">
+
+<a id="improve" href="#" class="btn btn-default">
+  <i class="glyphicon glyphicon-edit">&nbsp;</i>
+  Improve this doc
+</a>
+<a id="source" href="#" class="btn btn-default">
+  <i class="glyphicon glyphicon-eye-open">&nbsp;</i>
+  View the source
+</a>
+<h1>Marionette.Controller</h1>
+
+<p>A multi-purpose object to use as a controller for
+modules and routers, and as a mediator for workflow
+and coordination of other objects, views, and more.</p>
+
+<h2>Documentation Index</h2>
+
+<ul>
+<li><a href="#basic-use">Basic Use</a></li>
+<li><a href="#destroying-a-controller">Destroying A Controller</a></li>
+<li><a href="#getoption">getOption</a></li>
+<li><a href="#on-the-name-controller">On The Name &#39;Controller&#39;</a></li>
+</ul>
+
+<h2>Basic Use</h2>
+
+<p>A <code>Marionette.Controller</code> can be extended, like other
+Backbone and Marionette objects. It supports the standard
+<code>initialize</code> method, has a built-in <code>EventBinder</code>, and
+can trigger events, itself.</p>
+
+<pre><code class="js">// define a controller
+var MyController = Marionette.Controller.extend({
+
+  initialize: function(options){
+    this.stuff = options.stuff;
+  },
+
+  doStuff: function(){
+    this.trigger(&quot;stuff:done&quot;, this.stuff);
+  }
+
+});
+
+// create an instance
+var c = new MyController({
+  stuff: &quot;some stuff&quot;
+});
+
+// use the built in EventBinder
+c.listenTo(c, &quot;stuff:done&quot;, function(stuff){
+  console.log(stuff);
+});
+
+// do some stuff
+c.doStuff();
+</code></pre>
+
+<h2>getOption</h2>
+
+<p>Retrieve an object&#39;s attribute either directly from the object, or from the object&#39;s this.options, with this.options taking precedence.</p>
+
+<p>More information <a href="./marionette.functions.md">getOption</a></p>
+
+<h2>Destroying A Controller</h2>
+
+<p>Each Controller instance has a built in <code>destroy</code> method that handles
+unbinding all of the events that are directly attached to the controller
+instance, as well as those that are bound using the EventBinder from
+the controller.</p>
+
+<p>Invoking the <code>destroy</code> method will trigger a &quot;destroy&quot; event and corresponding
+<code>onDestroy</code> method call. These calls will be passed any arguments <code>destroy</code>
+was invoked with.</p>
+
+<pre><code class="js">// define a controller with an onDestroy method
+var MyController = Marionette.Controller.extend({
+
+  onDestroy: function(arg1, arg2){
+    // put custom code here, to destroy this controller
+  }
+
+});
+
+// create a new controller instance
+var contr = new MyController();
+
+// add some event handlers
+contr.on(&quot;destroy&quot;, function(arg1, arg2){ ... });
+contr.listenTo(something, &quot;bar&quot;, function(){...});
+
+// destroy the controller: unbind all of the
+// event handlers, trigger the &quot;destroy&quot; event and
+// call the onDestroy method
+contr.destroy(arg1, arg2);
+</code></pre>
+
+<h2>On The Name &#39;Controller&#39;</h2>
+
+<p>The name <code>Controller</code> is bound to cause a bit of confusion, which is
+rather unfortunate. There was some discussion and debate about what to
+call this object, the idea that people would confuse this with an
+MVC style controller came up a number of times. In the end, we decided
+to call this a controller anyway--as the typical use case is to control
+the workflow and process of an application and/or module.</p>
+
+<p>But the truth is, this is a very generic, multi-purpose object that can
+serve many different roles, in many different scenarios. We are always open
+to suggestions, with good reason and discussion, on renaming objects to
+be more descriptive and less confusing. If you would like to suggest a
+different name, please do so in either the mailing list or in the Github
+Issues list.</p>
+
+            </div>
+        </div>
+        <script src="/doc-assets/js/lib/jquery.js"></script>
+        <script src="/doc-assets/js/lib/prettify/prettify.js"></script>
+        <script src="/doc-assets/js/main.js"></script>
+    </body>
+</html>
+

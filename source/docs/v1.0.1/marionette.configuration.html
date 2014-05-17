@@ -4,14 +4,21 @@
         <meta charset="utf-8">
         <title>Marionette Configuration : Documentation</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="assets_/css/shCore.css">
-        <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
-        <link rel="stylesheet" href="assets_/css/main.css">
+        <link rel="stylesheet" href="/doc-assets/css/bootstrap.css">
+        <link rel="stylesheet" href="/doc-assets/css/main.css">
     </head>
     <body>
         <div id="wrapper">
             <div id="content">
 
+<a id="improve" href="#" class="btn btn-default">
+  <i class="glyphicon glyphicon-edit">&nbsp;</i>
+  Improve this doc
+</a>
+<a id="source" href="#" class="btn btn-default">
+  <i class="glyphicon glyphicon-eye-open">&nbsp;</i>
+  View the source
+</a>
 <h1>Marionette Configuration</h1>
 
 <p>Marionette has a few globally configurable settings that will
@@ -19,20 +26,13 @@ change how the system works. While many of these subjects are covered
 in other docs, this configuration doc should provides a list of the
 most common items to change.</p>
 
-<h2>Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
-
-<ul>
-<li><a href="#Documentation Index">Documentation Index</a></li>
-<li><a href="#Marionette.$">Marionette.$</a></li>
-</ul>
-
-<h2>Documentation Index <a href="#Documentation Index" id="Documentation Index" class="deep-link">#</a></h2>
+<h2>Documentation Index</h2>
 
 <ul>
 <li><a href="#marionette_">Marionette.$</a></li>
 </ul>
 
-<h2>Marionette.$ <a href="#Marionette.$" id="Marionette.$" class="deep-link">#</a></h2>
+<h2>Marionette.$</h2>
 
 <p>Marionette makes use of jQuery, by default, to manipulate DOM
 elements. To get a reference to jQuery, though, it assigns the
@@ -43,20 +43,18 @@ library is used.</p>
 <p>If you wish to change to a specific version of a DOM manipulation
 library, you can directly assign these settings:</p>
 
-<pre class="brush:js">
-
-Backbone.$ = myDOMLib;
+<pre><code class="js">Backbone.$ = myDOMLib;
 Marioentte.$ = myDOMLib;
-</pre>
+</code></pre>
 
 <p>Note that you should change both Backbone and Marionette at the same
 time, to the same DOM manipulation library.</p>
+
             </div>
         </div>
-        <script src="assets_/js/lib/jquery.js"></script>
-        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
-        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
-        <script src="assets_/js/main.js"></script>
+        <script src="/doc-assets/js/lib/jquery.js"></script>
+        <script src="/doc-assets/js/lib/prettify/prettify.js"></script>
+        <script src="/doc-assets/js/main.js"></script>
     </body>
 </html>
 

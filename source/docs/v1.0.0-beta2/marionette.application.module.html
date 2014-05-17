@@ -4,14 +4,21 @@
         <meta charset="utf-8">
         <title>Marionette.Application.module : Documentation</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="assets_/css/shCore.css">
-        <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
-        <link rel="stylesheet" href="assets_/css/main.css">
+        <link rel="stylesheet" href="/doc-assets/css/bootstrap.css">
+        <link rel="stylesheet" href="/doc-assets/css/main.css">
     </head>
     <body>
         <div id="wrapper">
             <div id="content">
 
+<a id="improve" href="#" class="btn btn-default">
+  <i class="glyphicon glyphicon-edit">&nbsp;</i>
+  Improve this doc
+</a>
+<a id="source" href="#" class="btn btn-default">
+  <i class="glyphicon glyphicon-eye-open">&nbsp;</i>
+  View the source
+</a>
 <h1>Marionette.Application.module</h1>
 
 <p>Marionette allows you to define a module within your application,
@@ -19,42 +26,28 @@ including sub-modules hanging from that module. This is useful for creating
 modular, encapsulated applications that are split apart in to multiple 
 files.</p>
 
-<p>Marionette's module allow you to have unlimited sub-modules hanging off
+<p>Marionette&#39;s module allow you to have unlimited sub-modules hanging off
 your application, and serve as an event aggregator in themselves.</p>
 
-<h2>Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
-
-<ul>
-<li><a href="#Basic Usage">Basic Usage</a></li>
-<li><a href="#Starting And Stopping Modules">Starting And Stopping Modules</a></li>
-<li><a href="#Defining Sub-Modules With . Notation">Defining Sub-Modules With . Notation</a></li>
-<li><a href="#Module Definitions">Module Definitions</a></li>
-<li><a href="#The Module's <code>this</code> Argument">The Module's <code>this</code> Argument</a></li>
-<li><a href="#Custom Arguments">Custom Arguments</a></li>
-<li><a href="#Splitting A Module Definition Apart">Splitting A Module Definition Apart</a></li>
-</ul>
-
-<h2>Basic Usage <a href="#Basic Usage" id="Basic Usage" class="deep-link">#</a></h2>
+<h2>Basic Usage</h2>
 
 <p>A module is defined directly from an Application object as the specified
 name:</p>
 
-<pre class="brush:js">
+<pre><code class="js">var MyApp = new Backbone.Marionette.Application();
 
-var MyApp = new Backbone.Marionette.Application();
+var myModule = MyApp.module(&quot;MyModule&quot;);
 
-var myModule = MyApp.module("MyModule");
+MyApp.MyModule; // =&gt; a new Marionette.Application object
 
-MyApp.MyModule; // => a new Marionette.Application object
-
-myModule === MyApp.MyModule; // => true
-</pre>
+myModule === MyApp.MyModule; // =&gt; true
+</code></pre>
 
 <p>If you specify the same module name more than once, the
 first instance of the module will be retained and a new
 instance will not be created.</p>
 
-<h2>Starting And Stopping Modules <a href="#Starting And Stopping Modules" id="Starting And Stopping Modules" class="deep-link">#</a></h2>
+<h2>Starting And Stopping Modules</h2>
 
 <p>Modules can be started and stopped independently of the application and
 of each other. This allows them to be loaded asynchronously, and also allows
@@ -72,20 +65,18 @@ module that you need in your tests.</p>
 </ol>
 
 <p>In this example, the module will be started automatically with the parent
-application object's <code>start</code> call:</p>
+application object&#39;s <code>start</code> call:</p>
 
-<pre class="brush:js">
+<pre><code class="js">MyApp = new Backbone.Marionette.Application();
 
-MyApp = new Backbone.Marionette.Application();
-
-MyApp.module("Foo", function(){
+MyApp.module(&quot;Foo&quot;, function(){
 
   // module code goes here
 
 });
 
 MyApp.start();
-</pre>
+</code></pre>
 
 <p>Note that modules loaded and defined after the <code>app.start()</code> call will still
 be started automatically.</p>
@@ -95,9 +86,7 @@ be started automatically.</p>
 <p>If you wish to manually start a module instead of having the application
 start it, you can tell the module definition not to start with the parent:</p>
 
-<pre class="brush:js">
-
-var fooModule = MyApp.module("Foo", {
+<pre><code class="js">var fooModule = MyApp.module(&quot;Foo&quot;, {
   startWithParent: false,
 
   define: function(){
@@ -110,26 +99,24 @@ MyApp.start();
 
 // later, start the module
 fooModule.start();
-</pre>
+</code></pre>
 
 <p>Note the use of an object literal instead of just a function to define
 the module, and the presence of the <code>startWithParent</code> attribute, to tell it
-not to start with the application. Then to start the module, the module's 
+not to start with the application. Then to start the module, the module&#39;s 
 <code>start</code> method is manually called.</p>
 
 <p>You can also grab a reference to the module at a later point in time, to
 start it:</p>
 
-<pre class="brush:js">
-
-MyApp.module("Foo", {
+<pre><code class="js">MyApp.module(&quot;Foo&quot;, {
   startWithParent: false,
   define: function(){ /*...*/ }
 });
 
 // start the module by getting a reference to it first
-MyApp.module("Foo").start();
-</pre>
+MyApp.module(&quot;Foo&quot;).start();
+</code></pre>
 
 <h3>Starting Sub-Modules With Parent</h3>
 
@@ -139,42 +126,36 @@ and finally `Foo.</p>
 
 <p>Submodules default to starting with their parent module. </p>
 
-<pre class="brush:js">
-
-MyApp.module("Foo", function(){...});
-MyApp.module("Foo.Bar", function(){...});
+<pre><code class="js">MyApp.module(&quot;Foo&quot;, function(){...});
+MyApp.module(&quot;Foo.Bar&quot;, function(){...});
 
 MyApp.start();
-</pre>
+</code></pre>
 
-<p>In this example, the "Foo.Bar" module will be started with the call to
-<code>MyApp.start()</code> because the parent module, "Foo" is set to start
+<p>In this example, the &quot;Foo.Bar&quot; module will be started with the call to
+<code>MyApp.start()</code> because the parent module, &quot;Foo&quot; is set to start
 with the app.</p>
 
-<p>A sub-module can override this behavior by setting it's <code>startWithParent</code>
-to false. This prevents it from being started by the parent's <code>start</code> call.</p>
+<p>A sub-module can override this behavior by setting it&#39;s <code>startWithParent</code>
+to false. This prevents it from being started by the parent&#39;s <code>start</code> call.</p>
 
-<pre class="brush:js">
+<pre><code class="js">MyApp.module(&quot;Foo&quot;, define: function(){...});
 
-MyApp.module("Foo", define: function(){...});
-
-MyApp.module("Foo.Bar", {
+MyApp.module(&quot;Foo.Bar&quot;, {
   startWithParent: true,
   define: function(){...}
 })
 
 MyApp.start(); 
-</pre>
+</code></pre>
 
-<p>Now the module "Foo" will be started, but the sub-module "Foo.Bar" will
+<p>Now the module &quot;Foo&quot; will be started, but the sub-module &quot;Foo.Bar&quot; will
 not be started.</p>
 
 <p>A sub-module can still be started manually, with this configuration:</p>
 
-<pre class="brush:js">
-
-MyApp.module("Foo.Bar").start();
-</pre>
+<pre><code class="js">MyApp.module(&quot;Foo.Bar&quot;).start();
+</code></pre>
 
 <h3>Stopping Modules</h3>
 
@@ -183,48 +164,42 @@ the module is no longer needed. Like starting of modules, stopping is done
 in a depth-first hierarchy traversal. That is, a hierarchy of modules like
 <code>Foo.Bar.Baz</code> will stop <code>Baz</code> first, then <code>Bar</code>, and finally <code>Foo</code>.</p>
 
-<p>To stop a module and it's children, call the <code>stop()</code> method of a module.</p>
+<p>To stop a module and it&#39;s children, call the <code>stop()</code> method of a module.</p>
 
-<pre class="brush:js">
-
-MyApp.module("Foo").stop();
-</pre>
+<pre><code class="js">MyApp.module(&quot;Foo&quot;).stop();
+</code></pre>
 
 <p>Modules are not automatically stopped by the application. If you wish to 
 stop one, you must call the <code>stop</code> method on it. The exception to this is
-that stopping a parent module will stop all of it's sub-modules.</p>
+that stopping a parent module will stop all of it&#39;s sub-modules.</p>
 
-<pre class="brush:js">
+<pre><code class="js">MyApp.module(&quot;Foo.Bar.Baz&quot;);
 
-MyApp.module("Foo.Bar.Baz");
-
-MyApp.module("Foo").stop();
-</pre>
+MyApp.module(&quot;Foo&quot;).stop();
+</code></pre>
 
 <p>This call to <code>stop</code> causes the <code>Bar</code> and <code>Baz</code> modules to both be stopped
 as they are sub-modules of <code>Foo</code>. For more information on defining
-sub-modules, see the section "Defining Sub-Modules With . Notation".</p>
+sub-modules, see the section &quot;Defining Sub-Modules With . Notation&quot;.</p>
 
-<h2>Defining Sub-Modules With . Notation <a href="#Defining Sub-Modules With . Notation" id="Defining Sub-Modules With . Notation" class="deep-link">#</a></h2>
+<h2>Defining Sub-Modules With . Notation</h2>
 
 <p>Sub-modules or child modules can be defined as a hierarchy of modules and 
 sub-modules all at once:</p>
 
-<pre class="brush:js">
+<pre><code class="js">MyApp.module(&quot;Parent.Child.GrandChild&quot;);
 
-MyApp.module("Parent.Child.GrandChild");
-
-MyApp.Parent; // => a valid module object
-MyApp.Parent.Child; // => a valid module object
-MyApp.Parent.Child.GrandChild; // => a valid module object
-</pre>
+MyApp.Parent; // =&gt; a valid module object
+MyApp.Parent.Child; // =&gt; a valid module object
+MyApp.Parent.Child.GrandChild; // =&gt; a valid module object
+</code></pre>
 
 <p>When defining sub-modules using the dot-notation, the 
 parent modules do not need to exist. They will be created
-for you if they don't exist. If they do exist, though, the
+for you if they don&#39;t exist. If they do exist, though, the
 existing module will be used instead of creating a new one.</p>
 
-<h2>Module Definitions <a href="#Module Definitions" id="Module Definitions" class="deep-link">#</a></h2>
+<h2>Module Definitions</h2>
 
 <p>You can specify a callback function to provide a definition
 for the module. Module definitions are invoked immediately
@@ -246,14 +221,12 @@ on calling <code>module</code> method. </p>
 them publicly accessible. You can also add private functions
 and data by using locally scoped variables.</p>
 
-<pre class="brush:js">
-
-MyApp.module("MyModule", function(MyModule, MyApp, Backbone, Marionette, $, _){
+<pre><code class="js">MyApp.module(&quot;MyModule&quot;, function(MyModule, MyApp, Backbone, Marionette, $, _){
 
   // Private Data And Functions
   // --------------------------
 
-  var myData = "this is private data";
+  var myData = &quot;this is private data&quot;;
 
   var myFunction = function(){
     console.log(myData);
@@ -263,108 +236,98 @@ MyApp.module("MyModule", function(MyModule, MyApp, Backbone, Marionette, $, _){
   // Public Data And Functions
   // -------------------------
 
-  MyModule.someData = "public data";
+  MyModule.someData = &quot;public data&quot;;
 
   MyModule.someFunction = function(){
     console.log(MyModule.someData);
   }
 });
 
-console.log(MyApp.MyModule.someData); //=> public data
-MyApp.MyModule.someFunction(); //=> public data
-</pre>
+console.log(MyApp.MyModule.someData); //=&gt; public data
+MyApp.MyModule.someFunction(); //=&gt; public data
+</code></pre>
 
 <h3>Module Initializers</h3>
 
-<p>Modules have initializers, similarly to <code>Application</code> objects. A module's
+<p>Modules have initializers, similarly to <code>Application</code> objects. A module&#39;s
 initializers are run when the module is started.</p>
 
-<pre class="brush:js">
-
-MyApp.module("Foo", function(Foo){
+<pre><code class="js">MyApp.module(&quot;Foo&quot;, function(Foo){
 
   Foo.addInitializer(function(){
-    // initialize and start the module's running code, here.
+    // initialize and start the module&#39;s running code, here.
   });
 
 });
-</pre>
+</code></pre>
 
-<p>Any way of starting this module will cause it's initializers to run. You
+<p>Any way of starting this module will cause it&#39;s initializers to run. You
 can have as many initializers for a module as you wish.</p>
 
 <h3>Module Finalizers</h3>
 
 <p>Modules also have finalizers that are run when a module is stopped.</p>
 
-<pre class="brush:js">
-
-MyApp.module("Foo", function(Foo){
+<pre><code class="js">MyApp.module(&quot;Foo&quot;, function(Foo){
 
   Foo.addFinalizer(function(){
     // tear down, shut down and clean up the module, here
   });
 
 });
-</pre>
+</code></pre>
 
-<p>Calling the <code>stop</code> method on the module will run all that module's 
+<p>Calling the <code>stop</code> method on the module will run all that module&#39;s 
 finalizers. A module can have as many finalizers as you wish.</p>
 
-<h2>The Module's <code>this</code> Argument <a href="#The Module's `this` Argument" id="The Module's `this` Argument" class="deep-link">#</a></h2>
+<h2>The Module&#39;s <code>this</code> Argument</h2>
 
-<p>The module's <code>this</code> argument is set to the module itself.</p>
+<p>The module&#39;s <code>this</code> argument is set to the module itself.</p>
 
-<pre class="brush:js">
-
-MyApp.module("Foo", function(Foo){
-  this === Foo; //=> true
+<pre><code class="js">MyApp.module(&quot;Foo&quot;, function(Foo){
+  this === Foo; //=&gt; true
 });
-</pre>
+</code></pre>
 
-<h2>Custom Arguments <a href="#Custom Arguments" id="Custom Arguments" class="deep-link">#</a></h2>
+<h2>Custom Arguments</h2>
 
 <p>You can provide any number of custom arguments to your module, after the
 module definition function. This will allow you to import 3rd party
 libraries, and other resources that you want to have locally scoped to
 your module.</p>
 
-<pre class="brush:js">
-
-MyApp.module("MyModule", function(MyModule, MyApp, Backbone, Marionette, $, _, Lib1, Lib2, LibEtc){
+<pre><code class="js">MyApp.module(&quot;MyModule&quot;, function(MyModule, MyApp, Backbone, Marionette, $, _, Lib1, Lib2, LibEtc){
 
   // Lib1 === LibraryNumber1;
   // Lib2 === LibraryNumber2;
   // LibEtc === LibraryNumberEtc;
 
 }, LibraryNumber1, LibraryNumber2, LibraryNumberEtc);
-</pre>
+</code></pre>
 
-<h2>Splitting A Module Definition Apart <a href="#Splitting A Module Definition Apart" id="Splitting A Module Definition Apart" class="deep-link">#</a></h2>
+<h2>Splitting A Module Definition Apart</h2>
 
 <p>Sometimes a module gets to be too long for a single file. In
 this case, you can split a module definition across multiple
 files:</p>
 
-<pre class="brush:js">
-
-MyApp.module("MyModule", function(MyModule){
+<pre><code class="js">MyApp.module(&quot;MyModule&quot;, function(MyModule){
   MyModule.definition1 = true;
 });
 
-MyApp.module("MyModule", function(MyModule){
+MyApp.module(&quot;MyModule&quot;, function(MyModule){
   MyModule.definition2 = true;
 });
 
-MyApp.MyModule.definition1; //=> true
-MyApp.MyModule.definition2; //=> true
-</pre>
+MyApp.MyModule.definition1; //=&gt; true
+MyApp.MyModule.definition2; //=&gt; true
+</code></pre>
+
             </div>
         </div>
-        <script src="assets_/js/lib/jquery.js"></script>
-        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
-        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
-        <script src="assets_/js/main.js"></script>
+        <script src="/doc-assets/js/lib/jquery.js"></script>
+        <script src="/doc-assets/js/lib/prettify/prettify.js"></script>
+        <script src="/doc-assets/js/main.js"></script>
     </body>
 </html>
 

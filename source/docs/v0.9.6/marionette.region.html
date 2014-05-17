@@ -4,14 +4,21 @@
         <meta charset="utf-8">
         <title>Marionette.Region : Documentation</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="assets_/css/shCore.css">
-        <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
-        <link rel="stylesheet" href="assets_/css/main.css">
+        <link rel="stylesheet" href="/doc-assets/css/bootstrap.css">
+        <link rel="stylesheet" href="/doc-assets/css/main.css">
     </head>
     <body>
         <div id="wrapper">
             <div id="content">
 
+<a id="improve" href="#" class="btn btn-default">
+  <i class="glyphicon glyphicon-edit">&nbsp;</i>
+  Improve this doc
+</a>
+<a id="source" href="#" class="btn btn-default">
+  <i class="glyphicon glyphicon-eye-open">&nbsp;</i>
+  View the source
+</a>
 <h1>Marionette.Region</h1>
 
 <p>Region managers provide a consistent way to manage your views and
@@ -19,21 +26,7 @@ show / close them in your application. They use a jQuery selector
 to show your views in the correct place. They also call extra
 methods on your views to facilitate additional functionality.</p>
 
-<h2>Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
-
-<ul>
-<li><a href="#Defining An Application Region">Defining An Application Region</a></li>
-<li><a href="#Initialize A Region With An <code>el</code">Initialize A Region With An <code>el</code></a></li>
-<li><a href="#Basic Usage">Basic Usage</a></li>
-<li><a href="#Set How View's <code>el</code> Is Attached">Set How View's <code>el</code> Is Attached</a></li>
-<li><a href="#Attach Existing View">Attach Existing View</a></li>
-<li><a href="#Region Events And Callbacks">Region Events And Callbacks</a></li>
-<li><a href="#View Callbacks And Events For Regions">View Callbacks And Events For Regions</a></li>
-<li><a href="#Defining A Custom Region">Defining A Custom Region </a></li>
-<li><a href="#Instantiate Your Own Region">Instantiate Your Own Region </a></li>
-</ul>
-
-<h2>Defining An Application Region <a href="#Defining An Application Region" id="Defining An Application Region" class="deep-link">#</a></h2>
+<h2>Defining An Application Region</h2>
 
 <p>Regions can be added to the application by calling the <code>addRegions</code> method on
 your application instance. This method expects a single hash parameter, with
@@ -41,13 +34,11 @@ named regions and either jQuery selectors or <code>Region</code> objects. You ma
 call this method as many times as you like, and it will continue adding regions
 to the app. </p>
 
-<pre class="brush:js">
-
-MyApp.addRegions({
-  mainRegion: "#main-content",
-  navigationRegion: "#navigation"
+<pre><code class="js">MyApp.addRegions({
+  mainRegion: &quot;#main-content&quot;,
+  navigationRegion: &quot;#navigation&quot;
 });
-</pre>
+</code></pre>
 
 <p>As soon as you call <code>addRegions</code>, your region managers are available on your
 app object. In the above, example <code>MyApp.mainRegion</code> and <code>MyApp.navigationRegion</code>
@@ -55,41 +46,35 @@ would be available for use immediately.</p>
 
 <p>If you specify the same region name twice, the last one in wins.</p>
 
-<h2>Initialize A Region With An <code>el</code> <a href="#Initialize A Region With An `el`" id="Initialize A Region With An `el`" class="deep-link">#</a></h2>
+<h2>Initialize A Region With An <code>el</code></h2>
 
 <p>You can specify an <code>el</code> for the region manager to manage at the time
 that the region manager is instantiated:</p>
 
-<pre class="brush:js">
-
-var mgr = new Backbone.Marionette.Region({
-  el: "#someElement"
+<pre><code class="js">var mgr = new Backbone.Marionette.Region({
+  el: &quot;#someElement&quot;
 });
-</pre>
+</code></pre>
 
-<h2>Basic Usage <a href="#Basic Usage" id="Basic Usage" class="deep-link">#</a></h2>
+<h2>Basic Usage</h2>
 
 <p>Once a region manager has been defined, you can call the <code>show</code>
 and <code>close</code> methods on it to render and display a view, and then
 to close that view:</p>
 
-<pre class="brush:js">
-
-var myView = new MyView();
+<pre><code class="js">var myView = new MyView();
 
 // render and display the view
 MyApp.mainRegion.show(myView);
 
 // closes the current view
 MyApp.mainRegion.close();
-</pre>
+</code></pre>
 
 <p>If you replace the current view with a new view by calling <code>show</code>,
 it will automatically close the previous view.</p>
 
-<pre class="brush:js">
-
-// show the first view
+<pre><code class="js">// show the first view
 var myView = new MyView();
 MyApp.mainRegion.show(myView);
 
@@ -97,9 +82,9 @@ MyApp.mainRegion.show(myView);
 // `close` method is called for you
 var anotherView = new AnotherView();
 MyApp.mainRegion.show(anotherView);
-</pre>
+</code></pre>
 
-<h2>Set How View's <code>el</code> Is Attached <a href="#Set How View's `el` Is Attached" id="Set How View's `el` Is Attached" class="deep-link">#</a></h2>
+<h2>Set How View&#39;s <code>el</code> Is Attached</h2>
 
 <p>If you need to change how the view is attached to the DOM when
 showing a view via a region, override the <code>open</code> method of the
@@ -107,32 +92,28 @@ region. This method receives one parameter - the view to show.</p>
 
 <p>The default implementation of <code>open</code> is:</p>
 
-<pre class="brush:js">
-
-Marionette.Region.prototype.open = function(view){
+<pre><code class="js">Marionette.Region.prototype.open = function(view){
   this.$el.html(view.el);
 }
-</pre>
+</code></pre>
 
-<p>This will replace the contents of the region with the view's
+<p>This will replace the contents of the region with the view&#39;s
 <code>el</code> / content. You can change to this be anything you wish,
 though, facilitating transition effects and more.</p>
 
-<pre class="brush:js">
-
-Marionette.Region.prototype.open = function(view){
+<pre><code class="js">Marionette.Region.prototype.open = function(view){
   this.$el.hide();
   this.$el.html(view.el);
-  this.$el.slideDown("fast");
+  this.$el.slideDown(&quot;fast&quot;);
 }
-</pre>
+</code></pre>
 
 <p>This example will cause a view to slide down from the top
 of the region, instead of just appearing in place.</p>
 
-<h2>Attach Existing View <a href="#Attach Existing View" id="Attach Existing View" class="deep-link">#</a></h2>
+<h2>Attach Existing View</h2>
 
-<p>There are some scenarios where it's desirable to attach an existing
+<p>There are some scenarios where it&#39;s desirable to attach an existing
 view to a region manager, without rendering or showing the view, and
 without replacing the HTML content of the region. For example, SEO and
 accessibiliy often need HTML to be generated by the server, and progressive
@@ -141,61 +122,55 @@ enhancement of the HTML.</p>
 <p>There are two ways to accomplish this: </p>
 
 <ul>
-<li>set the <code>currentView</code> in the region manager's constructor</li>
+<li>set the <code>currentView</code> in the region manager&#39;s constructor</li>
 <li>call <code>attachView</code> on the region manager instance</li>
 </ul>
 
 <h3>Set <code>currentView</code> On Initialization</h3>
 
-<pre class="brush:js">
-
-var myView = new MyView({
-  el: $("#existing-view-stuff")
+<pre><code class="js">var myView = new MyView({
+  el: $(&quot;#existing-view-stuff&quot;)
 });
 
 var manager = new Backbone.Marionette.Region({
-  el: "#content",
+  el: &quot;#content&quot;,
   currentView: myView
 });
-</pre>
+</code></pre>
 
 <h3>Call <code>attachView</code> On Region</h3>
 
-<pre class="brush:js">
-
-MyApp.addRegions({
-  someRegion: "#content"
+<pre><code class="js">MyApp.addRegions({
+  someRegion: &quot;#content&quot;
 });
 
 var myView = new MyView({
-  el: $("#existing-view-stuff")
+  el: $(&quot;#existing-view-stuff&quot;)
 });
 
 MyApp.someRegion.attachView(myView);
-</pre>
+</code></pre>
 
-<h2>Region Events And Callbacks <a href="#Region Events And Callbacks" id="Region Events And Callbacks" class="deep-link">#</a></h2>
+<h2>Region Events And Callbacks</h2>
 
-<p>A region manager will raise a few events during it's showing and
+<p>A region manager will raise a few events during it&#39;s showing and
 closing of views:</p>
 
 <ul>
-<li>"view:show" - when the view has been rendered and displayed</li>
-<li>"onShow" - called on the region when the view has been rendered</li>
-<li>"view:closed" - when the view has been closed</li>
+<li>&quot;view:show&quot; - when the view has been rendered and displayed</li>
+<li>&quot;onShow&quot; - called on the region when the view has been rendered</li>
+<li>&quot;view:closed&quot; - when the view has been closed</li>
 </ul>
 
 <p>You can bind to these events and add code that needs to run with
 your region manager, opening and closing views.</p>
 
-<pre class="brush:js">
-
-MyApp.mainRegion.on("view:show", function(view){
+<pre><code class="js">MyApp.mainRegion.on(&quot;view:show&quot;, function(view){
   // manipulate the `view` or do something extra
   // with the region manager via `this`
 });
 
-MyApp.mainRegion.on("view:closed", function(view){
+MyApp.mainRegion.on(&quot;view:closed&quot;, function(view){
   // manipulate the `view` or do something extra
   // with the region manager via `this`
 });
@@ -207,17 +182,15 @@ MyRegion = Backbone.Marionette.Region.extend({
     // the `view` has been shown
   }
 });
-</pre>
+</code></pre>
 
-<h2>View Callbacks And Events For Regions <a href="#View Callbacks And Events For Regions" id="View Callbacks And Events For Regions" class="deep-link">#</a></h2>
+<h2>View Callbacks And Events For Regions</h2>
 
 <p>The region manager will call an <code>onShow</code> method on the view
-that was displayed. It will also trigger a "show" event
+that was displayed. It will also trigger a &quot;show&quot; event
 from the view:</p>
 
-<pre class="brush:js">
-
-MyView = Backbone.View.extend({
+<pre><code class="js">MyView = Backbone.View.extend({
   onShow: function(){
     // the view has been shown
   }
@@ -225,14 +198,14 @@ MyView = Backbone.View.extend({
 
 view = new MyView();
 
-view.on("show", function(){
+view.on(&quot;show&quot;, function(){
   // the view has been shown.
 });
 
 MyApp.mainRegion.show(view);
-</pre>
+</code></pre>
 
-<h2>Defining A Custom Region  <a href="#Defining A Custom Region " id="Defining A Custom Region " class="deep-link">#</a></h2>
+<h2>Defining A Custom Region</h2>
 
 <p>You can define a custom region manager by extending from
 <code>Region</code>. This allows you to create new functionality,
@@ -243,30 +216,26 @@ or provide a base set of functionality for your app.</p>
 value - not an instance of it, but the actual constructor
 function.</p>
 
-<pre class="brush:js">
-
-var FooterRegion = Backbone.Marionette.Region.extend({
-  el: "#footer"
+<pre><code class="js">var FooterRegion = Backbone.Marionette.Region.extend({
+  el: &quot;#footer&quot;
 });
 
 MyApp.addRegions({footerRegion: FooterRegion});
-</pre>
+</code></pre>
 
 <p>Note that if you define your own <code>Region</code> object, you must provide an
-<code>el</code> for it. If you don't, you will receive an runtime exception saying that
+<code>el</code> for it. If you don&#39;t, you will receive an runtime exception saying that
 an <code>el</code> is required.</p>
 
-<h2>Instantiate Your Own Region  <a href="#Instantiate Your Own Region " id="Instantiate Your Own Region " class="deep-link">#</a></h2>
+<h2>Instantiate Your Own Region</h2>
 
 <p>There may be times when you want to add a region manager to your
-application after your app is up and running. To do this, you'll
+application after your app is up and running. To do this, you&#39;ll
 need to extend from <code>Region</code> as shown above and then use
 that constructor function on your own:</p>
 
-<pre class="brush:js">
-
-var SomeRegion = Backbone.Marionette.Region.extend({
-  el: "#some-div",
+<pre><code class="js">var SomeRegion = Backbone.Marionette.Region.extend({
+  el: &quot;#some-div&quot;,
 
   initialize: function(options){
     // your init code, here
@@ -276,18 +245,18 @@ var SomeRegion = Backbone.Marionette.Region.extend({
 MyApp.someRegion = new SomeRegion();
 
 MyApp.someRegion.show(someView);
-</pre>
+</code></pre>
 
 <p>You can optionally add an <code>initialize</code> function to your Region
 definition as shown in this example. It receives the <code>options</code>
 that were passed to the constructor of the Region, similar to
 a Backbone.View.</p>
+
             </div>
         </div>
-        <script src="assets_/js/lib/jquery.js"></script>
-        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
-        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
-        <script src="assets_/js/main.js"></script>
+        <script src="/doc-assets/js/lib/jquery.js"></script>
+        <script src="/doc-assets/js/lib/prettify/prettify.js"></script>
+        <script src="/doc-assets/js/main.js"></script>
     </body>
 </html>
 

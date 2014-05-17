@@ -15,9 +15,11 @@ Update the site
 
 Make your changes to the site in the source/ folder.
 
-    middleman server
+    rake build
+    cd build
+    rackup config.ru -p 2000
 
-Preview your changes in browser by pointing to http://localhost:4567
+Preview your changes in browser by pointing to http://localhost:2000
 
 
 Populate a new version of Marionette.js builds
@@ -32,4 +34,4 @@ Push your changes to Heroku
 -----
 
     Login to heroku CLI Tools
-    `git push heroku {branchName}:master`
+    `rake deploy`

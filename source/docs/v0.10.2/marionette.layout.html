@@ -4,14 +4,21 @@
         <meta charset="utf-8">
         <title>Marionette.Layout : Documentation</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="assets_/css/shCore.css">
-        <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
-        <link rel="stylesheet" href="assets_/css/main.css">
+        <link rel="stylesheet" href="/doc-assets/css/bootstrap.css">
+        <link rel="stylesheet" href="/doc-assets/css/main.css">
     </head>
     <body>
         <div id="wrapper">
             <div id="content">
 
+<a id="improve" href="#" class="btn btn-default">
+  <i class="glyphicon glyphicon-edit">&nbsp;</i>
+  Improve this doc
+</a>
+<a id="source" href="#" class="btn btn-default">
+  <i class="glyphicon glyphicon-eye-open">&nbsp;</i>
+  View the source
+</a>
 <h1>Marionette.Layout</h1>
 
 <p>A <code>Layout</code> is a specialized hybrid between an <code>ItemView</code> and
@@ -25,59 +32,42 @@ to be attached to dynamically rendered HTML.</p>
 <p>For a more in-depth discussion on Layouts, see the blog post
 <a href="http://lostechies.com/derickbailey/2012/03/22/managing-layouts-and-nested-views-with-backbone-marionette/">Manage Layouts And Nested Views With Backbone.Marionette</a></p>
 
-<h2>Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
-
-<ul>
-<li><a href="#Basic Usage">Basic Usage</a></li>
-<li><a href="#Region Availability">Region Availability</a></li>
-<li><a href="#Re-Rendering A Layout">Re-Rendering A Layout</a></li>
-<li><a href="#Nested Layouts And Views">Nested Layouts And Views</a></li>
-<li><a href="#Closing A Layout">Closing A Layout </a></li>
-<li><a href="#Custom Region Type">Custom Region Type</a></li>
-</ul>
-
-<h2>Basic Usage <a href="#Basic Usage" id="Basic Usage" class="deep-link">#</a></h2>
+<h2>Basic Usage</h2>
 
 <p>The <code>Layout</code> extends directly from <code>ItemView</code> and adds the ability
 to specify <code>regions</code> which become <code>Region</code> instances that are attached
 to the layout.</p>
 
-<pre class="brush:html">
+<pre><code class="html">&lt;script id=&quot;layout-template&quot; type=&quot;text/template&quot;&gt;
+  &lt;section&gt;
+    &lt;navigation id=&quot;menu&quot;&gt;...&lt;/navigation&gt;
+    &lt;article id=&quot;content&quot;&gt;...&lt;/article&gt;
+  &lt;/section&gt;
+&lt;/script&gt;
+</code></pre>
 
-<script id="layout-template" type="text/template">
-  <section>
-    <navigation id="menu">...</navigation>
-    <article id="content">...</article>
-  </section>
-</script>
-</pre>
-
-<pre class="brush:js">
-
-AppLayout = Backbone.Marionette.Layout.extend({
-  template: "#layout-template",
+<pre><code class="js">AppLayout = Backbone.Marionette.Layout.extend({
+  template: &quot;#layout-template&quot;,
 
   regions: {
-    menu: "#menu",
-    content: "#content"
+    menu: &quot;#menu&quot;,
+    content: &quot;#content&quot;
   }
 });
 
 var layout = new AppLayout();
 layout.render();
-</pre>
+</code></pre>
 
-<p>Once you've rendered the layout, you now have direct access
+<p>Once you&#39;ve rendered the layout, you now have direct access
 to all of the specified regions as region managers.</p>
 
-<pre class="brush:js">
-
-layout.menu.show(new MenuView());
+<pre><code class="js">layout.menu.show(new MenuView());
 
 layout.content.show(new MainContentView());
-</pre>
+</code></pre>
 
-<h2>Region Availability <a href="#Region Availability" id="Region Availability" class="deep-link">#</a></h2>
+<h2>Region Availability</h2>
 
 <p>Any defined regions within a layout will be available to the
 layout or any calling code immediately after instantiating the
@@ -88,11 +78,11 @@ method or anything else, to create the regions.</p>
 <p>However, a region will only be able to populate itself if the
 layout has access to the elements specified within the region
 definitions. That is, if your view has not yet rendered, your
-regions may not be able to find the element that you've
+regions may not be able to find the element that you&#39;ve
 specified for them to manage. In that scenario, using the
 region will result in no changes to the DOM.</p>
 
-<h2>Re-Rendering A Layout <a href="#Re-Rendering A Layout" id="Re-Rendering A Layout" class="deep-link">#</a></h2>
+<h2>Re-Rendering A Layout</h2>
 
 <p>A layout can be rendered as many times as needed, but renders
 after the first one behave differently than the initial render.</p>
@@ -110,7 +100,7 @@ reset so that they are no longer referencing the element of the previous
 layout render. </p>
 
 <p>Then after the Layout is finished re-rendering itself,
-showing a view in the layout's regions will cause the regions to attach
+showing a view in the layout&#39;s regions will cause the regions to attach
 themselves to the new elements in the layout.</p>
 
 <h3>Avoid Re-Rendering The Entire Layout</h3>
@@ -122,33 +112,31 @@ views that the layout is displaying.</p>
 
 <p>Therefore, it is suggested that you avoid re-rendering the entire
 layout unless absolutely necessary. Instead, if you are binding the
-layout's template to a model and need to update portions of the layout,
-you should listen to the model's "change" events and only update the
+layout&#39;s template to a model and need to update portions of the layout,
+you should listen to the model&#39;s &quot;change&quot; events and only update the
 neccesary DOM elements.</p>
 
-<h2>Nested Layouts And Views <a href="#Nested Layouts And Views" id="Nested Layouts And Views" class="deep-link">#</a></h2>
+<h2>Nested Layouts And Views</h2>
 
 <p>Since the <code>Layout</code> extends directly from <code>ItemView</code>, it
 has all of the core functionality of an item view. This includes
 the methods necessary to be shown within an existing region manager.</p>
 
-<pre class="brush:js">
-
-MyApp = new Backbone.Marionette.Application();
+<pre><code class="js">MyApp = new Backbone.Marionette.Application();
 MyApp.addRegions({
-  mainRegion: "#main"
+  mainRegion: &quot;#main&quot;
 });
 
 var layout = new AppLayout();
 MyApp.mainRegion.show(layout);
 
 layout.show(new MenuView());
-</pre>
+</code></pre>
 
 <p>You can nest layouts into region managers as deeply as you want.
 This provides for a well organized, nested view structure.</p>
 
-<h2>Closing A Layout  <a href="#Closing A Layout " id="Closing A Layout " class="deep-link">#</a></h2>
+<h2>Closing A Layout</h2>
 
 <p>When you are finished with a layout, you can call the
 <code>close</code> method on it. This will ensure that all of the region managers
@@ -162,46 +150,42 @@ one, the same it will close a view.</p>
 <p>All of this ensures that layouts and the views that they
 contain are cleaned up correctly.</p>
 
-<h2>Custom Region Type <a href="#Custom Region Type" id="Custom Region Type" class="deep-link">#</a></h2>
+<h2>Custom Region Type</h2>
 
 <p>If you have the need to replace the <code>Region</code> with a region class of
 your own implementation, you can specify an alternate class to use
 with the <code>regionType</code> propery of the <code>Layout</code>.</p>
 
-<pre class="brush:js">
-
-MyLayout = Backbone.Marionette.Layout.extend({
+<pre><code class="js">MyLayout = Backbone.Marionette.Layout.extend({
   regionType: SomeCustomRegion 
 });
-</pre>
+</code></pre>
 
 <p>You can also specify custom <code>Region</code> classes for each <code>region</code>:</p>
 
-<pre class="brush:js">
-
-AppLayout = Backbone.Marionette.Layout.extend({
-  template: "#layout-template",
+<pre><code class="js">AppLayout = Backbone.Marionette.Layout.extend({
+  template: &quot;#layout-template&quot;,
 
   regionType: SomeDefaultCustomRegion,
 
   regions: {
     menu: {
-      selector: "#menu",
+      selector: &quot;#menu&quot;,
       regionType: CustomRegionTypeReference
     },
     content: {
-      selector: "#content",
+      selector: &quot;#content&quot;,
       regionType: CustomRegionType2Reference
     }
   }
 });
-</pre>
+</code></pre>
+
             </div>
         </div>
-        <script src="assets_/js/lib/jquery.js"></script>
-        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
-        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
-        <script src="assets_/js/main.js"></script>
+        <script src="/doc-assets/js/lib/jquery.js"></script>
+        <script src="/doc-assets/js/lib/prettify/prettify.js"></script>
+        <script src="/doc-assets/js/main.js"></script>
     </body>
 </html>
 

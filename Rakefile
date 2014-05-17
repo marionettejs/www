@@ -23,6 +23,11 @@ end
 
 def build
   system "middleman build"
+
+  Dir.chdir "build" do
+    system "cp ../config.ru ."
+    system "cp ../Procfile ."
+  end
 end
 
 def generate_marionette_docs
@@ -30,10 +35,15 @@ def generate_marionette_docs
   repo_path = marionette_path
   site_path = current_path
   current_tag = ""
+  select_box = "<select id=\"version\" class=\"form-control\">"
   tags = Array.new
   print "Generating docs data from #{repo_path}... "
 
   Dir.chdir(repo_path) do
+    system("git checkout master")
+    describe = `git describe --tags --always`.strip
+    current_tag = describe.gsub("\n", "")
+
     # get list of tags in marionette repo
     describe = `git tag`.strip
     tags = describe.split("\n")
@@ -53,11 +63,17 @@ def generate_marionette_docs
         newfilename = File.basename(filename, ".*" )
         FileUtils.cp(filename, "#{site_path}/source/docs/#{tag}/#{newfilename}.md")
       end
+
+      if tag == current_tag
+        select_box += "<option value=\"#{tag}\">#{tag} (current)</option>"
+      else
+        select_box += "<option value=\"#{tag}\">#{tag}</option>"
+      end
     end
 
-    # checkout last tag
-    describe = `git describe --tags --always`.strip
-    current_tag = describe.gsub("\n", "")
+    select_box += "</select>"
+
+    # checkout latest tag
     system("git checkout tags/#{current_tag}")
     FileUtils.mkdir_p("#{site_path}/source/docs/current")
     filenames = Dir.glob('docs/*.md')
@@ -76,6 +92,8 @@ def generate_marionette_docs
 
         system("node ../../doc-assets/build.js");
         system("rm *.md");
+        text = File.read('sidebar_.html')
+        File.write('sidebar_.html', text.gsub('{select_box}', select_box))
 
       end
     end
@@ -85,15 +103,18 @@ def generate_marionette_docs
 
     system("node ../../doc-assets/build.js");
     system("rm *.md");
+    text = File.read('sidebar_.html')
+    File.write('sidebar_.html', text.gsub('{select_box}', select_box))
 
   end
 
-  print "Generating annotated src data from #{repo_path}... "
-  FileUtils.mkdir_p("#{site_path}/backbone.marionette/#{current_tag}")
-  system("curl https://raw.githubusercontent.com/marionettejs/backbone.marionette/#{current_tag}/lib/backbone.marionette.js > backbone.marionette/#{current_tag}/backbone.marionette.js")
-  system("./node_modules/.bin/docco backbone.marionette/#{current_tag}/backbone.marionette.js -o source/annotated-src/")
-  system("rm -rdf backbone.marionette");
-  puts "Built #{repo_path}"
+  # print "Generating annotated src data from #{repo_path}... "
+  # FileUtils.mkdir_p("#{site_path}/backbone.marionette/#{current_tag}")
+  # system("curl https://raw.githubusercontent.com/marionettejs/backbone.marionette/#{current_tag}/lib/backbone.marionette.js > backbone.marionette/#{current_tag}/backbone.marionette.js")
+  # system("./node_modules/.bin/docco backbone.marionette/#{current_tag}/backbone.marionette.js -o source/annotated-src/#{current_tag}/")
+  # system("./node_modules/.bin/docco backbone.marionette/#{current_tag}/backbone.marionette.js -o source/annotated-src/")
+  # system("rm -rdf backbone.marionette");
+  # puts "Built #{repo_path}"
 end
 
 def get_anotated_source
@@ -132,6 +153,10 @@ task :backfill_anotated_source do
   get_anotated_source
 end
 
+task :build do
+  build
+end
+
 desc "Build and deploy the website to github pages"
 task :deploy do
   require "highline/import"
@@ -146,8 +171,6 @@ task :deploy do
   build
 
   Dir.chdir "build" do
-    system "cp ../config.ru ."
-    system "cp ../Procfile ."
     system "git add -A"
     system "git commit -m '#{message.gsub("'", "\\'")}'"
     system "git push --force heroku master"

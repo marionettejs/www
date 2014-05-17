@@ -4,32 +4,28 @@
         <meta charset="utf-8">
         <title>Marionette.ItemView : Documentation</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="assets_/css/shCore.css">
-        <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
-        <link rel="stylesheet" href="assets_/css/main.css">
+        <link rel="stylesheet" href="/doc-assets/css/bootstrap.css">
+        <link rel="stylesheet" href="/doc-assets/css/main.css">
     </head>
     <body>
         <div id="wrapper">
             <div id="content">
 
+<a id="improve" href="#" class="btn btn-default">
+  <i class="glyphicon glyphicon-edit">&nbsp;</i>
+  Improve this doc
+</a>
+<a id="source" href="#" class="btn btn-default">
+  <i class="glyphicon glyphicon-eye-open">&nbsp;</i>
+  View the source
+</a>
 <h1>Marionette.ItemView</h1>
 
 <p>An <code>ItemView</code> is a view that represents a single item. That item may be a 
 <code>Backbone.Model</code> or may be a <code>Backbone.Collection</code>. Whichever it is, though, it
 will be treated as a single item. </p>
 
-<h2>Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
-
-<ul>
-<li><a href="#ItemView render">ItemView render</a></li>
-<li><a href="#Callback Methods">Callback Methods</a></li>
-<li><a href="#View Events">View Events</a></li>
-<li><a href="#"item">"item</a></li>
-<li><a href="#ItemView serializeData">ItemView serializeData</a></li>
-<li><a href="#Organizing ui elements">Organizing ui elements</a></li>
-</ul>
-
-<h2>ItemView render <a href="#ItemView render" id="ItemView render" class="deep-link">#</a></h2>
+<h2>ItemView render</h2>
 
 <p>An item view has a <code>render</code> method built in to it, and uses the
 <code>Renderer</code> object to do the actual rendering.</p>
@@ -37,16 +33,14 @@ will be treated as a single item. </p>
 <p>You should provide a <code>template</code> attribute on the item view, which
 will be either a jQuery selector:</p>
 
-<pre class="brush:js">
-
-MyView = Backbone.Marionette.ItemView.extend({
-  template: "#some-template"
+<pre><code class="js">MyView = Backbone.Marionette.ItemView.extend({
+  template: &quot;#some-template&quot;
 });
 
 new MyView().render();
-</pre>
+</code></pre>
 
-<h2>Callback Methods <a href="#Callback Methods" id="Callback Methods" class="deep-link">#</a></h2>
+<h2>Callback Methods</h2>
 
 <p>There are several callback methods that are called
 for an ItemView. These methods are intended to be handled within
@@ -57,142 +51,126 @@ the view definition, directly.</p>
 <p>Before an ItemView is rendered a <code>beforeRender</code> method will be called
 on the view.</p>
 
-<pre class="brush:js">
-
-Backbone.Marionette.ItemView.extend({
+<pre><code class="js">Backbone.Marionette.ItemView.extend({
   beforeRender: function(){
-    // set up final bits just before rendering the view's `el`
+    // set up final bits just before rendering the view&#39;s `el`
   }
 });
-</pre>
+</code></pre>
 
 <h3>onRender callback</h3>
 
 <p>After the view has been rendered, a <code>onRender</code> method will be called.
 You can implement this in your view to provide custom code for dealing
-with the view's <code>el</code> after it has been rendered:</p>
+with the view&#39;s <code>el</code> after it has been rendered:</p>
 
-<pre class="brush:js">
-
-Backbone.Marionette.ItemView.extend({
+<pre><code class="js">Backbone.Marionette.ItemView.extend({
   onRender: function(){
-    // manipulate the `el` here. it's already
-    // been rendered, and is full of the view's
+    // manipulate the `el` here. it&#39;s already
+    // been rendered, and is full of the view&#39;s
     // HTML, ready to go.
   }
 });
-</pre>
+</code></pre>
 
 <h3>beforeClose callback</h3>
 
 <p>A <code>beforeClose</code> method will be called on the view, just prior
 to closing it:</p>
 
-<pre class="brush:js">
-
-Backbone.Marionette.ItemView.extend({
+<pre><code class="js">Backbone.Marionette.ItemView.extend({
   beforeClose: function(){
-    // manipulate the `el` here. it's already
-    // been rendered, and is full of the view's
+    // manipulate the `el` here. it&#39;s already
+    // been rendered, and is full of the view&#39;s
     // HTML, ready to go.
   }
 });
-</pre>
+</code></pre>
 
 <h3>onClose callback</h3>
 
 <p>An <code>onClose</code> method will be called on the view, after closing it.</p>
 
-<pre class="brush:js">
-
-Backbone.Marionette.ItemView.extend({
+<pre><code class="js">Backbone.Marionette.ItemView.extend({
   onClose: function(){
     // custom closing and cleanup goes here
   }
 });
-</pre>
+</code></pre>
 
-<h2>View Events <a href="#View Events" id="View Events" class="deep-link">#</a></h2>
+<h2>View Events</h2>
 
 <p>There are several events that are triggers by an <code>ItemView</code>, which
-allow code outside of a view to respond to what's happening with
+allow code outside of a view to respond to what&#39;s happening with
 the view.</p>
 
-<h2>"item:before:render" event <a href="#"item" id=""item" class="deep-link">#</a></h2>
+<h2>&quot;item:before:render&quot; event</h2>
 
-<p>An "item:before:render" event will be triggered just before the
+<p>An &quot;item:before:render&quot; event will be triggered just before the
 view is rendered</p>
 
-<pre class="brush:js">
-
-MyView = Backbone.Marionette.ItemView.extend({...});
+<pre><code class="js">MyView = Backbone.Marionette.ItemView.extend({...});
 
 var myView = new MyView();
 
-myView.on("item:before:render", function(){
-  alert("the view is about to be rendered");
+myView.on(&quot;item:before:render&quot;, function(){
+  alert(&quot;the view is about to be rendered&quot;);
 });
-</pre>
+</code></pre>
 
-<h3>"render" / "item:rendered" event</h3>
+<h3>&quot;render&quot; / &quot;item:rendered&quot; event</h3>
 
-<p>An "item:rendered" event will be triggered just after the view 
+<p>An &quot;item:rendered&quot; event will be triggered just after the view 
 has been rendered.</p>
 
-<pre class="brush:js">
-
-MyView = Backbone.Marionette.ItemView.extend({...});
+<pre><code class="js">MyView = Backbone.Marionette.ItemView.extend({...});
 
 var myView = new MyView();
 
-myView.on("item:rendered", function(){
-  alert("the view was rendered!");
+myView.on(&quot;item:rendered&quot;, function(){
+  alert(&quot;the view was rendered!&quot;);
 });
 
-myView.on("render", function(){
-  alert("the view was rendered!");
+myView.on(&quot;render&quot;, function(){
+  alert(&quot;the view was rendered!&quot;);
 });
-</pre>
+</code></pre>
 
-<h3>"item:before:close" event</h3>
+<h3>&quot;item:before:close&quot; event</h3>
 
-<p>An "item:before:close" event will be triggered just prior to the
+<p>An &quot;item:before:close&quot; event will be triggered just prior to the
 view closing itself. This event fires when the <code>close</code> method of
 the view is called.</p>
 
-<pre class="brush:js">
-
-MyView = Backbone.Marionette.ItemView.extend({...});
+<pre><code class="js">MyView = Backbone.Marionette.ItemView.extend({...});
 
 var myView = new MyView();
 
-myView.on("item:before:close", function(){
-  alert("the view is about to be closed");
+myView.on(&quot;item:before:close&quot;, function(){
+  alert(&quot;the view is about to be closed&quot;);
 });
 
 myView.close();
-</pre>
+</code></pre>
 
-<h3>"item:closed" event</h3>
+<h3>&quot;item:closed&quot; event</h3>
 
-<p>An "item:closed" event will be triggered just after the
+<p>An &quot;item:closed&quot; event will be triggered just after the
 view closes. This event fires when the <code>close</code> method of
 the view is called.</p>
 
-<pre class="brush:js">
-
-MyView = Backbone.Marionette.ItemView.extend({...});
+<pre><code class="js">MyView = Backbone.Marionette.ItemView.extend({...});
 
 var myView = new MyView();
 
-myView.on("item:closed", function(){
-  alert("the view is closed");
+myView.on(&quot;item:closed&quot;, function(){
+  alert(&quot;the view is closed&quot;);
 });
 
 myView.close();
-</pre>
+</code></pre>
 
-<h2>ItemView serializeData <a href="#ItemView serializeData" id="ItemView serializeData" class="deep-link">#</a></h2>
+<h2>ItemView serializeData</h2>
 
 <p>Item views will serialize a model or collection, by default, by
 calling <code>.toJSON</code> on either the model or collection. If both a model
@@ -202,95 +180,83 @@ that is rendered. </p>
 
 <p>If the serialization is a model, the results are passed in directly:</p>
 
-<pre class="brush:js">
-
-var myModel = new MyModel({foo: "bar"});
+<pre><code class="js">var myModel = new MyModel({foo: &quot;bar&quot;});
 
 new MyItemView({
-  template: "#myItemTemplate",
+  template: &quot;#myItemTemplate&quot;,
   model: myModel
 });
 
 MyItemView.render();
-</pre>
+</code></pre>
 
-<pre class="brush:html">
-
-<script id="myItemTemplate" type="template">
-  Foo is: <%= foo %>
-</script>
-</pre>
+<pre><code class="html">&lt;script id=&quot;myItemTemplate&quot; type=&quot;template&quot;&gt;
+  Foo is: &lt;%= foo %&gt;
+&lt;/script&gt;
+</code></pre>
 
 <p>If the serialization is a collection, the results are passed in as an 
 <code>items</code> array:</p>
 
-<pre class="brush:js">
-
-var myCollection = new MyCollection([{foo: "bar"}, {foo: "baz"}]);
+<pre><code class="js">var myCollection = new MyCollection([{foo: &quot;bar&quot;}, {foo: &quot;baz&quot;}]);
 
 new MyItemView({
-  template: "#myCollectionTemplate",
+  template: &quot;#myCollectionTemplate&quot;,
   collection: myCollection
 });
 
 MyItemView.render();
-</pre>
+</code></pre>
 
-<pre class="brush:html">
-
-<script id="myCollectionTemplate" type="template">
-  <% _.each(items, function(item){ %>
-    Foo is: <%= foo %>
-  <% }); %>
-</script>
-</pre>
+<pre><code class="html">&lt;script id=&quot;myCollectionTemplate&quot; type=&quot;template&quot;&gt;
+  &lt;% _.each(items, function(item){ %&gt;
+    Foo is: &lt;%= foo %&gt;
+  &lt;% }); %&gt;
+&lt;/script&gt;
+</code></pre>
 
 <p>If you need custom serialization for your data, you can provide a
 <code>serializeData</code> method on your view. It must return a valid JSON
 object, as if you had called <code>.toJSON</code> on a model or collection.</p>
 
-<pre class="brush:js">
-
-Backbone.Marionette.ItemView.extend({
+<pre><code class="js">Backbone.Marionette.ItemView.extend({
   serializeData: function(){
     return {
-      "some attribute": "some value"
+      &quot;some attribute&quot;: &quot;some value&quot;
     }
   }
 });
-</pre>
+</code></pre>
 
-<h2>Organizing ui elements <a href="#Organizing ui elements" id="Organizing ui elements" class="deep-link">#</a></h2>
+<h2>Organizing ui elements</h2>
 
 <p>As documented in View, you can specify a <code>ui</code> hash in your view that
-maps between a ui element's name and its jQuery selector, similar to
+maps between a ui element&#39;s name and its jQuery selector, similar to
 how regions are organized. This is especially useful if you access the
-same ui element more than once in your view's code, so instead of
+same ui element more than once in your view&#39;s code, so instead of
 duplicating the selector you can simply reference it by
 <code>this.ui.elementName</code>:</p>
 
-<pre class="brush:js">
-
-Backbone.Marionette.ItemView.extend({
-  tagName: "tr",
+<pre><code class="js">Backbone.Marionette.ItemView.extend({
+  tagName: &quot;tr&quot;,
 
   ui: {
-    checkbox: "input[type=checkbox]"
+    checkbox: &quot;input[type=checkbox]&quot;
   },
 
   onRender: function() {
-    if (this.model.get('selected')) {
-      this.ui.checkbox.addClass('checked');
+    if (this.model.get(&#39;selected&#39;)) {
+      this.ui.checkbox.addClass(&#39;checked&#39;);
     }
   }
 });
-</pre>
+</code></pre>
+
             </div>
         </div>
-        <script src="assets_/js/lib/jquery.js"></script>
-        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
-        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
-        <script src="assets_/js/main.js"></script>
+        <script src="/doc-assets/js/lib/jquery.js"></script>
+        <script src="/doc-assets/js/lib/prettify/prettify.js"></script>
+        <script src="/doc-assets/js/main.js"></script>
     </body>
 </html>
 

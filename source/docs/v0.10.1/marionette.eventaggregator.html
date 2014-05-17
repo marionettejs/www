@@ -4,48 +4,43 @@
         <meta charset="utf-8">
         <title>Marionette.EventAggregator : Documentation</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="assets_/css/shCore.css">
-        <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
-        <link rel="stylesheet" href="assets_/css/main.css">
+        <link rel="stylesheet" href="/doc-assets/css/bootstrap.css">
+        <link rel="stylesheet" href="/doc-assets/css/main.css">
     </head>
     <body>
         <div id="wrapper">
             <div id="content">
 
+<a id="improve" href="#" class="btn btn-default">
+  <i class="glyphicon glyphicon-edit">&nbsp;</i>
+  Improve this doc
+</a>
+<a id="source" href="#" class="btn btn-default">
+  <i class="glyphicon glyphicon-eye-open">&nbsp;</i>
+  View the source
+</a>
 <h1>Marionette.EventAggregator</h1>
 
 <p>An event aggregator is an application level pub/sub mechanism that allows various
 pieces of an otherwise segmented and disconnected system to communicate with
 each other. </p>
 
-<h2>Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
-
-<ul>
-<li><a href="#Basic Usage">Basic Usage</a></li>
-<li><a href="#BindTo">BindTo</a></li>
-<li><a href="#Decoupling With An Event-Driven Architecture">Decoupling With An Event-Driven Architecture</a></li>
-</ul>
-
-<h2>Basic Usage <a href="#Basic Usage" id="Basic Usage" class="deep-link">#</a></h2>
+<h2>Basic Usage</h2>
 
 <p>Backbone.Marionette provides an event aggregator with each application instance: 
 <code>MyApp.vent</code>. You can also instantiate your own event aggregator:</p>
 
-<pre class="brush:js">
-
-myVent = new Backbone.Marionette.EventAggregator();
-</pre>
+<pre><code class="js">myVent = new Backbone.Marionette.EventAggregator();
+</code></pre>
 
 <p>Passing an object literal of options to the constructor function will extend the
 event aggregator with those options:</p>
 
-<pre class="brush:js">
+<pre><code class="js">myVent = new Backbone.Marionette.EventAggregator({foo: &quot;bar&quot;});
+myVent.foo // =&gt; &quot;bar&quot;
+</code></pre>
 
-myVent = new Backbone.Marionette.EventAggregator({foo: "bar"});
-myVent.foo // => "bar"
-</pre>
-
-<h2>BindTo <a href="#BindTo" id="BindTo" class="deep-link">#</a></h2>
+<h2>BindTo</h2>
 
 <p>The <code>EventAggregator</code> extends from the <a href="./marionette.eventbinder.md"><code>EventBinder</code></a> object to easily track
 and unbind all event callbacks, including inline callback functions. </p>
@@ -54,45 +49,41 @@ and unbind all event callbacks, including inline callback functions. </p>
 that the object being bound to is the event aggregator directly, and does not allow
 the bound object to be specified:</p>
 
-<pre class="brush:js">
+<pre><code class="js">vent = new Backbone.Marionette.EventAggregator();
 
-vent = new Backbone.Marionette.EventAggregator();
-
-vent.bindTo("foo", function(){
-  alert("bar");
+vent.bindTo(&quot;foo&quot;, function(){
+  alert(&quot;bar&quot;);
 });
 
 vent.unbindAll();
 
-vent.trigger("foo"); // => nothing. all events have been unbound.
-</pre>
+vent.trigger(&quot;foo&quot;); // =&gt; nothing. all events have been unbound.
+</code></pre>
 
-<h2>Decoupling With An Event-Driven Architecture <a href="#Decoupling With An Event-Driven Architecture" id="Decoupling With An Event-Driven Architecture" class="deep-link">#</a></h2>
+<h2>Decoupling With An Event-Driven Architecture</h2>
 
 <p>You can use an event aggregator to communicate between various modules of your
 application, ensuring correct decoupling while also facilitating functionality
-that needs more than one of your application's modules.</p>
+that needs more than one of your application&#39;s modules.</p>
 
-<pre class="brush:js">
+<pre><code class="js">var vent = new Backbone.Marionette.EventAggregator();
 
-var vent = new Backbone.Marionette.EventAggregator();
-
-vent.bind("some:event", function(){
-  alert("Some event was fired!!!!");
+vent.bind(&quot;some:event&quot;, function(){
+  alert(&quot;Some event was fired!!!!&quot;);
 });
 
-vent.trigger("some:event");
-</pre>
+vent.trigger(&quot;some:event&quot;);
+</code></pre>
 
 <p>For a more detailed discussion and example of using an event aggregator with
 Backbone applications, see the blog post: <a href="http://lostechies.com/derickbailey/2011/07/19/references-routing-and-the-event-aggregator-coordinating-views-in-backbone-js/">References, Routing, and The Event
 Aggregator: Coordinating Views In Backbone.js</a>.</p>
+
             </div>
         </div>
-        <script src="assets_/js/lib/jquery.js"></script>
-        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
-        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
-        <script src="assets_/js/main.js"></script>
+        <script src="/doc-assets/js/lib/jquery.js"></script>
+        <script src="/doc-assets/js/lib/prettify/prettify.js"></script>
+        <script src="/doc-assets/js/main.js"></script>
     </body>
 </html>
 

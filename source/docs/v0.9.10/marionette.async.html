@@ -4,32 +4,26 @@
         <meta charset="utf-8">
         <title>Marionette.Async : Documentation</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="assets_/css/shCore.css">
-        <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
-        <link rel="stylesheet" href="assets_/css/main.css">
+        <link rel="stylesheet" href="/doc-assets/css/bootstrap.css">
+        <link rel="stylesheet" href="/doc-assets/css/main.css">
     </head>
     <body>
         <div id="wrapper">
             <div id="content">
 
+<a id="improve" href="#" class="btn btn-default">
+  <i class="glyphicon glyphicon-edit">&nbsp;</i>
+  Improve this doc
+</a>
+<a id="source" href="#" class="btn btn-default">
+  <i class="glyphicon glyphicon-eye-open">&nbsp;</i>
+  View the source
+</a>
 <h1>Marionette.Async</h1>
 
 <p>Add async / deferred rendering and template loading to Backbone.Marionette</p>
 
-<h2>Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
-
-<ul>
-<li><a href="#Download">Download</a></li>
-<li><a href="#AMD/RequireJS Support">AMD/RequireJS Support</a></li>
-<li><a href="#Basic Usage">Basic Usage</a></li>
-<li><a href="#Marionette.Async.Region">Marionette.Async.Region</a></li>
-<li><a href="#Marionette.Async.ItemView">Marionette.Async.ItemView</a></li>
-<li><a href="#Marionette.Async.CollectionView">Marionette.Async.CollectionView</a></li>
-<li><a href="#Marionette.Async.CompositeView">Marionette.Async.CompositeView</a></li>
-<li><a href="#Marionette.Async.TemplateCache">Marionette.Async.TemplateCache</a></li>
-</ul>
-
-<h2>Download <a href="#Download" id="Download" class="deep-link">#</a></h2>
+<h2>Download</h2>
 
 <p>To add support for asynchronously loading templates and rendering views, 
 you need to download and include one of the following <code>marionette.async</code>
@@ -39,27 +33,25 @@ builds in your project:</p>
 
 <p>Production: <a href="https://raw.github.com/derickbailey/backbone.marionette/master/lib/backbone.marionette.async.min.js">backbone.marionette.async.min.js</a></p>
 
-<h2>AMD/RequireJS Support <a href="#AMD/RequireJS Support" id="AMD/RequireJS Support" class="deep-link">#</a></h2>
+<h2>AMD/RequireJS Support</h2>
 
 <p>Note that there is no AMD/RequireJS build for Marionette.Async. 
 AMD/RequireJS are asynchronous by definition: <strong>A</strong>synchronous 
 <strong>M</strong>odule <strong>D</strong>efinition. Providing an AMD/RequireJS version of 
 Marionette.Async would be redundant.</p>
 
-<h2>Basic Usage <a href="#Basic Usage" id="Basic Usage" class="deep-link">#</a></h2>
+<h2>Basic Usage</h2>
 
 <p>To use Marionette.Async, you must include one of the above downloads in
 your project, after Marionette has been included:</p>
 
-<pre class="brush:html">
-
-<script src="/js/underscore.js"></script>
-<script src="/js/jquery.js"></script>
-<script src="/js/json2.js"></script>
-<script src="/js/backbone.js"></script>
-<script src="/js/backbone.marionette.js"></script>
-<script src="/js/backbone.marionette.async.js"></script>
-</pre>
+<pre><code class="html">&lt;script src=&quot;/js/underscore.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;/js/jquery.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;/js/json2.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;/js/backbone.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;/js/backbone.marionette.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;/js/backbone.marionette.async.js&quot;&gt;&lt;/script&gt;
+</code></pre>
 
 <p>Once that has been included, several core functions on several of the
 Marionette objects will be overwritten with asynchronous counterparts.</p>
@@ -68,18 +60,16 @@ Marionette objects will be overwritten with asynchronous counterparts.</p>
 back and forth between sync/async objects. Once included in the page, all
 of the specified methods will run with async capabilities.</p>
 
-<h2>Marionette.Async.Region <a href="#Marionette.Async.Region" id="Marionette.Async.Region" class="deep-link">#</a></h2>
+<h2>Marionette.Async.Region</h2>
 
-<p>The region manager <code>show</code> method takes advantage of jQuery's
+<p>The region manager <code>show</code> method takes advantage of jQuery&#39;s
 deferred cababilities, allowing for some very advanced techniques
 to be used for rendering views.</p>
 
 <p>To use a deferred, a view that is shown via a region manager
 must return a jQuery deferred object from the <code>render</code> method:</p>
 
-<pre class="brush:js">
-
-DeferredView = Backbone.View.extend({
+<pre><code class="js">DeferredView = Backbone.View.extend({
   render: function(){
     var that = this;
     var data = this.serializeData();
@@ -103,47 +93,43 @@ DeferredView = Backbone.View.extend({
 
 var view = new DeferredView();
 MyApp.mainRegion.show(view);
-</pre>
+</code></pre>
 
 <p>The region manager will wait until the deferred object is resolved
-before it attached the view's <code>el</code> to the DOM and displays it.</p>
+before it attached the view&#39;s <code>el</code> to the DOM and displays it.</p>
 
-<h2>Marionette.Async.ItemView <a href="#Marionette.Async.ItemView" id="Marionette.Async.ItemView" class="deep-link">#</a></h2>
+<h2>Marionette.Async.ItemView</h2>
 
 <p>The <code>render</code> method returns a jQuery deferred object, allowing
 you to know when the rendering completes. </p>
 
-<h2>Marionette.Async.CollectionView <a href="#Marionette.Async.CollectionView" id="Marionette.Async.CollectionView" class="deep-link">#</a></h2>
+<h2>Marionette.Async.CollectionView</h2>
 
 <p>The <code>render</code> method returns a jQuery deferred object, allowing
 you to know when the rendering completes. This deferred object
 is resolved after all of the child views have been rendered.</p>
 
-<h2>Marionette.Async.CompositeView <a href="#Marionette.Async.CompositeView" id="Marionette.Async.CompositeView" class="deep-link">#</a></h2>
+<h2>Marionette.Async.CompositeView</h2>
 
 <p>A composite view returns a jQuery deferred object from the
 <code>render</code> method. This allows you to know when the rendering for
 the entire composite structure has been completed.</p>
 
-<pre class="brush:js">
-
-MyComp = Backbone.Marionette.CompositeView.extend({...});
+<pre><code class="js">MyComp = Backbone.Marionette.CompositeView.extend({...});
 
 myComp = new MyComp().render().done(function(){
   // the entire composite is now rendered. do stuff here
 });
-</pre>
+</code></pre>
 
-<h2>Marionette.Async.TemplateCache <a href="#Marionette.Async.TemplateCache" id="Marionette.Async.TemplateCache" class="deep-link">#</a></h2>
+<h2>Marionette.Async.TemplateCache</h2>
 
 <p>The default template retrieval is to select the template contents
 from the DOM using jQuery. If you wish to change the way this
 works, you can override the <code>loadTemplate</code> method on the
 <code>TemplateCache</code> object.</p>
 
-<pre class="brush:js">
-
-Backbone.Marionette.TemplateCache.prototype.loadTemplate = function(templateId, callback){
+<pre><code class="js">Backbone.Marionette.TemplateCache.prototype.loadTemplate = function(templateId, callback){
   // load your template here, returning it or a deferred
   // object that resolves with the template as the only param
   var myTemplate = ...;
@@ -151,47 +137,43 @@ Backbone.Marionette.TemplateCache.prototype.loadTemplate = function(templateId, 
   // send the template back
   callback(myTemplate);
 }
-</pre>
+</code></pre>
 
 <p>For example, if you want to load templates asychronously from the
 server, instead of from the DOM, you could replace 
 <code>loadTemplate</code> function.</p>
 
-<p>If a "template.html" file exists on the server, with this in it:</p>
+<p>If a &quot;template.html&quot; file exists on the server, with this in it:</p>
 
-<pre class="brush:html">
-
-<script id="my-template" type="text/template">
-  <div>some template stuff</div>
-</script>
-</pre>
+<pre><code class="html">&lt;script id=&quot;my-template&quot; type=&quot;text/template&quot;&gt;
+  &lt;div&gt;some template stuff&lt;/div&gt;
+&lt;/script&gt;
+</code></pre>
 
 <p>Then the <code>loadTemplate</code> implementation may look like this:</p>
 
-<pre class="brush:js">
-
-Backbone.Marionette.TemplateCache.loadTemplate = function(templateId, callback){
+<pre><code class="js">Backbone.Marionette.TemplateCache.loadTemplate = function(templateId, callback){
   var that = this;
-  var url = templateId + ".html";
+  var url = templateId + &quot;.html&quot;;
 
   $.get(url, function(templateHtml){
     var template = $(templateHtml).find(templateId);
     callback(template);
   });
 }
-</pre>
+</code></pre>
 
 <p>This will use jQuery to asynchronously retrieve the template from
 the server. When the <code>get</code> completes, the callback function will
 select the template from the resulting HTML and then call the
 <code>callback</code> function to send it in to the template cache and allow
 it to be used for rendering.</p>
+
             </div>
         </div>
-        <script src="assets_/js/lib/jquery.js"></script>
-        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
-        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
-        <script src="assets_/js/main.js"></script>
+        <script src="/doc-assets/js/lib/jquery.js"></script>
+        <script src="/doc-assets/js/lib/prettify/prettify.js"></script>
+        <script src="/doc-assets/js/main.js"></script>
     </body>
 </html>
 
