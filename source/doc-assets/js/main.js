@@ -23,6 +23,13 @@
         }
 
         function onTocLoad(data) {
+            var selectbox_version = $('#version option:contains(current)').val();
+
+            // check if we are viewing a specific version
+            if (_curPath[2] && _curPath[2].charAt(0) === 'v') {
+              selectbox_version = _curPath[2];
+            }
+
             $_search = $('#search');
             $_toc = $_sidebar.find('.toc');
             $_tocList = $_toc.find('.toc-list');
@@ -32,6 +39,13 @@
             $_search.on('keyup blur', filterOnSearch);
 
             $_sidebar.find('.toc-mod-title:has(a[href*="'+ _curFile +'"])').addClass('active');
+
+            $('#version').val(selectbox_version);
+
+            $('#version').change(function() {
+              console.log('change', $(this).val());
+              window.location = _curPath[0] + '/' + _curPath[1] + '/' + $(this).val() + '/';
+            });
         }
 
         function toggleNavOnClick(evt) {
@@ -127,6 +141,8 @@
 
         $('#improve').prop('href', _docUrl + _curFile.replace('.html', '') + '.md');
         $('#source').prop('href', _srcUrl + _curFile.replace('.html', '') + '.js');
+
+
     }
 
     $(document).ready(init);

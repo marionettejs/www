@@ -35,10 +35,15 @@ def generate_marionette_docs
   repo_path = marionette_path
   site_path = current_path
   current_tag = ""
+  select_box = "<select id=\"version\" class=\"form-control\">"
   tags = Array.new
   print "Generating docs data from #{repo_path}... "
 
   Dir.chdir(repo_path) do
+    system("git checkout master")
+    describe = `git describe --tags --always`.strip
+    current_tag = describe.gsub("\n", "")
+
     # get list of tags in marionette repo
     describe = `git tag`.strip
     tags = describe.split("\n")
@@ -58,12 +63,17 @@ def generate_marionette_docs
         newfilename = File.basename(filename, ".*" )
         FileUtils.cp(filename, "#{site_path}/source/docs/#{tag}/#{newfilename}.md")
       end
+
+      if tag == current_tag
+        select_box += "<option value=\"#{tag}\">#{tag} (current)</option>"
+      else
+        select_box += "<option value=\"#{tag}\">#{tag}</option>"
+      end
     end
 
+    select_box += "</select>"
+
     # checkout latest tag
-    system("git checkout master")
-    describe = `git describe --tags --always`.strip
-    current_tag = describe.gsub("\n", "")
     system("git checkout tags/#{current_tag}")
     FileUtils.mkdir_p("#{site_path}/source/docs/current")
     filenames = Dir.glob('docs/*.md')
@@ -82,6 +92,8 @@ def generate_marionette_docs
 
         system("node ../../doc-assets/build.js");
         system("rm *.md");
+        text = File.read('sidebar_.html')
+        File.write('sidebar_.html', text.gsub('{select_box}', select_box))
 
       end
     end
@@ -91,6 +103,8 @@ def generate_marionette_docs
 
     system("node ../../doc-assets/build.js");
     system("rm *.md");
+    text = File.read('sidebar_.html')
+    File.write('sidebar_.html', text.gsub('{select_box}', select_box))
 
   end
 end
