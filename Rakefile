@@ -23,6 +23,11 @@ end
 
 def build
   system "middleman build"
+
+  Dir.chdir "build" do
+    system "cp ../config.ru ."
+    system "cp ../Procfile ."
+  end
 end
 
 def generate_marionette_docs
@@ -55,7 +60,8 @@ def generate_marionette_docs
       end
     end
 
-    # checkout last tag
+    # checkout latest tag
+    system("git checkout master")
     describe = `git describe --tags --always`.strip
     current_tag = describe.gsub("\n", "")
     system("git checkout tags/#{current_tag}")
@@ -88,12 +94,13 @@ def generate_marionette_docs
 
   end
 
-  print "Generating annotated src data from #{repo_path}... "
-  FileUtils.mkdir_p("#{site_path}/backbone.marionette/#{current_tag}")
-  system("curl https://raw.githubusercontent.com/marionettejs/backbone.marionette/#{current_tag}/lib/backbone.marionette.js > backbone.marionette/#{current_tag}/backbone.marionette.js")
-  system("./node_modules/.bin/docco backbone.marionette/#{current_tag}/backbone.marionette.js -o source/annotated-src/")
-  system("rm -rdf backbone.marionette");
-  puts "Built #{repo_path}"
+  # print "Generating annotated src data from #{repo_path}... "
+  # FileUtils.mkdir_p("#{site_path}/backbone.marionette/#{current_tag}")
+  # system("curl https://raw.githubusercontent.com/marionettejs/backbone.marionette/#{current_tag}/lib/backbone.marionette.js > backbone.marionette/#{current_tag}/backbone.marionette.js")
+  # system("./node_modules/.bin/docco backbone.marionette/#{current_tag}/backbone.marionette.js -o source/annotated-src/#{current_tag}/")
+  # system("./node_modules/.bin/docco backbone.marionette/#{current_tag}/backbone.marionette.js -o source/annotated-src/")
+  # system("rm -rdf backbone.marionette");
+  # puts "Built #{repo_path}"
 end
 
 def get_anotated_source
@@ -132,6 +139,10 @@ task :backfill_anotated_source do
   get_anotated_source
 end
 
+task :build do
+  build
+end
+
 desc "Build and deploy the website to github pages"
 task :deploy do
   require "highline/import"
@@ -146,8 +157,6 @@ task :deploy do
   build
 
   Dir.chdir "build" do
-    system "cp ../config.ru ."
-    system "cp ../Procfile ."
     system "git add -A"
     system "git commit -m '#{message.gsub("'", "\\'")}'"
     system "git push --force heroku master"
