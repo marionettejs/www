@@ -225,6 +225,10 @@ html {
     font-size: 14px;
 }
 
+.toc .active a {
+  font-weight: bold;
+}
+
 .hd h3 {
   font-weight: 700;
 }
