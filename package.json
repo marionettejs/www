@@ -1,7 +1,7 @@
 {
   "name": "marionette-www",
   "dependencies": {
-    "mdoc": "~0.3.4",
+    "mdoc": "git://github.com/ahumphreys87/mdoc.git#v0.4.0",
     "docco": "~0.6.3"
   }
 }
