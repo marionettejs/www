@@ -34,8 +34,7 @@
             $_tocList.slideUp(0);
             $_search.on('keyup blur', filterOnSearch);
 
-            // $('#content h2')[0].remove();
-            // $('#content ul')[0].remove();
+            $_sidebar.find('.toc-mod-title:has(a[href*="'+ _curFile +'"])').addClass('active');
         }
 
         function toggleNavOnClick(evt) {
