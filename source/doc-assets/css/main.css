@@ -9,6 +9,11 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 html {
     line-height: 1;
 }
+
+body {
+    background: none;
+}
+
 ol, ul {
     list-style: none;
 }
@@ -36,6 +41,15 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 .hidden{display:none !important}
+
+#improve, #source {
+  float: right;
+  margin-top: 20px;
+}
+
+#improve {
+  margin: 20px 0 0px 20px;
+}
 
 pre table {
     border-spacing: 0;
@@ -144,7 +158,6 @@ html {
 #sidebar {
     width: 20%;
     padding: 25px 0;
-    position: fixed;
     top: 0;
     float: left;
 }
@@ -156,7 +169,6 @@ html {
 #content {
     width: 80%;
     background: #ffffff;
-    margin-left: 20%;
     padding: 0 30px 30px;
     position: relative;
     z-index: 2;
@@ -164,7 +176,7 @@ html {
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
-    float: left;
+    float: right;
 }
 #content h1, #content h2, #content h3, #content h4, #content h5, #content h6 {
     font-size: 22px;

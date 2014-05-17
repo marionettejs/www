@@ -113,6 +113,17 @@
 
 
     function init(){
+        var VERSION_TAG = 'master';
+
+        // check if we are viewing a specific version
+        if (_curPath[2] && _curPath[2].charAt(0) === 'v') {
+          VERSION_TAG = _curPath[2];
+        }
+
+        var _srcUrl = 'https://github.com/marionettejs/backbone.marionette/blob/'+ VERSION_TAG +'/src/',
+            _docUrl = 'https://github.com/marionettejs/backbone.marionette/edit/'+ VERSION_TAG +'/docs/';
+            // _specsUrl = 'https://github.com/marionettejs/backbone.marionette/blob/'+ VERSION_TAG +'/spec/javascripts/',
+
         $('code').addClass('prettyprint').addClass('lang-js');
         sidebar.init();
         syntax.init();
@@ -124,6 +135,9 @@
           $el.attr('id', id);
           $el.wrap('<a href="#' + id + '"></a>');
         });
+
+        $('#improve').prop('href', _docUrl + _curFile.replace('.html', '') + '.md');
+        $('#source').prop('href', _srcUrl + _curFile.replace('.html', '') + '.js');
     }
 
     $(document).ready(init);
