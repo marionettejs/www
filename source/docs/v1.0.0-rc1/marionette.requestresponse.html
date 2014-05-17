@@ -4,9 +4,7 @@
         <meta charset="utf-8">
         <title>Marionette.RequestResponse : Documentation</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="assets_/css/shCore.css">
-        <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
-        <link rel="stylesheet" href="assets_/css/main.css">
+        <link rel="stylesheet" href="/doc-assets/css/main.css">
     </head>
     <body>
         <div id="wrapper">
@@ -21,19 +19,10 @@ component that is performing the work.</p>
 
 <p>A return response is expected when making a request.</p>
 
-<p>Facilitated by <a href="https://github.com/marionettejs/backbone.wreqr">Backbone.Wreqr</a>'s 
+<p>Facilitated by <a href="https://github.com/marionettejs/backbone.wreqr">Backbone.Wreqr</a>&#39;s 
 RequestResponse object.</p>
 
-<h2>Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
-
-<ul>
-<li><a href="#Documentation Index">Documentation Index</a></li>
-<li><a href="#Register A Request Handler">Register A Request Handler</a></li>
-<li><a href="#Request A Response">Request A Response</a></li>
-<li><a href="#Remove / Replace A Request Handler">Remove / Replace A Request Handler</a></li>
-</ul>
-
-<h2>Documentation Index <a href="#Documentation Index" id="Documentation Index" class="deep-link">#</a></h2>
+<h2>Documentation Index</h2>
 
 <ul>
 <li><a href="#register-a-request-handler">Register A Request Handler</a></li>
@@ -41,32 +30,28 @@ RequestResponse object.</p>
 <li><a href="#remove--replace-a-request-handler">Remove / Replace A Request Handler</a></li>
 </ul>
 
-<h2>Register A Request Handler <a href="#Register A Request Handler" id="Register A Request Handler" class="deep-link">#</a></h2>
+<h2>Register A Request Handler</h2>
 
 <p>To register a command, call <code>App.reqres.addHandler</code> and provide a name for
 the command to handle, and a callback method.</p>
 
-<pre class="brush:js">
+<pre><code class="js">var App = new Marionette.Application();
 
-var App = new Marionette.Application();
-
-App.reqres.addHandler("foo", function(bar){
-  return bar + "-quux";
+App.reqres.addHandler(&quot;foo&quot;, function(bar){
+  return bar + &quot;-quux&quot;;
 });
-</pre>
+</code></pre>
 
-<h2>Request A Response <a href="#Request A Response" id="Request A Response" class="deep-link">#</a></h2>
+<h2>Request A Response</h2>
 
 <p>To execute a command, either call <code>App.reqres.request</code> or the more direct
 route of <code>App.request</code>, providing the name of the command to execute and
 any parameters the command needs:</p>
 
-<pre class="brush:js">
+<pre><code class="js">App.request(&quot;foo&quot;, &quot;baz&quot;); // =&gt; returns &quot;baz-quux&quot;
+</code></pre>
 
-App.request("foo", "baz"); // => returns "baz-quux"
-</pre>
-
-<h2>Remove / Replace A Request Handler <a href="#Remove / Replace A Request Handler" id="Remove / Replace A Request Handler" class="deep-link">#</a></h2>
+<h2>Remove / Replace A Request Handler</h2>
 
 <p>To remove a request handler, call <code>App.reqres.removeHandler</code> and provide the
 name of the request handler to remove. </p>
@@ -76,12 +61,12 @@ name of the request handler to remove. </p>
 <p>To replace a request handler, simply register a new handler for an existing
 request handler name. There can be only one request handler 
 for a given request name.</p>
+
             </div>
         </div>
-        <script src="assets_/js/lib/jquery.js"></script>
-        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
-        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
-        <script src="assets_/js/main.js"></script>
+        <script src="/doc-assets/js/lib/jquery.js"></script>
+        <script src="/doc-assets/js/lib/prettify/prettify.js"></script>
+        <script src="/doc-assets/js/main.js"></script>
     </body>
 </html>
 

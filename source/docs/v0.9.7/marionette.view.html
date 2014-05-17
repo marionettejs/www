@@ -4,9 +4,7 @@
         <meta charset="utf-8">
         <title>Marionette.View : Documentation</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="assets_/css/shCore.css">
-        <link rel="stylesheet" href="assets_/css/shThemeDefault.css">
-        <link rel="stylesheet" href="assets_/css/main.css">
+        <link rel="stylesheet" href="/doc-assets/css/main.css">
     </head>
     <body>
         <div id="wrapper">
@@ -23,17 +21,7 @@ used directly. It exists as a base view for other view types
 to be extended from, and to provide a common location for
 behaviors that are shared across all views.</p>
 
-<h2>Table of Contents <a href="#toc" name="toc" class="deep-link">#</a></h2>
-
-<ul>
-<li><a href="#View.triggers">View.triggers</a></li>
-<li><a href="#View.serializeData">View.serializeData</a></li>
-<li><a href="#View.templateHelpers">View.templateHelpers</a></li>
-<li><a href="#View.bindUIElements">View.bindUIElements</a></li>
-<li><a href="#Change Which Template Is Rendered For A View">Change Which Template Is Rendered For A View</a></li>
-</ul>
-
-<h2>View.triggers <a href="#View.triggers" id="View.triggers" class="deep-link">#</a></h2>
+<h2>View.triggers</h2>
 
 <p>Views can define a set of <code>triggers</code> as a hash, which will 
 convert a DOM event in to a <code>view.trigger</code> event.</p>
@@ -42,58 +30,54 @@ convert a DOM event in to a <code>view.trigger</code> event.</p>
 event configuration, while the right side of the hash is the
 view event that you want to trigger from the view.</p>
 
-<pre class="brush:js">
-
-MyView = Backbone.Marionette.ItemView.extend({
+<pre><code class="js">MyView = Backbone.Marionette.ItemView.extend({
   // ...
 
   triggers: {
-    "click .do-something": "something:do:it"
+    &quot;click .do-something&quot;: &quot;something:do:it&quot;
   }
 });
 
 view = new MyView();
 view.render();
 
-view.on("something:do:it", function(){
-  alert("I DID IT!");
+view.on(&quot;something:do:it&quot;, function(){
+  alert(&quot;I DID IT!&quot;);
 });
 
-// "click" the 'do-something' DOM element to 
+// &quot;click&quot; the &#39;do-something&#39; DOM element to 
 // demonstrate the DOM event conversion
-view.$(".do-something").trigger("click");
-</pre>
+view.$(&quot;.do-something&quot;).trigger(&quot;click&quot;);
+</code></pre>
 
-<p>The result of this is an alert box that says, "I DID IT!"</p>
+<p>The result of this is an alert box that says, &quot;I DID IT!&quot;</p>
 
 <p>You can also specify the <code>triggers</code> as a function that 
 returns a hash of trigger configurations</p>
 
-<pre class="brush:js">
-
-Backbone.Marionette.CompositeView.extend({
+<pre><code class="js">Backbone.Marionette.CompositeView.extend({
   triggers: function(){
     return {
-      "click .that-thing": "that:i:sent:you"
+      &quot;click .that-thing&quot;: &quot;that:i:sent:you&quot;
     };
   }
 });
-</pre>
+</code></pre>
 
 <p>Triggers work with all View types that extend from the base
 Marionette.View.</p>
 
-<h2>View.serializeData <a href="#View.serializeData" id="View.serializeData" class="deep-link">#</a></h2>
+<h2>View.serializeData</h2>
 
-<p>The <code>serializeData</code> method will serialize a view's model or
+<p>The <code>serializeData</code> method will serialize a view&#39;s model or
 collection - with precedence given to collections. That is,
 if you have both a collection and a model in a view, calling
 the <code>serializeData</code> method will return the serialized
 collection.</p>
 
-<h2>View.templateHelpers <a href="#View.templateHelpers" id="View.templateHelpers" class="deep-link">#</a></h2>
+<h2>View.templateHelpers</h2>
 
-<p>There are times when a view's template needs to have some
+<p>There are times when a view&#39;s template needs to have some
 logic in it, and the view engine itself will not provide an
 easy way to accomplish this. For example, Underscore templates
 do not provide a helper method mechanism while Handlebars
@@ -102,80 +86,74 @@ templates do.</p>
 <p>A <code>templateHelpers</code> attribute can be applied to any View object
 that uses the <code>serializeData</code> method - including ItemViews,
 Layouts and CompositeViews. When this attribute is present,
-it's contents will be mixed in to the data object that comes
+it&#39;s contents will be mixed in to the data object that comes
 back from the <code>serializeData</code> method for you. This will 
 allow you to create helper methods that can be called from
 within your templates.</p>
 
-<h2>View.bindUIElements <a href="#View.bindUIElements" id="View.bindUIElements" class="deep-link">#</a></h2>
+<h2>View.bindUIElements</h2>
 
 <p>In several cases you need to access ui elements inside the view
 to retrieve their data or manipulate them. For example you have a
 certain div element you need to show/hide based on some state,
 or other ui element that you wish to set a css class to it.
-Instead of having jQuery selectors hanging around in the view's code
+Instead of having jQuery selectors hanging around in the view&#39;s code
 you can define a <code>ui</code> hash that contains a mapping between the
-ui element's name and its jQuery selector. Afterwards you can simply
+ui element&#39;s name and its jQuery selector. Afterwards you can simply
 access it via <code>this.ui.elementName</code>.
 See ItemView documentation for examples.</p>
 
 <p>This functionality is provided via the <code>bindUIElements</code> method.
-Since View doesn't implement the render method, then if you directly extend
+Since View doesn&#39;t implement the render method, then if you directly extend
 from View you will need to invoke this method from your render method.
 In ItemView and CompositeView this is already taken care of.</p>
 
-<h2>Change Which Template Is Rendered For A View <a href="#Change Which Template Is Rendered For A View" id="Change Which Template Is Rendered For A View" class="deep-link">#</a></h2>
+<h2>Change Which Template Is Rendered For A View</h2>
 
 <p>There may be some cases where you need to change the template that is
 used for a view, based on some simple logic such as the value of a
-specific attribute in the view's model. To do this, you can provide
+specific attribute in the view&#39;s model. To do this, you can provide
 a <code>getTemplate</code> function on your views and use this to return the
 template that you need.</p>
 
-<pre class="brush:js">
-
-MyView = Backbone.Marionette.ItemView.extend({
+<pre><code class="js">MyView = Backbone.Marionette.ItemView.extend({
   getTemplate: function(){
-    if (this.model.get("foo")){
-      return "#some-template";
+    if (this.model.get(&quot;foo&quot;)){
+      return &quot;#some-template&quot;;
     } else {
-      return "#a-different-template";
+      return &quot;#a-different-template&quot;;
     }
   }
 });
-</pre>
+</code></pre>
 
 <p>This applies to all view types.</p>
 
 <h3>Basic Example</h3>
 
-<pre class="brush:html">
+<pre><code class="html">&lt;script id=&quot;my-template&quot; type=&quot;text/html&quot;&gt;
+  I think that &lt;%= showMessage() %&gt;
+&lt;/script&gt;
+</code></pre>
 
-<script id="my-template" type="text/html">
-  I think that <%= showMessage() %>
-</script>
-</pre>
-
-<pre class="brush:js">
-
-MyView = Backbone.Marionette.ItemView.extend({
-  template: "#my-template",
+<pre><code class="js">MyView = Backbone.Marionette.ItemView.extend({
+  template: &quot;#my-template&quot;,
 
   templateHelpers: {
     showMessage: function(){
-      return this.name + " is the coolest!"
+      return this.name + &quot; is the coolest!&quot;
     }
   }
 
 });
 
-model = new Backbone.Model({name: "Backbone.Marionette"});
+model = new Backbone.Model({name: &quot;Backbone.Marionette&quot;});
 view = new MyView({
   model: model
 });
 
-view.render(); //=> "I think that Backbone.Marionette is the coolest!";
-</pre>
+view.render(); //=&gt; &quot;I think that Backbone.Marionette is the coolest!&quot;;
+</code></pre>
 
 <h3>Accessing Data Within The Helpers</h3>
 
@@ -184,14 +162,12 @@ need to prefix the data you need with <code>this</code>. Doing that will
 give you all of the methods and attributes of the serialized
 data object, including the other helper methods.</p>
 
-<pre class="brush:js">
-
-templateHelpers: {
+<pre><code class="js">templateHelpers: {
   something: function(){
-    return "Do stuff with " + this.name + " because it's awesome.";
+    return &quot;Do stuff with &quot; + this.name + &quot; because it&#39;s awesome.&quot;;
   }
 }
-</pre>
+</code></pre>
 
 <h3>Object Or Function As <code>templateHelpers</code></h3>
 
@@ -203,22 +179,20 @@ with the current view instance as the context of the
 function. The function must return an object that can be
 mixed in to the data for the view.</p>
 
-<pre class="brush:js">
-
-Backbone.Marionette.ItemView.extend({
+<pre><code class="js">Backbone.Marionette.ItemView.extend({
   templateHelpers: function(){
     return {
       foo: function(){ /* ... */ }
     }
   }
 });
-</pre>
+</code></pre>
+
             </div>
         </div>
-        <script src="assets_/js/lib/jquery.js"></script>
-        <script src="assets_/js/lib/syntax-highlighter/shCore.js"></script>
-        <script src="assets_/js/lib/syntax-highlighter/shAutoloader.js"></script>
-        <script src="assets_/js/main.js"></script>
+        <script src="/doc-assets/js/lib/jquery.js"></script>
+        <script src="/doc-assets/js/lib/prettify/prettify.js"></script>
+        <script src="/doc-assets/js/main.js"></script>
     </body>
 </html>
 
