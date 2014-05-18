@@ -158,6 +158,7 @@ task :deploy do
 
   Dir.chdir "build" do
     git_initialize("marionette-www")
+    system "git remote add heroku git@heroku.com:marionette-www.git"
   end
 
   build
