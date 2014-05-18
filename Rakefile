@@ -157,6 +157,8 @@ task :deploy do
   mkdir_p "build"
 
   Dir.chdir "build" do
+    system "cp ../Gemfile ."
+    system "cp ../Gemfile.lock ."
     git_initialize("marionette-www")
     system "git remote add heroku git@heroku.com:marionette-www.git"
   end
