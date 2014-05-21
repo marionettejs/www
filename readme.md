@@ -27,4 +27,4 @@ Deploying a new version of the marionettejs site.
 There is a little bash script that collects and compresses all the files and adds the new version number on the site.
 
     $ ./build-marionette 1.0.0-beta6
-    rake generate_docs && rake deploy
+    rake deploy
