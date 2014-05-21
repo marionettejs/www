@@ -10,6 +10,9 @@
 # Ignore the build directory
 /build
 
+# Ignore the docs source
+/source/docs
+
 # Ignore Sass' cache
 /.sass-cache
 source/stylesheets/.git
