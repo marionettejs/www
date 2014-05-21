@@ -21,7 +21,7 @@ Make your changes to the site in the source/ folder.
 Preview your changes in browser by pointing to http://localhost:2000
 
 
-Deploing a new version of the marionettejs site.
+Deploying a new version of the marionettejs site.
 -----
 
 There is a little bash script that collects and compresses all the files and adds the new version number on the site.
