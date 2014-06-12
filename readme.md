@@ -4,7 +4,13 @@ Marionette.js WWW source
 Installation
 -----------
 
-This website is built using Middleman (http://middlemanapp.com), Sass, Compass and a few node modules. All the dependencies are automatically installed with the help of Bundler and npm.
+This website is built using Middleman (http://middlemanapp.com), Sass, Compass and a few node modules. All the dependencies are automatically installed with the help of Bundler (http://bundler.io/) and npm.
+
+If you don't have `bundler` installed, first do:
+
+     $ gem install bundler
+
+Then, do the following to install dependencies:
 
      $ bundle
      $ npm install
