@@ -40,8 +40,13 @@
   text-align: center;
 
   li {
-    margin:   1%;
+    margin:   1.2%;
     display:  inline-block;
+    vertical-align: middle;
+  }
+
+  a {
+     display:  inline-block;
   }
 
   img {
