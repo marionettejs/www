@@ -22,6 +22,9 @@ def current_path
 end
 
 def build
+
+  generate_marionette_docs
+
   system "middleman build"
 
   Dir.chdir "build" do
@@ -107,6 +110,11 @@ def generate_marionette_docs
     File.write('sidebar_.html', text.gsub('{select_box}', select_box))
 
   end
+
+  FileUtils.mkdir_p("#{site_path}/backbone.marionette/#{current_tag}")
+  system("curl https://raw.githubusercontent.com/marionettejs/backbone.marionette/#{current_tag}/lib/backbone.marionette.js > backbone.marionette/#{current_tag}/backbone.marionette.js")
+  system("./node_modules/.bin/docco backbone.marionette/#{current_tag}/backbone.marionette.js -o source/annotated-src/#{current_tag}")
+  system("rm -rdf backbone.marionette")
 end
 
 def get_anotated_source

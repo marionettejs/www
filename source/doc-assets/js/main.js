@@ -113,6 +113,11 @@
 
       return (cache[str] = str
         .toLowerCase()
+        .replace(/[']/g, '')
+        .replace(/["]/g, '')
+        .replace(/[/]/g, '')
+        .replace(/[.]/g, '')
+        .replace(/[:]/g, '')
         .replace(STRING_DASHERIZE_REGEXP,'-'));
     }
 
