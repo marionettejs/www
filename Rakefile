@@ -25,6 +25,8 @@ def build
 
   generate_marionette_docs
 
+  get_anotated_source
+
   system "middleman build"
 
   Dir.chdir "build" do
