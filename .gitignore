@@ -13,6 +13,9 @@
 # Ignore the docs source
 /source/docs
 
+# Ignore the annotated source
+/source/annotated-src
+
 # Ignore Sass' cache
 /.sass-cache
 source/stylesheets/.git
