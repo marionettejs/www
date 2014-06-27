@@ -5,6 +5,7 @@
 
 require "bundler/setup"
 require "fileutils"
+require 'semantic'
 
 def git_initialize(repository)
   unless File.exist?(".git")
@@ -46,12 +47,48 @@ def generate_marionette_docs
 
   Dir.chdir(repo_path) do
     system("git checkout master")
-    describe = `git describe --tags --always`.strip
+    describe = `git describe --tags --abbrev=0 --always`.strip
     current_tag = describe.gsub("\n", "")
 
     # get list of tags in marionette repo
     describe = `git tag`.strip
     tags = describe.split("\n")
+
+    tags = tags.sort do |tag, tag2|
+
+      if tag == "v1.7"
+        tag = "v1.7.0"
+      end
+
+      if tag2 == "v1.7"
+        tag2 = "v1.7.0"
+      end
+
+      if tag == "v1.4.0beta"
+        tag = "v1.4.0-beta"
+      end
+
+      if tag2 == "v1.4.0beta"
+        tag2 = "v1.4.0-beta"
+      end
+
+      if tag == "v0.4.1a"
+        tag = "v0.4.1-a"
+      end
+
+      if tag2 == "v0.4.1a"
+        tag2 = "v0.4.1-a"
+      end
+
+      tag = tag.gsub('v', '')
+      tag2 = tag2.gsub('v', '')
+      version1 = Semantic::Version.new tag
+      version2 = Semantic::Version.new tag2
+
+      version1 <=> version2
+    end
+
+    tags = tags.reverse
 
     tags.each do |tag|
 
@@ -62,17 +99,17 @@ def generate_marionette_docs
 
       if filenames.count > 0
         FileUtils.mkdir_p("#{site_path}/source/docs/#{tag}")
+
+        if tag == current_tag
+          select_box += "<option value=\"#{tag}\">#{tag} (current)</option>"
+        else
+          select_box += "<option value=\"#{tag}\">#{tag}</option>"
+        end
       end
 
       filenames.each do |filename|
         newfilename = File.basename(filename, ".*" )
         FileUtils.cp(filename, "#{site_path}/source/docs/#{tag}/#{newfilename}.md")
-      end
-
-      if tag == current_tag
-        select_box += "<option value=\"#{tag}\">#{tag} (current)</option>"
-      else
-        select_box += "<option value=\"#{tag}\">#{tag}</option>"
       end
     end
 
@@ -116,6 +153,7 @@ def generate_marionette_docs
   FileUtils.mkdir_p("#{site_path}/backbone.marionette/#{current_tag}")
   system("curl https://raw.githubusercontent.com/marionettejs/backbone.marionette/#{current_tag}/lib/backbone.marionette.js > backbone.marionette/#{current_tag}/backbone.marionette.js")
   system("./node_modules/.bin/docco backbone.marionette/#{current_tag}/backbone.marionette.js -o source/annotated-src/#{current_tag}")
+  system("./node_modules/.bin/docco backbone.marionette/#{current_tag}/backbone.marionette.js -o source/annotated-src")
   system("rm -rdf backbone.marionette")
 end
 
