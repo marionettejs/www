@@ -54,6 +54,8 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 .form-control {
   width: 90%;
   height: 25px;
+  padding-top: 0;
+  padding-bottom: 0;
   margin-bottom: 10px;
 }
 
