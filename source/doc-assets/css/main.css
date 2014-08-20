@@ -57,6 +57,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   margin-bottom: 10px;
 }
 
+select.form-control {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
 pre table {
     border-spacing: 0;
 }
