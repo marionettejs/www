@@ -10,8 +10,9 @@
 # Ignore the build directory
 /build
 
-# Ignore the docs source
+# Ignore the api & docs source
 /source/docs
+/source/api
 
 # Ignore the annotated source
 /source/annotated-src
@@ -26,3 +27,6 @@ source/stylesheets/.git
 .DS_Store
 *.zip
 node_modules
+
+# Ignore api files
+source/api-assets/jsDocFile.json

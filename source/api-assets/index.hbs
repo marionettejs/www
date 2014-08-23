@@ -1,0 +1,24 @@
+<h1>Marionette Api</h1>
+
+<div class="sidebar">
+  <h3>Classes</h3>
+  <ul>
+    {{#classes}}
+      <li>{{name}}</li>
+    {{/classes}}
+  </ul>
+
+  <h3>Functions</h3>
+  <ul>
+    {{#each functions}}
+      <li>{{@key}}</li>
+    {{/each}}
+  </ul>
+
+  <h3>Properties</h3>
+  <ul>
+    {{#each properties}}
+      <li>{{@key}}</li>
+    {{/each}}
+  </ul>
+</div>

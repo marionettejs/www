@@ -6,6 +6,7 @@
 require "bundler/setup"
 require "fileutils"
 require 'semantic'
+require "json"
 
 def git_initialize(repository)
   unless File.exist?(".git")
@@ -23,7 +24,6 @@ def current_path
 end
 
 def build
-
   generate_marionette_docs
 
   get_anotated_source
@@ -34,6 +34,42 @@ def build
     system "cp ../config.ru ."
     system "cp ../Procfile ."
   end
+end
+
+def generate_marionette_api
+  repo_path = marionette_path
+  site_path = current_path
+  puts "Generating api from #{repo_path}... "
+
+  api = {}
+  api['properties'] = {}
+  api['functions'] = {}
+  api['classes'] = []
+
+  # build the most recent jsdoc
+  Dir.chdir(repo_path) do
+    system("grunt api")
+    my_hash = JSON.parse('{"hello": "goodbye"}')
+
+    filenames = Dir.glob('jsdoc/*.json')
+    filenames.each do |filename|
+      doc = File.open(filename, "r").read
+      api_hash = JSON.parse(doc)
+
+      if api_hash.has_key?("class")
+        api['classes'] << api_hash
+      else
+        api['properties'].merge! api_hash['properties'] unless api_hash['properties'].empty?
+        api['functions'].merge! api_hash['functions'] unless api_hash['functions'].empty?
+      end
+    end
+  end
+
+  Dir.chdir("#{site_path}/source/api-assets") do
+    File.write("jsDocFile.json", JSON.pretty_generate(api))
+    system("node build.js");
+  end
+
 end
 
 def generate_marionette_docs
@@ -187,6 +223,11 @@ end
 
 task :generate_docs do
   generate_marionette_docs
+end
+
+
+task :api do
+  generate_marionette_api
 end
 
 task :backfill_anotated_source do

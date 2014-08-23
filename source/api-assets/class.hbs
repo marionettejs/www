@@ -1,0 +1,42 @@
+<h1>{{name}}</h1>
+<p>{{class}}</p>
+
+{{{description}}}
+
+<h2>Examples</h2>
+{{#each examples}}
+  <h3>{{name}}</h3>
+  <div>
+    {{{example}}}
+  </div>
+{{/each}}
+
+<h2>Functions</h2>
+{{#with constructor}}
+  <h3>Constructor</h3>
+  {{#with description}}
+    {{#params}}
+      <div>{{name}} - {{type}} - {{description}}</div>
+    {{/params}}
+  {{/with}}
+{{/with}}
+
+{{#each functions}}
+  <h3>{{@key}}</h3>
+  {{#with description}}
+    {{{description.full}}}
+
+    <h4>Params</h4>
+    {{#params}}
+      <div>{{name}} - {{type}} - {{description}}</div>
+    {{/params}}
+  {{/with}}
+
+  {{#if examples}}
+    <h4>Examples</h4>
+    {{#each examples}}
+      <h4>{{name}}</h4>
+      {{{example}}}
+    {{/each}}
+  {{/if}}
+{{/each}}
