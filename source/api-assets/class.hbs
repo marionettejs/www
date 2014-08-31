@@ -1,42 +1,95 @@
-<h1>{{name}}</h1>
-<p>{{class}}</p>
+<html>
+  <head>
+    <link rel="stylesheet" href="../api-assets/main.css">
+  </head>
+  <body>
+    <div class="docs__sidebar">
+      <nav>
+        <h2>Marionette</h2>
+        {{#with marionette}}
+          <ul>
+            {{#each classes}}
+              <li><a href="#">{{name}}</a></li>
+            {{/each}}
+          </ul>
+        {{/with}}
 
-{{{description}}}
 
-<h2>Examples</h2>
-{{#each examples}}
-  <h3>{{name}}</h3>
-  <div>
-    {{{example}}}
-  </div>
-{{/each}}
+        {{#with klass}}
+          <h3>{{name}}</h3>
+          <h3>Functions</h3>
+          <ul>
+            {{#each functions}}
+              <li><a href="#">{{@key}}</a></li>
+            {{/each}}
+          </ul>
 
-<h2>Functions</h2>
-{{#with constructor}}
-  <h3>Constructor</h3>
-  {{#with description}}
-    {{#params}}
-      <div>{{name}} - {{type}} - {{description}}</div>
-    {{/params}}
-  {{/with}}
-{{/with}}
+          <h3>Properties</h3>
+          <ul>
+            {{#each properties}}
+              <li><a href="#">{{@key}}</a></li>
+            {{/each}}
+          </ul>
+        {{/with}}
+      </nav>
+    </div>
 
-{{#each functions}}
-  <h3>{{@key}}</h3>
-  {{#with description}}
-    {{{description.full}}}
+    <div class="docs__content">
+      {{#with klass}}
+        <h1>{{name}}</h1>
+        <div class="class">Class: {{class}}</div>
+        {{#each extends}}
+          <div class="extend">Extends: {{.}}</div>
+        {{/each}}
 
-    <h4>Params</h4>
-    {{#params}}
-      <div>{{name}} - {{type}} - {{description}}</div>
-    {{/params}}
-  {{/with}}
+        {{{description}}}
 
-  {{#if examples}}
-    <h4>Examples</h4>
-    {{#each examples}}
-      <h4>{{name}}</h4>
-      {{{example}}}
-    {{/each}}
-  {{/if}}
-{{/each}}
+        {{#if examples}}
+          <h2>Examples</h2>
+          {{#each examples}}
+            <h3>Example: {{name}}</h3>
+            <div>
+              {{{example}}}
+            </div>
+          {{/each}}
+        {{/if}}
+
+        <h2>Functions</h2>
+          {{#with constructor}}
+            <div class="function_block">
+              <h3>Constructor</h3>
+              {{#with description}}
+                {{#params}}
+                  <div>{{name}} - {{typeStr}} {{#if description}} - {{description}} {{/if}}</div>
+                {{/params}}
+              {{/with}}
+            </div>
+          {{/with}}
+
+          {{#each functions}}
+            <div class="function_block">
+              <h3>{{@key}}</h3>
+              {{#with description}}
+                {{{description.full}}}
+
+                {{#if params}}
+                <h4>Params</h4>
+                {{#each params}}
+                  <div>{{name}} - {{type}} - {{description}}</div>
+                {{/each}}
+                {{/if}}
+              {{/with}}
+
+              {{#if examples}}
+                <h4>Examples</h4>
+                {{#each examples}}
+                  <h4>{{name}}</h4>
+                  {{{example}}}
+                {{/each}}
+              {{/if}}
+            </div>
+          {{/each}}
+      {{/with}}
+    </div>
+  </body>
+</html>

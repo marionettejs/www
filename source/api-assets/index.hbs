@@ -1,24 +1,33 @@
-<h1>Marionette Api</h1>
+<html>
+  <head>
+    <link rel="stylesheet" href="../api-assets/main.css">
+  </head>
+  <body>
+    <div class="docs__sidebar">
+      <h3>Classes</h3>
+      <ul>
+        {{#each classes}}
+          <li><a href="">{{name}}</a></li>
+        {{/each}}
+      </ul>
 
-<div class="sidebar">
-  <h3>Classes</h3>
-  <ul>
-    {{#classes}}
-      <li>{{name}}</li>
-    {{/classes}}
-  </ul>
+      <h3>Functions</h3>
+      <ul>
+        {{#each functions}}
+          <li><a href="">{{@key}}</a></li>
+        {{/each}}
+      </ul>
 
-  <h3>Functions</h3>
-  <ul>
-    {{#each functions}}
-      <li>{{@key}}</li>
-    {{/each}}
-  </ul>
+      <h3>Properties</h3>
+      <ul>
+        {{#each properties}}
+          <li>{{@key}}</li>
+        {{/each}}
+      </ul>
+    </div>
 
-  <h3>Properties</h3>
-  <ul>
-    {{#each properties}}
-      <li>{{@key}}</li>
-    {{/each}}
-  </ul>
-</div>
+    <div class="docs__content">
+      <h1>Marionette Api</h1>
+    </div>
+  </body>
+</html>

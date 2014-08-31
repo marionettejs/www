@@ -26,7 +26,11 @@ var classHbs = fs.readFileSync("class.hbs").toString();
 var classTpl = Handlebars.compile(classHbs)
 
 _.each(json.classes, function(klass) {
-  var classHtml = classTpl(klass);
+  var data = {
+    marionette: json,
+    klass: klass
+  }
+  var classHtml = classTpl(data);
 
   fs.writeFile('../api/'+klass.name+'.html', classHtml, function(err) {
     if (err) {
