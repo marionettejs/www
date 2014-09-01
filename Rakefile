@@ -66,6 +66,7 @@ def generate_marionette_api
   end
 
   Dir.chdir("#{site_path}/source/api-assets") do
+    FileUtils.mkdir_p("#{site_path}/source/api") unless File.directory?("#{site_path}/source/api")
     File.write("jsDocFile.json", JSON.pretty_generate(api))
     system("node build.js");
   end
