@@ -4,30 +4,40 @@
   </head>
   <body>
     <div class="docs__sidebar">
-      <h3>Classes</h3>
-      <ul>
-        {{#each classes}}
-          <li><a href="">{{name}}</a></li>
-        {{/each}}
-      </ul>
+      <nav>
+        <h3>Classes</h3>
+        <ul>
+          {{#each classes}}
+            <li><a href="api/{{name}}.html">{{name}}</a></li>
+          {{/each}}
+        </ul>
 
-      <h3>Functions</h3>
-      <ul>
-        {{#each functions}}
-          <li><a href="">{{@key}}</a></li>
-        {{/each}}
-      </ul>
 
-      <h3>Properties</h3>
-      <ul>
-        {{#each properties}}
-          <li>{{@key}}</li>
-        {{/each}}
-      </ul>
+        <h3>Functions</h3>
+        <ul>
+          {{#each functions}}
+            <li><a href="/api/globals.html#{{@key}}">{{@key}}</a></li>
+          {{/each}}
+        </ul>
+
+        <h3>Properties</h3>
+        <ul>
+          {{#each properties}}
+            <li><a href="/api/globals.html#{{@key}}">{{@key}}</a></li>
+          {{/each}}
+        </ul>
+      </nav>
     </div>
 
     <div class="docs__content">
       <h1>Marionette Api</h1>
+      
+      {{#each classes}}
+        <div class="class_block">
+          <h3>{{name}}</h3>
+          <p> {{description.short}}</p>
+        </div class="class_block">
+      {{/each}}
     </div>
   </body>
 </html>

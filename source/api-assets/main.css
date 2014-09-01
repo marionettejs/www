@@ -39,6 +39,7 @@ pre {
   background: #f8f8f8;
   border-radius: 6px;
   overflow: auto;
+  font-size: 16px;
 }
 
 pre code {
@@ -70,22 +71,32 @@ pre code {
 
 .docs__sidebar nav a {
   display: block;
+  font-size: 16px;
+  text-decoration: none;
 }
 
 .docs__sidebar nav ul {
   padding: 0;
+  margin: 0;
 }
 
 .docs__sidebar nav li {
   list-style: none;
 }
 
-.docs__sidebar nav li:hover {
+.docs_sidebar nav li:hover {
   background: #D1DFE6;
 }
 
-.docs_sidebar h3 {
+.docs__sidebar h3 {
   margin: 0;
+  margin-top:5px;
+}
+
+.docs__sidebar .class_links {
+  border-top: 1px solid #D9E2E7;
+  margin-top:10px;
+  padding-top:5px;
 }
 
 
@@ -101,10 +112,23 @@ pre code {
   margin-bottom: 0;
 }
 
-.function_block {
-  border-top: 1px solid #ccc;
+.docs__content p {
+  font-size: 16px;
 }
 
+.function_block {
+  border-top: 1px solid #ccc;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.function_block .function_signature a{
+  text-decoration: none;
+}
+
+.property_block .property a{
+  text-decoration: none;
+}
 
 /* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
 

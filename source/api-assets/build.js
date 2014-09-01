@@ -22,8 +22,18 @@ fs.writeFile('../api/index.html', index, function(err) {
 })
 
 // WRITE class files
+var globalsHbs = fs.readFileSync("globals.hbs").toString();
+var globals = Handlebars.compile(globalsHbs)(json)
+fs.writeFile('../api/globals.html', globals, function(err) {
+  if (err) {
+    console.log('error', err);
+  }
+})
+
+// WRITE class files
 var classHbs = fs.readFileSync("class.hbs").toString();
 var classTpl = Handlebars.compile(classHbs)
+
 
 _.each(json.classes, function(klass) {
   var data = {
