@@ -9,7 +9,7 @@ fi
 # replace version in data/global.yml
 sed -E -i '' -e 's/^version: (.+)/version: '$1'/g' data/global.yml
 
--mkdir -p backbone.marionette/core
+mkdir -p backbone.marionette/core
 
 curl -L https://raw.github.com/douglascrockford/JSON-js/master/json2.js > backbone.marionette/json2.js
 curl -L http://underscorejs.org/underscore.js > backbone.marionette/underscore.js
