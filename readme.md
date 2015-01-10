@@ -1,8 +1,13 @@
-Marionette.js WWW source
-=============
+This Repo is No Longer the WWW source code.
+===========
+<p align="center">
+Please open PRs and file issues here
+https://github.com/marionettejs/marionettejs.com
+</p>
 
-Installation
------------
+
+###Installation
+
 
 This website is built using Middleman (http://middlemanapp.com), Sass, Compass and a few node modules. All the dependencies are automatically installed with the help of Bundler (http://bundler.io/) and npm.
 
